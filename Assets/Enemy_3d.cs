@@ -32,7 +32,8 @@ public class Enemy_3d : Character
         //HP‚ª0‚Å‚ ‚ê‚Î©g‚ğíœ
         if (HealthPoint_Current <= 0.0f)
         {
-            Destroy(this.gameObject);
+            //íœˆË—Š
+            GameManager.Instance.DeleteEnemy(this.gameObject);
         }
     }
 
@@ -71,6 +72,17 @@ public class Enemy_3d : Character
         normaliVec.y = 0.0f;//c²‚ğ–³‹
         normaliVec.Normalize();//³‹K‰»
         transform.position += normaliVec * MoveSpeedPoint_Result * Time.deltaTime;
+    }
+
+    public void SetLevelStatus(int _Level)
+    {
+        //MoveSpeedPoint_Result = MoveSpeedPoint_Base;
+        AttackPoint_Result = AttackPoint_Base * Mathf.Pow(1.10f, _Level);
+        //DefensePoint_Result = DefensePoint_Base;
+        HealthPointMax_Result = HealthPointMax_Base * Mathf.Pow(1.15f, _Level);
+
+        //Å‘åHP‚Ü‚Å‰ñ•œ
+        HealthPoint_Current = HealthPointMax_Result;
     }
 
     private void OnTriggerEnter(Collider other)

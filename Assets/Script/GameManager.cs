@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     //---------------
 
     [SerializeField] private EnemyManager enemyManager;//エネミーマネージャー
+    [SerializeField] private UI_Manager ui_Manager;//UIマネージャー
 
     public static GameManager Instance { get; private set; }
 
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
         WaveTimer = WaveTime;//タイマー設定
 
         enemyManager = this.GetComponent<EnemyManager>();//エネミーマネージャー取得
+        ui_Manager = this.GetComponent<UI_Manager>();//UIマネージャー取得
     }
     private void Update()
     {
@@ -65,27 +67,10 @@ public class GameManager : MonoBehaviour
         //Wave初期化
         if (WaveClearFlag == true)
         {
-            //ウェーブレベルを上げる
-            ++WaveLevel;
+            //報酬UIを呼び出す
 
-            //ウェーブのリストを選ぶ
-            WaveData_Index = Random.Range(0, WaveDataList.Count);
-
-            //ウェーブDataをセット
-            if (WaveData_Index >= 0 && WaveData_Index < WaveDataList.Count)//リスト内かチェック
-            {
-                if (enemyManager != null) enemyManager.SetWaveData(WaveDataList[WaveData_Index]);//登録
-            }
-            else
-            {
-                if (enemyManager != null) enemyManager.SetWaveData(null);//登録
-            }
-          
-
-            //フラグを戻す
-            WaveClearFlag = false;
-
-            WaveTimer = WaveTime;//タイマー設定
+            //
+            InitWave();
         }
 
         //Wave進行
@@ -96,6 +81,45 @@ public class GameManager : MonoBehaviour
 
         }
 	}
+
+    public void SetCursorObj(GameObject _Cursor)
+    {
+        if (ui_Manager) ui_Manager.SetCursorObj(_Cursor);
+    }
+    public GameObject GetCursorObj()
+    {
+        if (ui_Manager) return ui_Manager.GetCursorObj();
+        else
+            return null;
+    }
+    private void InitWave()
+    {
+        //ウェーブレベルを上げる
+        ++WaveLevel;
+
+        //ウェーブのリストを選ぶ
+        WaveData_Index = Random.Range(0, WaveDataList.Count);
+
+        //ウェーブDataをセット
+        if (WaveData_Index >= 0 && WaveData_Index < WaveDataList.Count)//リスト内かチェック
+        {
+            if (enemyManager != null)
+            {
+                enemyManager.SetWaveData(WaveDataList[WaveData_Index]);//リストを登録
+                enemyManager.SetEnemyLevel(WaveLevel);//Levelを設定
+            }
+        }
+        else
+        {
+            if (enemyManager != null) enemyManager.SetWaveData(null);//登録
+        }
+
+
+        //フラグを戻す
+        WaveClearFlag = false;
+
+        WaveTimer = WaveTime;//タイマー設定
+    }
 
     public int GetWaveLevel()
     {
@@ -167,5 +191,16 @@ public class GameManager : MonoBehaviour
     public static float VectorToAngle(Vector2 v)
     {
         return Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
+    }
+
+    public void DeleteEnemy(GameObject _Enemy)
+    {
+        if (enemyManager == null) return;//ヌルチェック
+        enemyManager.Exclusion_EnemyList(_Enemy);
+    }
+    public GameObject GetNearestEnemy(Vector3 _Pos)
+    {
+        if (enemyManager == null) return null;//ヌルチェック
+        return enemyManager.GetNearestEnemy(_Pos);
     }
 }

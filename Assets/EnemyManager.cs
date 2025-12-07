@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float SpawnLength = 1.0f;//エネミー出現距離
 
     [SerializeField] private WaveData_Base WaveData;
+
+    [SerializeField] private int EnemyLevel;
+
     void Start()
     {
         SpawnEnemyRateTimer = SpawnEnemyRateTime;
@@ -45,10 +50,14 @@ public class EnemyManager : MonoBehaviour
                     randVec *= SpawnLength;//倍化
 
                     //生成
-                    GameObject enemy = Instantiate(SpawnEnemy, midPos + randVec, Quaternion.identity);
+                    GameObject enemyObj = Instantiate(SpawnEnemy, midPos + randVec, Quaternion.identity);
+
+                    //レベルを設定
+                    Enemy_3d enemyController = enemyObj.GetComponent<Enemy_3d>();
+                    if (enemyController != null) enemyController.SetLevelStatus(EnemyLevel);
 
                     //リストに登録
-                    EnemyList.Add(enemy);
+                    EnemyList.Add(enemyObj);
                 }
 
                 //タイマー設定
@@ -89,5 +98,50 @@ public class EnemyManager : MonoBehaviour
     public void SetWaveData(WaveData_Base _data)
     {
         WaveData = _data;
+    }
+
+    public void Exclusion_EnemyList(GameObject _Enemy)
+    {
+        //指定されたエネミーと同一のものをリストから外す
+        if (EnemyList.Contains(_Enemy))
+        {
+            EnemyList.Remove(_Enemy);
+        }
+
+        //エネミーを削除
+        if (_Enemy != null)
+        {
+            Destroy(_Enemy);
+        }
+    }
+
+    public void SetEnemyLevel(int _Level)
+    {
+        EnemyLevel = _Level;
+    }
+    public GameObject GetNearestEnemy(Vector3 _Pos)
+    {
+        if (EnemyList == null || EnemyList.Count == 0)
+            return null;
+
+        GameObject nearest = null;
+        float minDistance = float.MaxValue;
+
+        foreach (var obj in EnemyList)
+        {
+            if (obj == null) continue;
+
+            //距離を算出(平方根なし)
+            float distance = (obj.transform.position - _Pos).sqrMagnitude;
+
+            //距離を比較
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearest = obj;
+            }
+        }
+
+        return nearest;
     }
 }

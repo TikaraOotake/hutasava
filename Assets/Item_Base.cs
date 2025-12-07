@@ -14,6 +14,7 @@ public class Item_Base : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //æ“¾ó‘Ô
         if (Getter != null)
         {
             //
