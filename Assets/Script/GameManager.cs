@@ -26,7 +26,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EnemyManager enemyManager;//エネミーマネージャー
     [SerializeField] private UI_Manager ui_Manager;//UIマネージャー
 
+    [SerializeField] private int Money;//銭
+    [SerializeField] private GameObject CoinPrefab;//コインのプレハブ
+
     public static GameManager Instance { get; private set; }
+
+    [SerializeField] private Weapon PairWeapon;//ペア武器
 
     private void Awake()
     {
@@ -80,8 +85,25 @@ public class GameManager : MonoBehaviour
 
 
         }
+
+        if(ui_Manager!=null)
+        {
+            ui_Manager.SetMoneyValue_UI(Money);
+        }
 	}
 
+    public void SetMoney(int _Money)
+    {
+        Money = _Money;
+    }
+    public int GetMoney()
+    {
+        return Money;
+    }
+    public void AddMoney(int _Money)
+    {
+        Money += _Money;
+    }
     public void SetCursorObj(GameObject _Cursor)
     {
         if (ui_Manager) ui_Manager.SetCursorObj(_Cursor);
@@ -202,5 +224,14 @@ public class GameManager : MonoBehaviour
     {
         if (enemyManager == null) return null;//ヌルチェック
         return enemyManager.GetNearestEnemy(_Pos);
+    }
+
+    public void DropItem_Coin(Vector3 _pos)
+    {
+        if (CoinPrefab != null)
+        {
+            GameObject obj = Instantiate(CoinPrefab);
+            obj.transform.position = _pos;
+        }
     }
 }

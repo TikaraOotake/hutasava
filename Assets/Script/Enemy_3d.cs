@@ -32,6 +32,9 @@ public class Enemy_3d : Character
         //HP‚ª0‚Å‚ ‚ê‚Î©g‚ğíœ
         if (HealthPoint_Current <= 0.0f)
         {
+            //ƒRƒCƒ“‚ğ—‚Æ‚·
+            GameManager.Instance.DropItem_Coin(transform.position);
+
             //íœˆË—Š
             GameManager.Instance.DeleteEnemy(this.gameObject);
         }

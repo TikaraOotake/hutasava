@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class UI_Manager : MonoBehaviour
 {
     [SerializeField] private bool Reward_UI_Flag;//報酬画面の表示フラグ
     [SerializeField] private GameObject CursorObj;//カーソルのオブジェクト
+
+    [SerializeField] private Text MoneyValueText;//残高を表示するテキスト
     void Start()
     {
         
@@ -34,5 +37,12 @@ public class UI_Manager : MonoBehaviour
     public GameObject GetCursorObj()
     {
         return CursorObj;
+    }
+    public void SetMoneyValue_UI(int _value)
+    {
+        if (MoneyValueText != null)
+        {
+            MoneyValueText.text = _value.ToString();
+        }
     }
 }

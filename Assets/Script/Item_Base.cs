@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class Item_Base : MonoBehaviour
 {
-    [SerializeField] private bool IsGet;//æ“¾ó‘Ô
-    [SerializeField] private GameObject Getter;//æ“¾Ò
+    [SerializeField] protected bool IsGet;//æ“¾ó‘Ô
+    [SerializeField] protected GameObject Getter;//æ“¾Ò
 
-    [SerializeField] private 
     void Start()
     {
 
