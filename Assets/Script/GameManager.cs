@@ -29,6 +29,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int Money;//銭
     [SerializeField] private GameObject CoinPrefab;//コインのプレハブ
 
+    enum GameSceneStatus
+    {
+        PlayGame,
+        Pause,
+        GameOver
+    }
+    [SerializeField] GameSceneStatus gameSceneStatus;
+
+
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private Weapon PairWeapon;//ペア武器
