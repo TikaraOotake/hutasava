@@ -6,18 +6,18 @@ public class UI_SelectSlot : MonoBehaviour
     //選択項目のUI
 
     [SerializeField]
-    private EquipmentItem_Base Item;//登録されているItem
-    private EquipmentItem_Base Item_old;//前フレームの登録されているItem
-    [SerializeField] private bool SelectingFlag;//選択中のフラグ
+    protected EquipmentItem_Base Item;//登録されているItem
+    protected EquipmentItem_Base Item_old;//前フレームの登録されているItem
+    [SerializeField] protected bool SelectingFlag;//選択中のフラグ
 
     //表示させるためのもの
-    [SerializeField] private Image ImageComp;//イメージ表示用
-    [SerializeField] private Text TextNameComp;//名前表示用
-    [SerializeField] private Text TextExpComp;//説明文表示用
+    [SerializeField] protected Image ImageComp;//イメージ表示用
+    [SerializeField] protected Text TextNameComp;//名前表示用
+    [SerializeField] protected Text TextExpComp;//説明文表示用
 
-    [SerializeField] private Image SelectingLightComp;//選択中に発光させる用
+    [SerializeField] protected Image SelectingLightComp;//選択中に発光させる用
 
-    private Color NeutralColor;//通常色
+    protected Color NeutralColor;//通常色
 
     void Start()
     {
@@ -86,7 +86,7 @@ public class UI_SelectSlot : MonoBehaviour
         SelectingFlag = true;
     }
 
-    private void Update_Display()
+    protected void Update_Display()
     {
         if (Item != null)
         {
@@ -94,5 +94,11 @@ public class UI_SelectSlot : MonoBehaviour
             if (TextNameComp != null) TextNameComp.text = Item.GetItemName();//アイテム名を設定
             if (TextExpComp != null) TextExpComp.text = Item.GetItemExplanation();//アイテム説明を設定
         }
+    }
+
+    //選択決定時の挙動
+    protected virtual void DecideAction()
+    {
+
     }
 }
