@@ -19,6 +19,9 @@ public class UI_SelectSlot : MonoBehaviour
 
     protected Color NeutralColor;//通常色
 
+    [SerializeField] protected UI_RewardScene RewardScene;
+    
+
     void Start()
     {
         Update_Display();
@@ -72,14 +75,7 @@ public class UI_SelectSlot : MonoBehaviour
     }
     public EquipmentItem_Base GetItem()
     {
-        if (Item != null)
-        {
-            return Instantiate(Item);
-        }
-        else
-        {
-            return null;
-        }
+        return Item;
     }
     public void SetSelectingFlag()
     {
@@ -94,11 +90,25 @@ public class UI_SelectSlot : MonoBehaviour
             if (TextNameComp != null) TextNameComp.text = Item.GetItemName();//アイテム名を設定
             if (TextExpComp != null) TextExpComp.text = Item.GetItemExplanation();//アイテム説明を設定
         }
+        else
+        {
+            //アイテムが無効である場合
+            if (ImageComp != null) ImageComp.sprite = null;//
+            if (TextNameComp != null) TextNameComp.text = " ";//
+            if (TextExpComp != null) TextExpComp.text = " ";
+        }
     }
 
     //選択決定時の挙動
-    protected virtual void DecideAction()
+    public virtual void DecideAction()
     {
-
+        if (RewardScene != null)
+        {
+            RewardScene.ExchangeItem(this);
+        }
+    }
+    public void SetRewardScene(UI_RewardScene _RewardScene)
+    {
+        RewardScene = _RewardScene;
     }
 }

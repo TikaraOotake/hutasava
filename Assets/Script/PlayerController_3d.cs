@@ -27,6 +27,8 @@ public class PlayerController_3d : Character
     private bool IsDead;//死亡状態フラグ
     [SerializeField] private float HealthPoint_Current_old;//前フレームのHP状態を記録
 
+    [SerializeField] private UI_Inventory_Player uI_Inventory_Player;
+
 
     void Start()
     {
@@ -94,6 +96,31 @@ public class PlayerController_3d : Character
             if (WeaponList[i] != null)
             {
                 WeaponList[i].Update_Item(this.gameObject);
+            }
+        }
+
+        if (uI_Inventory_Player != null)
+        {
+            List<GameObject> weapons = uI_Inventory_Player.GetPlayerItemSlot();
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                if (weapons[i] != null)
+                {
+                    UI_SelectSlot slot = weapons[i].GetComponent<UI_SelectSlot>();
+                    if (slot != null)
+                    {
+                        EquipmentItem_Base item = slot.GetItem();
+                        if (item != null)
+                        {
+                            Weapon weapon = (Weapon)item;
+
+                            if (weapon != null)
+                            {
+                                weapon.Update_Item(this.gameObject);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

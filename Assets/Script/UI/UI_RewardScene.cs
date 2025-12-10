@@ -5,7 +5,7 @@ public class UI_RewardScene : MonoBehaviour
 {
     [SerializeField] private UI_Inventory_Player Player1Inventory;
     [SerializeField] private UI_Inventory_Player Player2Inventory;
-    [SerializeField] private UI_Inventory Inventory;
+    [SerializeField] private UI_StorageInventory Inventory;
 
 
     public List<Transform> uiObjects;   // 選択可能UI
@@ -14,20 +14,13 @@ public class UI_RewardScene : MonoBehaviour
 
     [SerializeField] private List<GameObject> UI_RewardSlotList;//報酬スロットのリスト
 
+    private UI_SelectSlot OnHoldSelectSlot;//保留スロット(入れ替え用)
+
     void Start()
     {
+
+
         
-
-        //報酬スロットと紐づけ
-        for (int i = 0; i < UI_RewardSlotList.Count; ++i)
-        {
-            UI_RewardSlot rewardSlot = UI_RewardSlotList[i].GetComponent<UI_RewardSlot>();
-
-            if (rewardSlot != null)
-            {
-                rewardSlot.SetRewardScene(this);//自身を登録しておく
-            }
-        }
 
         //リストを取得
         List<GameObject> Player1InventoryList = new List<GameObject>();
@@ -46,6 +39,25 @@ public class UI_RewardScene : MonoBehaviour
         UI_SelectList = MergeLists(UI_SelectList, Player1InventoryList);
         UI_SelectList = MergeLists(UI_SelectList, Player2InventoryList);
         UI_SelectList = MergeLists(UI_SelectList, InventoryList);
+
+        //報酬スロットと紐づけ
+        for (int i = 0; i < UI_SelectList.Count; ++i)
+        {
+            GameObject obj = UI_SelectList[i];
+            if (obj != null)
+            {
+                UI_SelectSlot Slot = obj.GetComponent<UI_SelectSlot>();
+
+                if (Slot != null)
+                {
+                    Slot.SetRewardScene(this);//自身を登録しておく
+                }
+            }
+        }
+
+
+        //報酬スロットのアイテムを作成
+        GenerateItem();
 
 
         // 保険：範囲外の時は0に戻す
@@ -72,10 +84,36 @@ public class UI_RewardScene : MonoBehaviour
             --inputNum;
         }
 
+        //決定入力
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            GameObject obj = UI_SelectList[currentIndex];
+            if (obj != null)
+            {
+                UI_SelectSlot slot = obj.GetComponent<UI_SelectSlot>();
+                if (slot != null)
+                {
+                    slot.DecideAction();
+                }
+                else
+                {
+                    Debug.Log("セレクトスロットがありません");
+                }
+            }
+            else
+            {
+                Debug.Log("オブジェクトが無効です");
+            }
+        }
+
         //選択中の選択肢を発光
         if (currentIndex >= 0)
         {
-            HighlightUI(UI_SelectList[currentIndex]);
+            HighlightUI(UI_SelectList[currentIndex]);//選択スロット
+        }
+        if (OnHoldSelectSlot != null)
+        {
+            HighlightUI(OnHoldSelectSlot.gameObject);//保留スロット
         }
 
     }
@@ -175,8 +213,88 @@ public class UI_RewardScene : MonoBehaviour
             Debug.Log($"{name}: {o?.name}");
         }
     }
+    public void GenerateItem()
+    {
+        for (int i = 0; i < UI_RewardSlotList.Count; ++i)
+        {
+            UI_SelectSlot slot = UI_RewardSlotList[i].GetComponent<UI_SelectSlot>();
+            if (slot != null)
+            {
+                //ランダムなアイテムデータを渡す
+                slot.SetItem(GameManager.Instance.GetRandCopyItemData());
+            }
+        }
+    }
     public void SetItem()
     {
 
+    }
+    public bool TransferItem_toStorage(EquipmentItem_Base _Itemdata)
+    {
+        List<GameObject> InventoryList = new List<GameObject>();
+        if (Inventory != null) InventoryList = Inventory.GetSelectSlotList();
+
+        for(int i = 0; i < InventoryList.Count; ++i)
+        {
+            GameObject obj=InventoryList[i];
+            if (obj != null)
+            {
+                UI_SelectSlot slot = obj.GetComponent<UI_SelectSlot>();
+                if (slot != null)
+                {
+                    //既に入っているアイテムを取得
+                    EquipmentItem_Base item = slot.GetItem();
+
+                    //アイテムが空であれば引き数のアイテムを代入して終了
+                    if (item == null)
+                    {
+                        slot.SetItem(_Itemdata);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+    public void ExchangeItem(UI_SelectSlot _slot)
+    {
+        //引き数スロットの有効性確認
+        if (_slot == null) return;//無効なため終了
+
+        //保留変数を確認
+        if (OnHoldSelectSlot != null)
+        {
+            //保留が選択済みなので交換開始
+
+            //保留と同じものを選択していないか確認
+            if (OnHoldSelectSlot == _slot)
+            {
+                //同じものを指定しているため保留を解除して終了
+                OnHoldSelectSlot = null;
+                return;
+            }
+
+            //一時保存用
+            EquipmentItem_Base _tempItem = _slot.GetItem();
+            //交換
+            _slot.SetItem(OnHoldSelectSlot.GetItem());
+            OnHoldSelectSlot.SetItem(_tempItem);
+
+            //保留スロットを空に
+            OnHoldSelectSlot = null;
+            return;
+        }
+        else
+        {
+            //保留が空っぽなのでスロットを登録して終了
+            OnHoldSelectSlot = _slot;
+            return;
+        }
+    }
+    //保留状態にする
+    public void SetOnHold(UI_SelectSlot _slot)
+    {
+        if (OnHoldSelectSlot != null) return;//ほ
     }
 }

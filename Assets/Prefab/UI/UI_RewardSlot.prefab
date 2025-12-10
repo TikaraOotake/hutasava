@@ -170,6 +170,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 497d56fd0c2fbee4f94f3cdc273c1b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Item: {fileID: 0}
+  SelectingFlag: 0
+  ImageComp: {fileID: 7344467537508398765}
+  TextNameComp: {fileID: 5021887108785521171}
+  TextExpComp: {fileID: 5216082252947912033}
+  SelectingLightComp: {fileID: 8000579830303443874}
+  RewardScene: {fileID: 0}
 --- !u!1 &6570040156329332712
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int Money;//銭
     [SerializeField] private GameObject CoinPrefab;//コインのプレハブ
 
+    [SerializeField] private List<EquipmentItem_Base> OriginItemDataList;//複製したいアイテムを登録して使う
+
+    [SerializeField] private UI_RewardScene ui_RewardScene;//報酬SceneのUI
+
     enum GameSceneStatus
     {
         PlayGame,
@@ -64,6 +68,16 @@ public class GameManager : MonoBehaviour
 
         enemyManager = this.GetComponent<EnemyManager>();//エネミーマネージャー取得
         ui_Manager = this.GetComponent<UI_Manager>();//UIマネージャー取得
+
+        //時間をとめる
+        Time.timeScale = 0.0f;
+
+        //報酬UIを呼び出す
+        if (ui_RewardScene != null)
+        {
+            ui_RewardScene.gameObject.SetActive(true);
+            ui_RewardScene.GenerateItem();
+        }
     }
     private void Update()
     {
@@ -73,6 +87,15 @@ public class GameManager : MonoBehaviour
         {
             WaveClearFlag = true;//クリア状態に
 
+            //時間をとめる
+            Time.timeScale = 0.0f;
+
+            //報酬UIを呼び出す
+            if (ui_RewardScene != null)
+            {
+                ui_RewardScene.gameObject.SetActive(true);
+            }
+
             //全てのエネミーを削除
             //if (enemyManager != null) enemyManager.DestroyAllEnemy();
         }
@@ -81,10 +104,27 @@ public class GameManager : MonoBehaviour
         //Wave初期化
         if (WaveClearFlag == true)
         {
-            //報酬UIを呼び出す
+            
 
             //
-            InitWave();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                InitWave();
+
+                //時間をもどす
+                Time.timeScale = 1.0f;
+
+                //報酬シーンのUIを閉じる
+                if (ui_RewardScene != null)
+                {
+                    ui_RewardScene.gameObject.SetActive(false);
+                }
+            }
+            
+        }
+        else
+        {
+            //報酬UIを閉じる
         }
 
         //Wave進行
@@ -125,6 +165,8 @@ public class GameManager : MonoBehaviour
     }
     private void InitWave()
     {
+        Debug.Log("Waveの初期化");
+
         //ウェーブレベルを上げる
         ++WaveLevel;
 
@@ -145,6 +187,7 @@ public class GameManager : MonoBehaviour
             if (enemyManager != null) enemyManager.SetWaveData(null);//登録
         }
 
+        
 
         //フラグを戻す
         WaveClearFlag = false;
@@ -241,6 +284,33 @@ public class GameManager : MonoBehaviour
         {
             GameObject obj = Instantiate(CoinPrefab);
             obj.transform.position = _pos;
+        }
+    }
+    public EquipmentItem_Base GetRandCopyItemData()
+    {
+        //リストサイズを取得し確認
+        int Size = OriginItemDataList.Count;
+        if (Size > 0)
+        {
+            //ランダムな添え字を取得
+            int index = Random.Range(0, Size);
+            EquipmentItem_Base item = OriginItemDataList[index];
+
+            if (item != null)
+            {
+                //アイテムデータを複製して渡す
+                return Instantiate(item);
+            }
+            else
+            {
+                //アイテムデータが無効なので終了
+                return null;
+            }
+        }
+        else
+        {
+            //リストのサイズが満たしていないため終了
+            return null;
         }
     }
 }
