@@ -1,5 +1,5 @@
 using UnityEngine;
-using static UnityEditor.Progress;
+//using static UnityEditor.Progress;
 
 public class UI_SelectSlot_Small : UI_SelectSlot
 {

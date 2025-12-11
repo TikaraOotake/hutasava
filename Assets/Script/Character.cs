@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
     protected void Update_Blow()
     {
         //ˆÚ“®
-        transform.position += new Vector3(BlowVec.x, 0.0f, BlowVec.y) * 0.1f;
+        transform.position += new Vector3(BlowVec.x, 0.0f, BlowVec.y) * Time.deltaTime;
 
         const float LerpLevel = 10.0f;//ŠŠ‚ç‚©“x
 

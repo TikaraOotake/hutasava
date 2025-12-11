@@ -8,6 +8,8 @@ public class Bullet_01 : MonoBehaviour
     [SerializeField] private Vector3 BulletMoveVec;
 
     [SerializeField] private float DestroyTimer = 1.0f;//削除タイマー
+
+	[SerializeField] private bool isPerforate;//弾貫通フラグ
     void Start()
     {
         
@@ -27,6 +29,11 @@ public class Bullet_01 : MonoBehaviour
         }
     }
 
+    public void SetAtkValue(float _Atk)
+    {
+        BulletAtk = _Atk;
+    }
+
 	private void OnTriggerEnter(Collider other)
 	{
 		//仮ダメージ処理
@@ -34,26 +41,26 @@ public class Bullet_01 : MonoBehaviour
 		{
 			Character chara = other.GetComponent<Character>();
 			if (chara != null)
-			{
-				//ダメージ計算
-				float Def = chara.GetDefensePoint_Result();
+            {
+                //ダメージ計算
+                float Def = chara.GetDefensePoint_Result();
 
-				float Damage = BulletAtk;//補正は要件等
+                float Damage = BulletAtk;//補正は要件等
 
-				//ダメージ適用
-				chara.SetDamage(Damage);
+                //ダメージ適用
+                chara.SetDamage(Damage);
 
-				//吹き飛ぶ方向を計算
-				Vector3 BlowVec = chara.transform.position - transform.position;//方向を算出
-				BlowVec.Normalize();//正規化
-				BlowVec *= 0.5f;//いい感じに補正
+                //吹き飛ぶ方向を計算
+                Vector3 BlowVec = chara.transform.position - transform.position;//方向を算出
+                BlowVec.Normalize();//正規化
+                BlowVec *= 0.5f;//いい感じに補正
 
-				//ノックバックを反映
-				chara.SetKnockBack(new Vector2(BlowVec.x, BlowVec.z));
+                //ノックバックを反映
+                chara.SetKnockBack(new Vector2(BlowVec.x, BlowVec.z));
 
-				//自身を削除
-				Destroy(this.gameObject);
-			}
-		}
-	}
+                //自身を削除
+                if (isPerforate == false) Destroy(this.gameObject);
+            }
+        }
+    }
 }

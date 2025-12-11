@@ -41,8 +41,6 @@ public class Coin : Item_Base
                 //©g‚ğíœ
                 Destroy(this.gameObject);
             }
-
-
         }
     }
     private void OnTriggerEnter(Collider other)

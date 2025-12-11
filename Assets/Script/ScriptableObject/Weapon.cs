@@ -25,4 +25,17 @@ public class Weapon : EquipmentItem_Base
         //タイマー更新
         AttackCooltimer = Mathf.Max(0.0f, AttackCooltimer - Time.deltaTime);
     }
+
+    //弾の攻撃力代入関数
+    protected void SetBulletAtkValue(GameObject _bulletObj, float _AtkValue)
+    {
+        if (_bulletObj)
+        {
+            Bullet_01 bullet = _bulletObj.GetComponent<Bullet_01>();
+            if (bullet)
+            {
+                bullet.SetAtkValue(_AtkValue);
+            }
+        }
+    }
 }

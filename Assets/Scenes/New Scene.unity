@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaveLevel: 0
-  WaveTime: 10
+  WaveTime: 30
   WaveTimer: 0
   WaveDataList:
   - {fileID: 11400000, guid: ecfc3f20663c56747a6f5093366f0b7f, type: 2}
@@ -368,6 +368,8 @@ MonoBehaviour:
   OriginItemDataList:
   - {fileID: 11400000, guid: 5e2563a63c377a14caced6f1d11ae9c4, type: 2}
   - {fileID: 11400000, guid: 58518b97a5bcda044997a0838adcc2e7, type: 2}
+  - {fileID: 11400000, guid: b99d43380ba374241baff82b6c471ddd, type: 2}
+  - {fileID: 11400000, guid: 9945f191160183f429bdacbb6f893db2, type: 2}
   ui_RewardScene: {fileID: 213870737717585878}
   gameSceneStatus: 0
   PairWeapon: {fileID: 0}

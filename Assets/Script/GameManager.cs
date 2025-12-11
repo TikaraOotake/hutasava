@@ -85,16 +85,19 @@ public class GameManager : MonoBehaviour
 
         if (WaveTimer <= 0.0f)
         {
+            //報酬UIを呼び出す
+            if (ui_RewardScene != null && WaveClearFlag == false)
+            {
+                ui_RewardScene.gameObject.SetActive(true);
+                ui_RewardScene.GenerateItem();
+            }
+
             WaveClearFlag = true;//クリア状態に
 
             //時間をとめる
             Time.timeScale = 0.0f;
 
-            //報酬UIを呼び出す
-            if (ui_RewardScene != null)
-            {
-                ui_RewardScene.gameObject.SetActive(true);
-            }
+            
 
             //全てのエネミーを削除
             //if (enemyManager != null) enemyManager.DestroyAllEnemy();
