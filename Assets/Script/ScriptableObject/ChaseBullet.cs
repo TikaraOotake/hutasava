@@ -30,8 +30,15 @@ public class ChaseBullet : Weapon
                     angle = _CallObject.transform.eulerAngles.y;
                 }
 
+                //弾生成
                 GameObject newBullet = Instantiate(BulletPrefab, _CallObject.transform.position, Quaternion.identity);
                 newBullet.transform.eulerAngles = new Vector3(0.0f, 90 - angle, 0.0f);
+
+                //攻撃力適用
+                float PlayerAtk = 1;
+                PlayerController_3d player = _CallObject.GetComponent<PlayerController_3d>();//プレイヤースクリプト取得
+                if (player) PlayerAtk = player.GetAttackPoint_Result();//プレイヤー攻撃力取得
+                SetBulletAtkValue(newBullet, PlayerAtk * WeaponAttackPoint_Base);//攻撃力適用
             }
 
             //タイマー再設定

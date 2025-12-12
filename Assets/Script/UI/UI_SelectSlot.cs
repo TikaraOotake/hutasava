@@ -41,12 +41,14 @@ public class UI_SelectSlot : MonoBehaviour
             Update_Display();
         }
 
-        
+
         if (SelectingLightComp != null)
         {
             if (SelectingFlag)
             {
-                SelectingLightComp.color = Color.yellow;//‘I‘ð’†‚È‚ç”­Œõ
+                Color color = Color.yellow;//‘I‘ð’†‚È‚ç”­Œõ
+                color.a = NeutralColor.a;
+                SelectingLightComp.color = color;
             }
             else
             {
@@ -82,7 +84,7 @@ public class UI_SelectSlot : MonoBehaviour
         SelectingFlag = true;
     }
 
-    protected void Update_Display()
+    public virtual void Update_Display()
     {
         if (Item != null)
         {

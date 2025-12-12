@@ -91,6 +91,8 @@ public class PlayerController_3d : Character
 
     private void Update_Weapons()
     {
+        if (Time.timeScale == 0.0f) return;
+
         for (int i = 0; i < WeaponList.Count; i++)
         {
             if (WeaponList[i] != null)

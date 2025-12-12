@@ -17,5 +17,6 @@ MonoBehaviour:
   ItemExplanation: "\u4E00\u5B9A\u9593\u9694\u3067\u9023\u6483\u3092\u653E\u3064"
   BulletPrefab: {fileID: 5563455895595331127, guid: 7fb1b8ce41d23f74ca0d56524f0be8e4, type: 3}
   AttackCooltime: 1
-  WeaponAttackPoint_Base: 0
+  WeaponAttackPoint_Base: 1
+  WeaponLevel: 1
   ComboCooltime_Ratio: 0.3

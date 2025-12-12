@@ -107,10 +107,10 @@ public class GameManager : MonoBehaviour
         //Waveèâä˙âª
         if (WaveClearFlag == true)
         {
-            
+
 
             //
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
             {
                 InitWave();
 

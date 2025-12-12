@@ -16,12 +16,10 @@ public class UI_RewardScene : MonoBehaviour
 
     private UI_SelectSlot OnHoldSelectSlot;//保留スロット(入れ替え用)
 
+    private float JoyStickInputLength_old;
+
     void Start()
     {
-
-
-        
-
         //リストを取得
         List<GameObject> Player1InventoryList = new List<GameObject>();
         List<GameObject> Player2InventoryList = new List<GameObject>();
@@ -74,18 +72,8 @@ public class UI_RewardScene : MonoBehaviour
 
         //HighlightUI(UI_SelectList[currentIndex].transform);
 
-        int inputNum = 0;
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            ++inputNum;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            --inputNum;
-        }
-
         //決定入力
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             GameObject obj = UI_SelectList[currentIndex];
             if (obj != null)
@@ -124,7 +112,31 @@ public class UI_RewardScene : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S)) return Vector2.down;
         if (Input.GetKeyDown(KeyCode.A)) return Vector2.left;
         if (Input.GetKeyDown(KeyCode.D)) return Vector2.right;
-        return Vector2.zero;
+
+        Vector2 InputValue = Vector2.zero;
+
+        InputValue.x = Input.GetAxis("Horizontal");
+        InputValue.y = Input.GetAxis("Vertical");
+
+        const float threshold = 0.8f;//閾値
+        bool flag = false;
+        float InputLength = Vector2.Distance(InputValue, Vector2.zero);
+
+        if (JoyStickInputLength_old < threshold && InputLength >= threshold)
+        {
+            flag = true;
+        }
+
+        JoyStickInputLength_old = InputLength;
+
+        if (flag)
+        {
+            return InputValue.normalized;
+        }
+        else
+        {
+            return Vector2.zero;
+        }
     }
 
     void SelectNext()
@@ -234,9 +246,9 @@ public class UI_RewardScene : MonoBehaviour
         List<GameObject> InventoryList = new List<GameObject>();
         if (Inventory != null) InventoryList = Inventory.GetSelectSlotList();
 
-        for(int i = 0; i < InventoryList.Count; ++i)
+        for (int i = 0; i < InventoryList.Count; ++i)
         {
-            GameObject obj=InventoryList[i];
+            GameObject obj = InventoryList[i];
             if (obj != null)
             {
                 UI_SelectSlot slot = obj.GetComponent<UI_SelectSlot>();
@@ -273,6 +285,41 @@ public class UI_RewardScene : MonoBehaviour
                 //同じものを指定しているため保留を解除して終了
                 OnHoldSelectSlot = null;
                 return;
+            }
+
+            //保留に入っているアイテムと同じ派生クラスか確認
+            UI_SelectSlot holdSlot = OnHoldSelectSlot.GetComponent<UI_SelectSlot>();
+            UI_SelectSlot arguSlot = _slot.GetComponent<UI_SelectSlot>();
+            if (holdSlot && arguSlot)//コンポの有効性を確認
+            {
+                EquipmentItem_Base holdItem = holdSlot.GetItem();
+                EquipmentItem_Base arguItem = arguSlot.GetItem();
+                if (holdItem && arguItem)//アイテムの有効性を確認
+                {
+                    if (holdItem.GetType() == arguItem.GetType())//同じ派生クラスか確認
+                    {
+                        //型変換
+                        Weapon holdWeapon = (Weapon)holdItem;
+                        Weapon arguWeapon = (Weapon)arguItem;
+                        if (holdWeapon.GetWeaponLevel() == arguWeapon.GetWeaponLevel())
+                        {
+                            //Debug.Log("同じ種類の同じレベルです");
+                            //武器合成
+                            arguWeapon.SetWeaponLevel(arguWeapon.GetWeaponLevel() + 1);//レベルを1上げる
+
+                            //スロットの表示を更新
+                            arguSlot.Update_Display();
+
+                            //保留スロットのアイテムを削除
+                            OnHoldSelectSlot.SetItem(null);
+
+                            //保留を空に
+                            OnHoldSelectSlot = null;
+
+                            return;
+                        }
+                    }
+                }
             }
 
             //一時保存用

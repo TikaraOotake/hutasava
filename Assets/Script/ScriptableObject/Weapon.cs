@@ -10,7 +10,9 @@ public class Weapon : EquipmentItem_Base
     protected float AttackCooltimer;//再使用時間計測
 
     [SerializeField]
-    protected float WeaponAttackPoint_Base;//武器基礎攻撃力
+    protected float WeaponAttackPoint_Base = 1;//武器基礎攻撃力
+    [SerializeField]
+    protected int WeaponLevel = 0;
 
     //アイテムの更新処理
     public virtual void Update_Item(GameObject _CallObject)//引き数：_CallObject　呼び出し元のオブジェクト
@@ -37,5 +39,14 @@ public class Weapon : EquipmentItem_Base
                 bullet.SetAtkValue(_AtkValue);
             }
         }
+    }
+
+    public int GetWeaponLevel()
+    {
+        return WeaponLevel;
+    }
+    public void SetWeaponLevel(int _WeaponLevel)
+    {
+        WeaponLevel = _WeaponLevel;
     }
 }
