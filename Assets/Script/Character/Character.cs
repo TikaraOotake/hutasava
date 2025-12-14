@@ -50,6 +50,9 @@ public class Character : MonoBehaviour
     public virtual void SetDamage(float _Damage)
     {
         HealthPoint_Current = Mathf.Max(0.0f, HealthPoint_Current - _Damage);
+
+        //ダメージ表示を依頼
+        GameManager.Instance.GenerateDamageDisplayUI((int)_Damage, transform.position);
     }
     public void SetKnockBack(Vector2 _BlowVec)
     {

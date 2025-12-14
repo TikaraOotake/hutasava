@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
             
 
             //全てのエネミーを削除
-            //if (enemyManager != null) enemyManager.DestroyAllEnemy();
+            if (enemyManager != null) enemyManager.DestroyAllEnemy();
         }
 
 
@@ -314,6 +314,14 @@ public class GameManager : MonoBehaviour
         {
             //リストのサイズが満たしていないため終了
             return null;
+        }
+    }
+
+    public void GenerateDamageDisplayUI(int _Damage, Vector3 _Pos)
+    {
+        if (ui_Manager != null)
+        {
+            ui_Manager.GenerateDamageDisplayUI(_Damage, _Pos);
         }
     }
 }

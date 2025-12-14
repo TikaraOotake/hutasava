@@ -1,15 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
-//using static UnityEditor.Progress;
 
-public class UI_SelectSlot_Small : UI_SelectSlot
+public class UI_PlayerSlot : UI_SelectSlot_Small
 {
-    [SerializeField] private GameObject SubColumn;//サブ欄のオブジェクト
-    [SerializeField]
-    protected Text TextLevelComp;//レベルを表示させるためのテキスト
+    [SerializeField] private bool LockFalg = false;//解放フラグ
+    [SerializeField] private int UnlockCost;//解放コスト
+    [SerializeField] private Sprite LockIcon;//鍵アイコン
 
+    [SerializeField] private GameObject LockText;//ロック中に表示するテキスト
 
-    // Update is called once per frame
+    void Start()
+    {
+        //コストが0より大きい場合はロック状態に
+        if (UnlockCost > 0)
+        {
+            LockFalg = true;
+        }
+
+        if (SelectingLightComp != null)
+        {
+            NeutralColor = SelectingLightComp.color;//通常色を記憶
+        }
+
+        //表示を更新
+        Update_Display();
+    }
+
     void Update()
     {
         //アイテムの情報が変わったらUI更新
@@ -41,8 +57,54 @@ public class UI_SelectSlot_Small : UI_SelectSlot
             SubColumn.SetActive(false);//非表示
         }
 
+        if (SelectingFlag == true && LockFalg == true)
+        {
+            LockText.SetActive(true);
+            Text text = LockText.GetComponent<Text>();
+            if (text != null)
+            {
+                text.text = UnlockCost.ToString() + "Gで解放";
+            }
+        }
+        else
+        {
+            LockText.SetActive(false);
+        }
+
         Item_old = Item;
         SelectingFlag = false;
+    }
+    public override void DecideAction()
+    {
+        if (LockFalg)
+        {
+            //未開放状態
+
+            //残高取得
+            int Money = GameManager.Instance.GetMoney();
+
+            //
+            Money -= UnlockCost;
+
+            //赤字でないか
+            if (Money >= 0)
+            {
+                //購入可能
+
+                //お釣りを代入
+                GameManager.Instance.SetMoney(Money);
+
+                //ロック解除
+                LockFalg = false;
+
+                //表示状態更新
+                Update_Display();
+            }
+        }
+        else if (RewardScene != null)
+        {
+            RewardScene.ExchangeItem(this);
+        }
     }
 
     public override void Update_Display()
@@ -73,6 +135,11 @@ public class UI_SelectSlot_Small : UI_SelectSlot
             if (TextNameComp != null) TextNameComp.text = " ";//
             if (TextExpComp != null) TextExpComp.text = " ";
             if (TextLevelComp != null) TextLevelComp.text = " ";
+
+            if (LockFalg == true)
+            {
+                if (ImageComp != null) ImageComp.sprite = LockIcon;//鍵アイコンを表示
+            }
         }
     }
 }

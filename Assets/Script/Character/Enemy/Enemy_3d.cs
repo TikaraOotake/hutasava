@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Enemy_3d : Character
 {
-    [SerializeField] private Vector3 TargetPoint;//移動目標点
+    [SerializeField] protected Vector3 TargetPoint;//移動目標点
 
-    private GameObject Player1;
-    private GameObject Player2;
+    protected GameObject Player1;
+    protected GameObject Player2;
     void Start()
     {
         
@@ -29,6 +29,9 @@ public class Enemy_3d : Character
     {
         HealthPoint_Current = Mathf.Max(0.0f, HealthPoint_Current - _Damage);
 
+        //ダメージ表示を依頼
+        GameManager.Instance.GenerateDamageDisplayUI((int)_Damage, transform.position);
+
         //HPが0であれば自身を削除
         if (HealthPoint_Current <= 0.0f)
         {
@@ -41,7 +44,7 @@ public class Enemy_3d : Character
     }
 
     //追跡するPlayerを探す
-    void SearchChasePlayer()
+    protected void SearchChasePlayer()
     {
         var p1 = GameManager.Instance.GetPlayer(1);
         var p2 = GameManager.Instance.GetPlayer(2);
@@ -69,7 +72,7 @@ public class Enemy_3d : Character
         if (best != null)
             TargetPoint = best.position;
     }
-    private void Move()
+    protected void Move()
     {
         Vector3 normaliVec = TargetPoint - transform.position;
         normaliVec.y = 0.0f;//縦軸を無視
@@ -79,7 +82,7 @@ public class Enemy_3d : Character
 
     public void SetLevelStatus(int _Level)
     {
-        //MoveSpeedPoint_Result = MoveSpeedPoint_Base;
+        MoveSpeedPoint_Result = MoveSpeedPoint_Base;
         AttackPoint_Result = AttackPoint_Base * Mathf.Pow(1.10f, _Level);
         //DefensePoint_Result = DefensePoint_Base;
         HealthPointMax_Result = HealthPointMax_Base * Mathf.Pow(1.15f, _Level);

@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef6593b30e7e8454db563e4614eea158, type: 3}
-  m_Name: Test_WaveData
+  m_Name: Test_WaveData 2
   m_EditorClassIdentifier: 
   EnemyPrefabList:
-  - {fileID: 8463169047004779428, guid: c5cb10f1d4fa8b24d96677d5c20569f6, type: 3}
-  - {fileID: 8463169047004779428, guid: 99628c78e9ced8d41a34b43736b7a690, type: 3}
   - {fileID: 8463169047004779428, guid: 3d7121998b2029b47bfe223d242fcdd7, type: 3}
+  - {fileID: 8463169047004779428, guid: 8e1eaed62a84b5d458133eec828e1737, type: 3}
+  - {fileID: 8463169047004779428, guid: c5cb10f1d4fa8b24d96677d5c20569f6, type: 3}
   LevelModifierRatioList:
-  - 1
-  - 1
-  - 2
+  - 0
+  - 0
+  - 0
   SpawnRateList:
   - 1
-  - 0
+  - 2
   - 0
   TreasureLevel: 0
   DestroyQuota: 0
