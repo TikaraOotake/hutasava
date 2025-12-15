@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using StructStatus;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -249,6 +250,33 @@ public class PlayerController_3d : Character
         {
             RevivalTimer = RevivalTime_Result;
         }
+    }
+    public override void CalcuStatus()
+    {
+        float AcceAtk = 0.0f;
+        float AcceHP = 0.0f;
+        float AcceSpeed = 0.0f;
+
+        //アクセサリステータスを全て加算
+        if (uI_Inventory_Player != null)
+        {
+            List<Accessory> accessoryList = uI_Inventory_Player.GetAccessoryList();
+            for (int i = 0; i < accessoryList.Count; ++i)
+            {
+                if (accessoryList[i] != null)
+                {
+                    CharacterStatus status = accessoryList[i].GetStatus();
+                    AcceAtk = status.AttackPoint;
+                    AcceHP = status.HealthPoint;
+                    AcceSpeed = status.SpeedPoint;
+                }
+            }
+        }
+
+        MoveSpeedPoint_Result = MoveSpeedPoint_Base + MoveSpeedPoint_Base * AcceSpeed;
+        AttackPoint_Result = AttackPoint_Base + AttackPoint_Base * AcceAtk;
+        //DefensePoint_Result = DefensePoint_Base;
+        HealthPointMax_Result = HealthPointMax_Base + HealthPointMax_Base * AcceHP;
     }
 
     private void OnTriggerEnter(Collider other)

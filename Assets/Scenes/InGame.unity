@@ -564,6 +564,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &248074270 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+  m_PrefabInstance: {fileID: 7446580687219940879}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d246894ec2bc39b479ab44f1644af054, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &294613892 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1558802493712177713, guid: 736b8a0926ae6bc48b46b14a08ed9fa5, type: 3}
@@ -694,6 +705,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b537df1d91f431545a84a2fedc39a5ff, type: 3}
+--- !u!114 &614595921 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+  m_PrefabInstance: {fileID: 115041149}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d246894ec2bc39b479ab44f1644af054, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &675512094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,6 +1837,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_RewardScene
       objectReference: {fileID: 0}
+    - target: {fileID: 2536004244553702927, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 614595921}
+    - target: {fileID: 6848921003638955233, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 248074270}
+    - target: {fileID: 6848921003638955233, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
+      propertyPath: PlayerAccessoryList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6848921003638955233, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
+      propertyPath: 'PlayerAccessoryList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ed224d93739f9c49841a7a2b3a8dc0e, type: 2}
     - target: {fileID: 7932953518940517984, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

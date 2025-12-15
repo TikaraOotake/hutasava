@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06c81a5debc19e418fad8a0b1fc746a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeedPoint_Base: 6
+  MoveSpeedPoint_Base: 0.5
   MoveSpeedPoint_Result: 1
   AttackPoint_Base: 70
   AttackPoint_Result: 1
@@ -162,7 +162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3118489158666715263, guid: fdcaa5500e6536549928281414bc56db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.000000059604645
+      value: 1.64
       objectReference: {fileID: 0}
     - target: {fileID: 3118489158666715263, guid: fdcaa5500e6536549928281414bc56db, type: 3}
       propertyPath: m_LocalPosition.z

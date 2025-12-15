@@ -22,7 +22,7 @@ MonoBehaviour:
   - 2
   SpawnRateList:
   - 1
-  - 0
-  - 0
+  - 1
+  - 1
   TreasureLevel: 0
   DestroyQuota: 0

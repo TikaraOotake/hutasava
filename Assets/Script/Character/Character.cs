@@ -60,7 +60,7 @@ public class Character : MonoBehaviour
     }
 
     //各種ステータス計算
-    protected void CalcuStatus()
+    public virtual void CalcuStatus()
     {
         MoveSpeedPoint_Result = MoveSpeedPoint_Base;
         AttackPoint_Result = AttackPoint_Base;

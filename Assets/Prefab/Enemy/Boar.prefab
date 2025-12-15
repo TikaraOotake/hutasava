@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672c3cb2ba49a3a419d0f26eb0ad2da6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeedPoint_Base: 30
+  MoveSpeedPoint_Base: 4
   MoveSpeedPoint_Result: 1
   AttackPoint_Base: 20
   AttackPoint_Result: 1
@@ -130,6 +130,7 @@ MonoBehaviour:
   TargetPoint: {x: 0, y: 0, z: 0}
   RushTime: 4
   RushTimer: 0
+  MoveVec: {x: 0, y: 0, z: 0}
 --- !u!1001 &2567428157965613932
 PrefabInstance:
   m_ObjectHideFlags: 0

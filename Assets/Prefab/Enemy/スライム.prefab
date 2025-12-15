@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06c81a5debc19e418fad8a0b1fc746a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeedPoint_Base: 8
+  MoveSpeedPoint_Base: 1
   MoveSpeedPoint_Result: 1
   AttackPoint_Base: 5
   AttackPoint_Result: 1
