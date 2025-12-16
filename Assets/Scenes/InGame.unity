@@ -1841,6 +1841,14 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 614595921}
+    - target: {fileID: 2536004244553702927, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
+      propertyPath: PlayerAccessoryList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2536004244553702927, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
+      propertyPath: 'PlayerAccessoryList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 744cb52b258d03047a899d7a0e848263, type: 2}
     - target: {fileID: 6848921003638955233, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
       propertyPath: Player
       value: 
@@ -1852,7 +1860,7 @@ PrefabInstance:
     - target: {fileID: 6848921003638955233, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
       propertyPath: 'PlayerAccessoryList.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 9ed224d93739f9c49841a7a2b3a8dc0e, type: 2}
+      objectReference: {fileID: 11400000, guid: 744cb52b258d03047a899d7a0e848263, type: 2}
     - target: {fileID: 7932953518940517984, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
