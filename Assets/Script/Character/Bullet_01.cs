@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet_01 : MonoBehaviour
@@ -10,6 +11,8 @@ public class Bullet_01 : MonoBehaviour
     [SerializeField] private float DestroyTimer = 1.0f;//削除タイマー
 
 	[SerializeField] private bool isPerforate;//弾貫通フラグ
+
+    [SerializeField] private List<GameObject> HittedObjList;
     void Start()
     {
         
@@ -34,33 +37,58 @@ public class Bullet_01 : MonoBehaviour
         BulletAtk = _Atk;
     }
 
-	private void OnTriggerEnter(Collider other)
-	{
-		//仮ダメージ処理
-		if (other.tag == "Enemy")//衝突相手がエネミー
-		{
-			Character chara = other.GetComponent<Character>();
-			if (chara != null)
+    //既に当たったオブジェクトかどうかチェック
+    private bool CheckHittedObj(GameObject _obj)
+    {
+        bool Result = false;
+        for (int i = 0; i < HittedObjList.Count; ++i)
+        {
+            if (_obj == HittedObjList[i])
             {
-                //ダメージ計算
-                float Def = chara.GetDefensePoint_Result();
-
-                float Damage = BulletAtk;//補正は要件等
-
-                //ダメージ適用
-                chara.SetDamage(Damage);
-
-                //吹き飛ぶ方向を計算
-                Vector3 BlowVec = chara.transform.position - transform.position;//方向を算出
-                BlowVec.Normalize();//正規化
-                BlowVec *= 0.5f;//いい感じに補正
-
-                //ノックバックを反映
-                chara.SetKnockBack(new Vector2(BlowVec.x, BlowVec.z));
-
-                //自身を削除
-                if (isPerforate == false) Destroy(this.gameObject);
+                Result = true;
+                break;
             }
+        }
+
+        return Result;
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //仮ダメージ処理
+        if (other.tag == "Enemy")//衝突相手がエネミー
+        {
+            //既に当たっていないかチェック
+            if (!CheckHittedObj(other.gameObject))
+            {
+                Character chara = other.GetComponent<Character>();
+                if (chara != null)
+                {
+                    //ダメージ計算
+                    float Def = chara.GetDefensePoint_Result();
+
+                    float Damage = BulletAtk;//補正は要件等
+
+                    //ダメージ適用
+                    chara.SetDamage(Damage);
+
+                    //吹き飛ぶ方向を計算
+                    Vector3 BlowVec = chara.transform.position - transform.position;//方向を算出
+                    BlowVec.Normalize();//正規化
+                    BlowVec *= 0.5f;//いい感じに補正
+
+                    //ノックバックを反映
+                    chara.SetKnockBack(new Vector2(BlowVec.x, BlowVec.z));
+
+                    //当たったオブジェクトを記録
+                    HittedObjList.Add(other.gameObject);
+
+                    //自身を削除
+                    if (isPerforate == false) Destroy(this.gameObject);
+                }
+            }
+
         }
     }
 }

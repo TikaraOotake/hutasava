@@ -78,6 +78,8 @@ MonoBehaviour:
   HealthPointMax_Base: 1
   HealthPointMax_Result: 1
   HealthPoint_Current: 1
+  BlowPower: 10
+  BlowResist: 0
   BlowVec: {x: 0, y: 0}
   TargetPoint: {x: 0, y: 0, z: 0}
 --- !u!54 &8890002322504395464

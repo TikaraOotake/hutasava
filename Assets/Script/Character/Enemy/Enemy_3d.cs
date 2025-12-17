@@ -110,7 +110,7 @@ public class Enemy_3d : Character
                 //吹き飛ぶ方向を計算
                 Vector3 BlowVec = chara.transform.position - transform.position;//方向を算出
                 BlowVec.Normalize();//正規化
-                BlowVec *= 0.5f;//いい感じに補正
+                BlowVec *= BlowPower;
 
                 //ノックバックを反映
                 chara.SetKnockBack(new Vector2(BlowVec.x, BlowVec.z));

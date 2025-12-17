@@ -21,12 +21,15 @@ public class Character : MonoBehaviour
     //現在体力
     [SerializeField] protected float HealthPoint_Current = 1.0f;
 
+    [SerializeField] protected float BlowPower = 10.0f;//吹き飛ばし力の程度
+
+    [SerializeField][Range(0f, 1f)] 
+    protected float BlowResist = 0.0f;// 吹き飛び抵抗 0：無抵抗 1：完全抵抗
 
     [SerializeField] protected Vector2 BlowVec;//吹き飛ぶ方向
 
     void Start()
     {
-        //GameManager._instance.test();
     }
 
     // Update is called once per frame
@@ -56,7 +59,7 @@ public class Character : MonoBehaviour
     }
     public void SetKnockBack(Vector2 _BlowVec)
     {
-        BlowVec = _BlowVec;
+        BlowVec = _BlowVec * (1.0f - BlowResist);
     }
 
     //各種ステータス計算

@@ -96,6 +96,10 @@ MonoBehaviour:
   - {fileID: 757921650429336644}
   - {fileID: 8467747559054343198}
   - {fileID: 6093601872515166029}
+  PlayerAccessoryList: []
+  Player: {fileID: 0}
+  SelectingFlag: 0
+  SelectingLightComp: {fileID: 8000579830303443874}
 --- !u!1 &6570040156329332712
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +134,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.5, y: 31.6}
+  m_AnchoredPosition: {x: -24.3, y: 16}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2067356757668157173
@@ -257,7 +261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1123972489663531221, guid: 5ac4913433a3ab949b5c654b917cf708, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -27.7
       objectReference: {fileID: 0}
     - target: {fileID: 1123972489663531221, guid: 5ac4913433a3ab949b5c654b917cf708, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -376,7 +380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1123972489663531221, guid: 5ac4913433a3ab949b5c654b917cf708, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -27.7
       objectReference: {fileID: 0}
     - target: {fileID: 1123972489663531221, guid: 5ac4913433a3ab949b5c654b917cf708, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -499,7 +503,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1123972489663531221, guid: 5ac4913433a3ab949b5c654b917cf708, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -27.7
       objectReference: {fileID: 0}
     - target: {fileID: 1123972489663531221, guid: 5ac4913433a3ab949b5c654b917cf708, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

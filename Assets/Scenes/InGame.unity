@@ -372,6 +372,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 58518b97a5bcda044997a0838adcc2e7, type: 2}
   - {fileID: 11400000, guid: b99d43380ba374241baff82b6c471ddd, type: 2}
   - {fileID: 11400000, guid: 9945f191160183f429bdacbb6f893db2, type: 2}
+  - {fileID: 11400000, guid: 8eb1e98414f181446969ea7192437308, type: 2}
   ui_RewardScene: {fileID: 213870737717585878}
   gameSceneStatus: 0
   PairWeapon: {fileID: 0}

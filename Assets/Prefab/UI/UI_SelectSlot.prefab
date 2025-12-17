@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Name
 --- !u!1 &3013461742162718426
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   TextNameComp: {fileID: 5021887108785521171}
   TextExpComp: {fileID: 5216082252947912033}
   SelectingLightComp: {fileID: 8000579830303443874}
+  RewardScene: {fileID: 0}
 --- !u!1 &6570040156329332712
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,4 +330,6 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 'Exp
+
+'

@@ -18,6 +18,11 @@ public class UI_RewardScene : MonoBehaviour
 
     private float JoyStickInputLength_old;
 
+    [SerializeField]
+    private bool MainSelectUI_LockFalg;//メインUIの選択ロックのフラグ
+    [SerializeField]
+    private int SelectPlayerNum = 0;
+
     void Start()
     {
         //リストを取得
@@ -68,42 +73,81 @@ public class UI_RewardScene : MonoBehaviour
 
     void Update()
     {
-        SelectNext();
-
-        //HighlightUI(UI_SelectList[currentIndex].transform);
-
-        //決定入力
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if(!MainSelectUI_LockFalg)
         {
-            GameObject obj = UI_SelectList[currentIndex];
-            if (obj != null)
+            SelectNext();
+
+            //HighlightUI(UI_SelectList[currentIndex].transform);
+
+            //決定入力
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1))
             {
-                UI_SelectSlot slot = obj.GetComponent<UI_SelectSlot>();
-                if (slot != null)
+                GameObject obj = UI_SelectList[currentIndex];
+                if (obj != null)
                 {
-                    slot.DecideAction();
+                    UI_SelectSlot slot = obj.GetComponent<UI_SelectSlot>();
+                    if (slot != null)
+                    {
+                        slot.DecideAction();
+                    }
+                    else
+                    {
+                        Debug.Log("セレクトスロットがありません");
+                    }
                 }
                 else
                 {
-                    Debug.Log("セレクトスロットがありません");
+                    Debug.Log("オブジェクトが無効です");
                 }
             }
-            else
+
+            //選択中の選択肢を発光
+            if (currentIndex >= 0)
             {
-                Debug.Log("オブジェクトが無効です");
+                HighlightUI(UI_SelectList[currentIndex]);//選択スロット
+            }
+            if (OnHoldSelectSlot != null)
+            {
+                HighlightUI(OnHoldSelectSlot.gameObject);//保留スロット
             }
         }
-
-        //選択中の選択肢を発光
-        if (currentIndex >= 0)
+        else
         {
-            HighlightUI(UI_SelectList[currentIndex]);//選択スロット
-        }
-        if (OnHoldSelectSlot != null)
-        {
-            HighlightUI(OnHoldSelectSlot.gameObject);//保留スロット
-        }
+            int input = 0;
+            if(Input.GetKeyDown(KeyCode.A))
+            {
+                input += -1;
+            }
+            if(Input.GetKeyDown(KeyCode.D))
+            {
+                input += +1;
+            }
 
+            if (input > 0)
+            {
+                SelectPlayerNum = 2;
+            }
+            else if (input < 0)
+            {
+                SelectPlayerNum = 1;
+            }
+
+            //決定入力
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+            {
+                //戻す
+                MainSelectUI_LockFalg = false;
+            }
+
+            if (SelectPlayerNum == 1)
+            {
+                HighlightUI(Player1Inventory.gameObject);
+            }
+            else if (SelectPlayerNum == 2)
+            {
+                HighlightUI(Player2Inventory.gameObject);
+            }
+        }
     }
 
     Vector2 GetInputDir()
@@ -188,6 +232,12 @@ public class UI_RewardScene : MonoBehaviour
         if (SelectSlot != null)
         {
             SelectSlot.SetSelectingFlag();
+        }
+
+        UI_Inventory_Player _Inventory_Player = _UI_obj.GetComponent<UI_Inventory_Player>();
+        if (_Inventory_Player != null)
+        {
+            _Inventory_Player.SetSelectingFlag();
         }
     }
 

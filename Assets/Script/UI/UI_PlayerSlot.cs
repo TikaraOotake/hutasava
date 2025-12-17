@@ -116,15 +116,18 @@ public class UI_PlayerSlot : UI_SelectSlot_Small
             if (TextExpComp != null) TextExpComp.text = Item.GetItemExplanation();//ƒAƒCƒeƒ€à–¾‚ðÝ’è
             if (TextLevelComp != null)
             {
-                Weapon weapon = (Weapon)Item;
-                int Level = weapon.GetWeaponLevel();
-                if (Level > 0)
+                if (Item is Weapon)
                 {
-                    TextLevelComp.text = "Lv." + Level.ToString();
-                }
-                else
-                {
-                    TextLevelComp.text = " ";
+                    Weapon weapon = (Weapon)Item;
+                    int Level = weapon.GetWeaponLevel();
+                    if (Level > 0)
+                    {
+                        TextLevelComp.text = "Lv." + Level.ToString();
+                    }
+                    else
+                    {
+                        TextLevelComp.text = " ";
+                    }
                 }
             }
         }

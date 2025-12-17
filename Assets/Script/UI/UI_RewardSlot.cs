@@ -22,8 +22,20 @@ public class UI_RewardSlot : UI_SelectSlot
             {
                 //購入可能
 
-                //ストレージにアイテムを追加
-                Result = RewardScene.TransferItem_toStorage(Item);
+                if(Item is Accessory)
+                {
+                    //アクセサリーは別
+
+
+                }
+                else
+                {
+                    //通常アイテム
+
+                    //ストレージにアイテムを追加
+                    Result = RewardScene.TransferItem_toStorage(Item);
+                }
+                   
             }
             else
             {
