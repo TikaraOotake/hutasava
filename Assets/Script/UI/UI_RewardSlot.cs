@@ -26,7 +26,9 @@ public class UI_RewardSlot : UI_SelectSlot
                 {
                     //アクセサリーは別
 
+                    RewardScene.SetAcceMode((Accessory)Item);
 
+                    Result = true;
                 }
                 else
                 {

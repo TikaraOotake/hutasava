@@ -187,6 +187,10 @@ PrefabInstance:
       propertyPath: uI_Inventory_Player
       value: 
       objectReference: {fileID: 1551240005}
+    - target: {fileID: 7513406737407848883, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: mainTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: cfbdf16e50cd14045965fa0833597c35, type: 3}
     - target: {fileID: 8096445257806889996, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -365,14 +369,16 @@ MonoBehaviour:
   SpawnRateList: []
   enemyManager: {fileID: 0}
   ui_Manager: {fileID: 0}
-  Money: 100
+  Money: 10
   CoinPrefab: {fileID: 3626767033986122044, guid: b537df1d91f431545a84a2fedc39a5ff, type: 3}
   OriginItemDataList:
   - {fileID: 11400000, guid: 5e2563a63c377a14caced6f1d11ae9c4, type: 2}
   - {fileID: 11400000, guid: 58518b97a5bcda044997a0838adcc2e7, type: 2}
   - {fileID: 11400000, guid: b99d43380ba374241baff82b6c471ddd, type: 2}
   - {fileID: 11400000, guid: 9945f191160183f429bdacbb6f893db2, type: 2}
-  - {fileID: 11400000, guid: 8eb1e98414f181446969ea7192437308, type: 2}
+  - {fileID: 11400000, guid: 62d49ff41929e2f43959e8cd16cb4cd8, type: 2}
+  - {fileID: 11400000, guid: 149c1939f286cf64292d18d0ad97893a, type: 2}
+  - {fileID: 11400000, guid: 70369835a523f914f911dc47a23a4a64, type: 2}
   ui_RewardScene: {fileID: 213870737717585878}
   gameSceneStatus: 0
   PairWeapon: {fileID: 0}
@@ -1844,7 +1850,7 @@ PrefabInstance:
       objectReference: {fileID: 614595921}
     - target: {fileID: 2536004244553702927, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
       propertyPath: PlayerAccessoryList.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2536004244553702927, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
       propertyPath: 'PlayerAccessoryList.Array.data[0]'
@@ -1856,7 +1862,7 @@ PrefabInstance:
       objectReference: {fileID: 248074270}
     - target: {fileID: 6848921003638955233, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
       propertyPath: PlayerAccessoryList.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6848921003638955233, guid: 085f4ceaf82ab424385b279f32e31eab, type: 3}
       propertyPath: 'PlayerAccessoryList.Array.data[0]'
@@ -2027,6 +2033,10 @@ PrefabInstance:
       propertyPath: uI_Inventory_Player
       value: 
       objectReference: {fileID: 1015785555}
+    - target: {fileID: 7513406737407848883, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: mainTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 8d6ce27068f295a4bbc9c280bbab7dd1, type: 3}
     - target: {fileID: 8096445257806889996, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1

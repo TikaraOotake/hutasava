@@ -266,9 +266,9 @@ public class PlayerController_3d : Character
                 if (accessoryList[i] != null)
                 {
                     CharacterStatus status = accessoryList[i].GetStatus();
-                    AcceAtk = status.AttackPoint;
-                    AcceHP = status.HealthPoint;
-                    AcceSpeed = status.SpeedPoint;
+                    AcceAtk += status.AttackPoint;
+                    AcceHP += status.HealthPoint;
+                    AcceSpeed += status.SpeedPoint;
                 }
             }
         }

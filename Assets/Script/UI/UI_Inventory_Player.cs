@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 public class UI_Inventory_Player : MonoBehaviour
 {
     [SerializeField] private List<GameObject> PlayerItemSlot;
@@ -12,6 +11,10 @@ public class UI_Inventory_Player : MonoBehaviour
     [SerializeField] private bool SelectingFlag;//選択フラグ
     [SerializeField] protected Image SelectingLightComp;//選択中に発光させる用
     protected Color NeutralColor;//通常色
+
+    [SerializeField] Text HealthView;
+    [SerializeField] Text AtkViw;
+    [SerializeField] Text SpeedViw;
 
     private void Start()
     {

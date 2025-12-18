@@ -23,6 +23,8 @@ public class UI_RewardScene : MonoBehaviour
     [SerializeField]
     private int SelectPlayerNum = 0;
 
+    [SerializeField] private Accessory tempAcce;
+
     void Start()
     {
         //ƒŠƒXƒg‚ðŽæ“¾
@@ -122,6 +124,18 @@ public class UI_RewardScene : MonoBehaviour
             {
                 input += +1;
             }
+            if(input==0)
+            {
+                Vector2 vec = GetInputDir();
+                if (vec.x > 0)
+                {
+                    input += 1;
+                }
+                else if (vec.x < 0)
+                {
+                    input -= 1;
+                }
+            }
 
             if (input > 0)
             {
@@ -135,6 +149,19 @@ public class UI_RewardScene : MonoBehaviour
             //Œˆ’è“ü—Í
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Joystick1Button1))
             {
+                if (tempAcce != null)
+                {
+                    if (SelectPlayerNum == 1)
+                    {
+                        Player1Inventory.SetAccessory(tempAcce);
+                    }
+                    else if (SelectPlayerNum == 2)
+                    {
+                        Player2Inventory.SetAccessory(tempAcce);
+                    }
+                }
+
+
                 //–ß‚·
                 MainSelectUI_LockFalg = false;
             }
@@ -393,5 +420,12 @@ public class UI_RewardScene : MonoBehaviour
     public void SetOnHold(UI_SelectSlot _slot)
     {
         if (OnHoldSelectSlot != null) return;//‚Ù
+    }
+
+
+    public void SetAcceMode(Accessory _Acce)
+    {
+        MainSelectUI_LockFalg = true;
+        tempAcce = _Acce;
     }
 }

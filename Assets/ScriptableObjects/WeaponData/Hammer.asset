@@ -15,6 +15,10 @@ MonoBehaviour:
   ItemSprite: {fileID: 21300000, guid: b1f2b6ac984274b4a9872d9a353046fa, type: 3}
   ItemName: "\u30B7\u30E7\u30C3\u30AF\u30CF\u30F3\u30DE\u30FC"
   ItemExplanation: "\u8FD1\u3044\u6575\u306E\u65B9\u5411\u306B\u885D\u6483\u6CE2\u3092\u751F\u307F\u51FA\u3059"
+  SaleCost: 5
+  Atk: 0
+  HP: 0
+  Speed: 0
   BulletPrefab: {fileID: 5563455895595331127, guid: 2727a50af21a20a4eb37ac709fb63b10, type: 3}
   AttackCooltime: 3
   WeaponAttackPoint_Base: 6

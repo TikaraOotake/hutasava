@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee20fec3a5ff51541adfc3bb9a11c0dd, type: 3}
-  m_Name: TestAccessory
+  m_Name: SpeedAccessory
   m_EditorClassIdentifier: 
   ItemSprite: {fileID: 21300000, guid: b1548610771867f4a9c3b9df09de2bc1, type: 3}
-  ItemName: "\u7121\u540D\u306E\u30A2\u30AF\u30BB"
-  ItemExplanation: 
+  ItemName: "\u901F\u5EA6\u306E\u30A2\u30AF\u30BB"
+  ItemExplanation: "\u79FB\u52D5\u901F\u5EA6+0.2"
   SaleCost: 3
-  Atk: 2
-  HP: 2
-  Speed: 2
+  Atk: 0
+  HP: 0
+  Speed: 0.2
