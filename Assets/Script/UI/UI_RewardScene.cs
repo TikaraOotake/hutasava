@@ -116,15 +116,15 @@ public class UI_RewardScene : MonoBehaviour
         else
         {
             int input = 0;
-            if(Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A))
             {
                 input += -1;
             }
-            if(Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 input += +1;
             }
-            if(input==0)
+            if (input == 0)
             {
                 Vector2 vec = GetInputDir();
                 if (vec.x > 0)
@@ -266,6 +266,7 @@ public class UI_RewardScene : MonoBehaviour
         {
             _Inventory_Player.SetSelectingFlag();
         }
+
     }
 
     //sauceリストの内容をTargetリストにコピーする関数(重複回避)
@@ -416,6 +417,7 @@ public class UI_RewardScene : MonoBehaviour
             return;
         }
     }
+
     //保留状態にする
     public void SetOnHold(UI_SelectSlot _slot)
     {

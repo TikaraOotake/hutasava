@@ -324,4 +324,8 @@ public class GameManager : MonoBehaviour
             ui_Manager.GenerateDamageDisplayUI(_Damage, _Pos);
         }
     }
+    public PlayerManager GetPlayerManager()
+    {
+        return GetComponent<PlayerManager>();
+    }
 }
