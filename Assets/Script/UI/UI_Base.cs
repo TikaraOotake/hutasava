@@ -13,15 +13,13 @@ public class UI_Base : MonoBehaviour
     [SerializeField] protected bool HighlightFalg;//発光フラグ
     public void Awake()
     {
-        //SetSelectingHighlight_UI(false);
-    }
-    public void Start()
-    {
         Image image = GetComponent<Image>();
         if (image != null)
         {
             BaseColor = image.color;
         }
+
+        SetSelectingHighlight_UI(false);
     }
 
     //イベントを呼び出す

@@ -24,6 +24,12 @@ public class RewardScene : MonoBehaviour
         {
             playerManager = GameManager.Instance.GetPlayerManager();
         }
+
+        //選択可能状態にしたい選択肢を登録
+        GameManager.Instance.SetSelectSlot_isSelective(UI_RewardItemList);
+
+        //アイテム生成
+        GenerateItem();
     }
 
     // Update is called once per frame
@@ -39,6 +45,8 @@ public class RewardScene : MonoBehaviour
         {
             if (UI_RewardItemList[i] == ui)
             {
+                //Debug.Log(i + "番スロットが呼ばれました");
+
                 //該当要素番号のアイテムを交換に掛ける
                 TransferItem_toStorage(RewardItemList[i]);
                 return;
@@ -98,6 +106,37 @@ public class RewardScene : MonoBehaviour
         {
             //ランダムなアイテムデータを渡す
             RewardItemList[i] = GameManager.Instance.GetRandCopyItemData();
+        }
+
+        Update_DisplayUI();
+    }
+
+    //UIの表示を更新する
+    private void Update_DisplayUI()
+    {
+        //UIの数だけ繰り返し
+        for (int i = 0; i < UI_RewardItemList.Count; ++i)
+        {
+            if (UI_RewardItemList[i] != null)
+            {
+                if (0 <= i && RewardItemList.Count > i)
+                {
+                    //アイテムを取得してUIに映したい情報を伝える
+                    EquipmentItem_Base item = RewardItemList[i];
+                    if (item != null) 
+                    {
+                        UI_RewardItemList[i].SetItemShowData(
+                            item.GetItemSprite(),
+                            item.GetItemName(),
+                            item.GetItemExplanation());
+
+                        continue;
+                    }
+                }
+
+                //アイテムが無効だった場合はなにも表示しない
+                UI_RewardItemList[i].ResetShowData();
+            }
         }
     }
     public List<UI_ItemSlot_V2> GetUI_RewardItemList()

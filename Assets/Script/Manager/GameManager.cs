@@ -328,4 +328,24 @@ public class GameManager : MonoBehaviour
     {
         return GetComponent<PlayerManager>();
     }
+    //‘I‘ğˆ‚ğ‘I‘ğ‰Â”\ó‘Ô‚É‚·‚é
+    public void SetSelectSlot_isSelective(List<UI_Base> _List)
+    {
+        if (ui_Manager != null)
+        {
+            ui_Manager.SetSelectSlot_isSelective(_List);
+        }
+    }
+    public void SetSelectSlot_isSelective(List<UI_ItemSlot_V2> _List)
+    {
+        if (ui_Manager != null)
+        {
+            List<UI_Base> tempList = new List<UI_Base>();
+            for (int i = 0; i < _List.Count; ++i)
+            {
+                tempList.Add(_List[i]);
+            }
+            ui_Manager.SetSelectSlot_isSelective(tempList);
+        }
+    }
 }

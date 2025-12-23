@@ -35,6 +35,10 @@ public class UI_Manager : MonoBehaviour
                 canvas = obj.GetComponent<Canvas>();
             }
         }
+
+        //選択中のUIを光らせる
+        //UIを発光
+        HighlightUI(SelectUI_List[SelectIndex], true);
     }
 
     // Update is called once per frame
@@ -203,4 +207,24 @@ public class UI_Manager : MonoBehaviour
         }
     }
     
+    //選択肢を選択可能状態にする
+    public void SetSelectSlot_isSelective(List<UI_Base> _List)
+    {
+        //選択肢可能リストに追加
+        MergeLists<UI_Base>(SelectUI_List, _List);
+    }
+
+    //sauceリストの内容をTargetリストにコピーする関数(重複回避)
+    public List<T> MergeLists<T>(List<T> target, List<T> source)
+    {
+        foreach (var item in source)
+        {
+            if (!target.Contains(item))
+            {
+                target.Add(item);
+            }
+        }
+
+        return target;
+    }
 }

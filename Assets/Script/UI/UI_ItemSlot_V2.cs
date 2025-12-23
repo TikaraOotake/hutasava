@@ -6,6 +6,7 @@ public class UI_ItemSlot_V2 : UI_Base
 {
     new public event Action<UI_Base> OnSelected;
 
+
     [SerializeField] protected Image ItemSpriteImage;//アイテムの画像を表示させるイメージ
     [SerializeField] protected Text ItemNameText;//アイテムの名前を表示させるテキスト
     [SerializeField] protected Text ItemExpText;//アイテムの説明を表示させるテキスト

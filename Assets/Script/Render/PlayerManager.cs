@@ -19,6 +19,9 @@ public class PlayerManager : MonoBehaviour
         {
             UI_ItemStorageList[i].OnSelected += OnClick_UI;
         }
+
+        //選択可能状態にしたい選択肢を登録
+        GameManager.Instance.SetSelectSlot_isSelective(UI_ItemStorageList);
     }
     private void Update()
     {
@@ -46,6 +49,37 @@ public class PlayerManager : MonoBehaviour
         if (0 <= _index && ItemStorageList.Count > _index)
         {
             ItemStorageList[_index] = _item;
+
+            //UI更新
+            Update_DisplayUI();
+        }
+    }
+    //UIの表示を更新する
+    private void Update_DisplayUI()
+    {
+        //UIの数だけ繰り返し
+        for (int i = 0; i < UI_ItemStorageList.Count; ++i)
+        {
+            if (UI_ItemStorageList[i] != null)
+            {
+                if (0 <= i && ItemStorageList.Count > i)
+                {
+                    //アイテムを取得してUIに映したい情報を伝える
+                    EquipmentItem_Base item = ItemStorageList[i];
+                    if (item != null)
+                    {
+                        UI_ItemStorageList[i].SetItemShowData(
+                            item.GetItemSprite(),
+                            item.GetItemName(),
+                            item.GetItemExplanation());
+
+                        continue;
+                    }
+                }
+
+                //アイテムが無効だった場合はなにも表示しない
+                UI_ItemStorageList[i].ResetShowData();
+            }
         }
     }
     public List<UI_ItemSlot_V2> GetUI_ItemStorageList()
