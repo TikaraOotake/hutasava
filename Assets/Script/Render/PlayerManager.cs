@@ -1,12 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : ItemContainer
 {
-    //ストレージのアイテム欄
-    [SerializeField] List<EquipmentItem_Base> ItemStorageList;
-    [SerializeField] List<UI_ItemSlot_V2> UI_ItemStorageList;
-
     //Player
     [SerializeField] List<GameObject> PlayerList;//プレイヤーを格納するためのリスト
 
@@ -15,13 +11,13 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < UI_ItemStorageList.Count; ++i)
+        for (int i = 0; i < UI_ItemList.Count; ++i)
         {
-            UI_ItemStorageList[i].OnSelected += OnClick_UI;
+            UI_ItemList[i].OnSelected += OnClick_UI;
         }
 
         //選択可能状態にしたい選択肢を登録
-        GameManager.Instance.SetSelectSlot_isSelective(UI_ItemStorageList);
+        GameManager.Instance.SetSelectSlot_isSelective(UI_ItemList);
     }
     private void Update()
     {
@@ -31,84 +27,75 @@ public class PlayerManager : MonoBehaviour
     private void OnClick_UI(UI_Base ui)
     {
         //どこのUIが呼ばれたか特定する
-        for (int i = 0; i < UI_ItemStorageList.Count; ++i)
+        for (int i = 0; i < UI_ItemList.Count; ++i)
         {
-            if (UI_ItemStorageList[i] == ui)
+            if (UI_ItemList[i] == ui)
             {
-
+                GameManager.Instance.SetSelectSlot(this, i);
                 return;
             }
         }
     }
     public List<EquipmentItem_Base> GetItemStorageList()
     {
-        return ItemStorageList;
+        return ItemList;
     }
     public void SetItem(EquipmentItem_Base _item, int _index)
     {
-        if (0 <= _index && ItemStorageList.Count > _index)
+        if (0 <= _index && ItemList.Count > _index)
         {
-            ItemStorageList[_index] = _item;
+            ItemList[_index] = _item;
 
             //UI更新
             Update_DisplayUI();
         }
     }
-    //UIの表示を更新する
-    private void Update_DisplayUI()
+    public List<UI_ItemSlot_V2> GetUI_ItemList()
     {
-        //UIの数だけ繰り返し
-        for (int i = 0; i < UI_ItemStorageList.Count; ++i)
+        return UI_ItemList;
+    }
+    public override bool SetItem(int _Index, EquipmentItem_Base _Item)
+    {
+        bool Result = false;
+        if (_Index >= 0 && _Index < ItemList.Count)//配列内チェック
         {
-            if (UI_ItemStorageList[i] != null)
-            {
-                if (0 <= i && ItemStorageList.Count > i)
-                {
-                    //アイテムを取得してUIに映したい情報を伝える
-                    EquipmentItem_Base item = ItemStorageList[i];
-                    if (item != null)
-                    {
-                        UI_ItemStorageList[i].SetItemShowData(
-                            item.GetItemSprite(),
-                            item.GetItemName(),
-                            item.GetItemExplanation());
-
-                        continue;
-                    }
-                }
-
-                //アイテムが無効だった場合はなにも表示しない
-                UI_ItemStorageList[i].ResetShowData();
-            }
+            ItemList[_Index] = _Item;
+            Result = true;
         }
+        else
+        {
+            Debug.Log("入れようとした要素番号が配列外でした");
+        }
+
+        //UI更新
+        Update_DisplayUI();
+
+        return Result;
     }
-    public List<UI_ItemSlot_V2> GetUI_ItemStorageList()
-    {
-        return UI_ItemStorageList;
-    }
+
 
     private void OnValidate()
     {
         //リストサイズ同期用処理
 
         // どれが変更されたか判定
-        bool aChanged = ItemStorageList.Count != prevA;
-        bool bChanged = UI_ItemStorageList.Count != prevB;
+        bool aChanged = ItemList.Count != prevA;
+        bool bChanged = UI_ItemList.Count != prevB;
 
         // 変更されたリストのサイズを基準にする
         int targetSize = -1;
 
-        if (aChanged) targetSize = ItemStorageList.Count;
-        else if (bChanged) targetSize = UI_ItemStorageList.Count;
+        if (aChanged) targetSize = ItemList.Count;
+        else if (bChanged) targetSize = UI_ItemList.Count;
         else return; // 何も変わってなければ終了
 
         // サイズ同期
-        SyncSize(ItemStorageList, targetSize);
-        SyncSize(UI_ItemStorageList, targetSize);
+        SyncSize(ItemList, targetSize);
+        SyncSize(UI_ItemList, targetSize);
 
         // サイズを更新して次回比較に使う
-        prevA = ItemStorageList.Count;
-        prevB = UI_ItemStorageList.Count;
+        prevA = ItemList.Count;
+        prevB = UI_ItemList.Count;
     }
     private void SyncSize<T>(List<T> list, int size)
     {

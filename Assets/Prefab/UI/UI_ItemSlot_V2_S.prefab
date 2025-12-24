@@ -96,6 +96,8 @@ MonoBehaviour:
   ItemNameText: {fileID: 9092879017040044980}
   ItemExpText: {fileID: 8457561441229361606}
   IsSetedItem: 0
+  Container: {fileID: 0}
+  Index: 0
   SubTab: {fileID: 6048337840673404176}
 --- !u!1 &6048337840673404176
 GameObject:
@@ -240,7 +242,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 57121744d2e660e48b0cb51dd8e8bf02, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -288,7 +290,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 36.1}
-  m_SizeDelta: {x: 423.41, y: 45.8}
+  m_SizeDelta: {x: 423.41, y: 82.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8765166361254059290
 CanvasRenderer:
@@ -319,7 +321,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 57121744d2e660e48b0cb51dd8e8bf02, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0

@@ -429,6 +429,7 @@ GameObject:
   - component: {fileID: 188116531}
   - component: {fileID: 188116532}
   - component: {fileID: 188116533}
+  - component: {fileID: 188116534}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -580,6 +581,7 @@ MonoBehaviour:
   SpawnRateList: []
   enemyManager: {fileID: 0}
   ui_Manager: {fileID: 0}
+  itemManager: {fileID: 0}
   Money: 10
   CoinPrefab: {fileID: 3626767033986122044, guid: b537df1d91f431545a84a2fedc39a5ff, type: 3}
   OriginItemDataList:
@@ -654,6 +656,8 @@ MonoBehaviour:
   - {fileID: 144354617}
   SelectIndex: 0
   SelectingUI: {fileID: 0}
+  HoldingUI: {fileID: 0}
+  UI_BlinkInterval: 0.5
   JoyStickInputLength_old: 0
 --- !u!114 &188116531
 MonoBehaviour:
@@ -667,14 +671,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa587781a1acf094d85068c8ed032be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemStorageList:
+  ItemList:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  UI_ItemStorageList:
+  UI_ItemList:
   - {fileID: 144354617}
   - {fileID: 1425653026}
   - {fileID: 282305824}
+  ItemIndex: 0
   PlayerList: []
 --- !u!114 &188116532
 MonoBehaviour:
@@ -700,20 +705,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2b7d32360355941aa32f31f7da186c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RewardItemList:
+  ItemList:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  UI_RewardItemList:
+  UI_ItemList:
   - {fileID: 2067182332}
   - {fileID: 208257727}
   - {fileID: 394912091}
   - {fileID: 1840788024}
   - {fileID: 1413835551}
+  ItemIndex: 0
   HoldSelectIndex: 0
   playerManager: {fileID: 0}
+--- !u!114 &188116534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188116522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd91c5d4cea9de546af2bab7939de8ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &208257726 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 584224732585481487, guid: 0d9b0404af9209949bdfe077b15427e3, type: 3}

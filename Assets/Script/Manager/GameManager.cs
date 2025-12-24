@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private EnemyManager enemyManager;//エネミーマネージャー
     [SerializeField] private UI_Manager ui_Manager;//UIマネージャー
+    [SerializeField] private ItemManager itemManager;//アイテムマネージャー
 
     [SerializeField] private int Money;//銭
     [SerializeField] private GameObject CoinPrefab;//コインのプレハブ
@@ -68,6 +69,7 @@ public class GameManager : MonoBehaviour
 
         enemyManager = this.GetComponent<EnemyManager>();//エネミーマネージャー取得
         ui_Manager = this.GetComponent<UI_Manager>();//UIマネージャー取得
+        itemManager = this.GetComponent<ItemManager>();//アイテムマネージャー取得
 
         //時間をとめる
         Time.timeScale = 0.0f;
@@ -316,6 +318,13 @@ public class GameManager : MonoBehaviour
             return null;
         }
     }
+    public void SetHoldingUI(UI_Base _ui)
+    {
+        if(ui_Manager!=null)
+        {
+            ui_Manager.SetHoldingUI(_ui);
+        }
+    }
 
     public void GenerateDamageDisplayUI(int _Damage, Vector3 _Pos)
     {
@@ -328,6 +337,14 @@ public class GameManager : MonoBehaviour
     {
         return GetComponent<PlayerManager>();
     }
+    public void SetSelectSlot(ItemContainer _Container, int _Index)
+    {
+        if(itemManager!=null)
+        {
+            itemManager.SetSelectSlot(_Container, _Index);
+        }
+    }
+
     //選択肢を選択可能状態にする
     public void SetSelectSlot_isSelective(List<UI_Base> _List)
     {

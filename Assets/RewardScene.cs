@@ -1,11 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class RewardScene : MonoBehaviour
+public class RewardScene : ItemContainer
 {
-    [SerializeField] private List<EquipmentItem_Base> RewardItemList;//報酬のアイテムのリスト
-    [SerializeField] private List<UI_ItemSlot_V2> UI_RewardItemList;//報酬のアイテムUIのリスト(インスペクターで紐づけ設定)
-
     [SerializeField] int HoldSelectIndex;//保留選択中のインデックス
 
     [SerializeField] private PlayerManager playerManager;
@@ -15,9 +12,9 @@ public class RewardScene : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < UI_RewardItemList.Count; ++i)
+        for (int i = 0; i < UI_ItemList.Count; ++i)
         {
-            UI_RewardItemList[i].OnSelected += OnClick_UI;
+            UI_ItemList[i].OnSelected += OnClick_UI;
         }
 
         if (playerManager == null)
@@ -26,7 +23,7 @@ public class RewardScene : MonoBehaviour
         }
 
         //選択可能状態にしたい選択肢を登録
-        GameManager.Instance.SetSelectSlot_isSelective(UI_RewardItemList);
+        GameManager.Instance.SetSelectSlot_isSelective(UI_ItemList);
 
         //アイテム生成
         GenerateItem();
@@ -41,14 +38,14 @@ public class RewardScene : MonoBehaviour
     private void OnClick_UI(UI_Base ui)
     {
         //どこのUIが呼ばれたか特定する
-        for (int i = 0; i < UI_RewardItemList.Count; ++i)
+        for (int i = 0; i < UI_ItemList.Count; ++i)
         {
-            if (UI_RewardItemList[i] == ui)
+            if (UI_ItemList[i] == ui)
             {
                 //Debug.Log(i + "番スロットが呼ばれました");
 
                 //該当要素番号のアイテムを交換に掛ける
-                TransferItem_toStorage(RewardItemList[i]);
+                TransferItem_toStorage(ItemList[i]);
                 return;
             }
         }
@@ -102,46 +99,19 @@ public class RewardScene : MonoBehaviour
 
     public void GenerateItem()
     {
-        for (int i = 0; i < RewardItemList.Count; ++i)
+        for (int i = 0; i < ItemList.Count; ++i)
         {
             //ランダムなアイテムデータを渡す
-            RewardItemList[i] = GameManager.Instance.GetRandCopyItemData();
+            ItemList[i] = GameManager.Instance.GetRandCopyItemData();
         }
 
         Update_DisplayUI();
     }
 
-    //UIの表示を更新する
-    private void Update_DisplayUI()
+    
+    public List<UI_ItemSlot_V2> GetUI_ItemList()
     {
-        //UIの数だけ繰り返し
-        for (int i = 0; i < UI_RewardItemList.Count; ++i)
-        {
-            if (UI_RewardItemList[i] != null)
-            {
-                if (0 <= i && RewardItemList.Count > i)
-                {
-                    //アイテムを取得してUIに映したい情報を伝える
-                    EquipmentItem_Base item = RewardItemList[i];
-                    if (item != null) 
-                    {
-                        UI_RewardItemList[i].SetItemShowData(
-                            item.GetItemSprite(),
-                            item.GetItemName(),
-                            item.GetItemExplanation());
-
-                        continue;
-                    }
-                }
-
-                //アイテムが無効だった場合はなにも表示しない
-                UI_RewardItemList[i].ResetShowData();
-            }
-        }
-    }
-    public List<UI_ItemSlot_V2> GetUI_RewardItemList()
-    {
-        return UI_RewardItemList;
+        return UI_ItemList;
     }
 
     private void OnValidate()
@@ -149,23 +119,23 @@ public class RewardScene : MonoBehaviour
         //リストサイズ同期用処理
 
         // どれが変更されたか判定
-        bool aChanged = RewardItemList.Count != prevA;
-        bool bChanged = UI_RewardItemList.Count != prevB;
+        bool aChanged = ItemList.Count != prevA;
+        bool bChanged = UI_ItemList.Count != prevB;
 
         // 変更されたリストのサイズを基準にする
         int targetSize = -1;
 
-        if (aChanged) targetSize = RewardItemList.Count;
-        else if (bChanged) targetSize = UI_RewardItemList.Count;
+        if (aChanged) targetSize = ItemList.Count;
+        else if (bChanged) targetSize = UI_ItemList.Count;
         else return; // 何も変わってなければ終了
 
         // サイズ同期
-        SyncSize(RewardItemList, targetSize);
-        SyncSize(UI_RewardItemList, targetSize);
+        SyncSize(ItemList, targetSize);
+        SyncSize(UI_ItemList, targetSize);
 
         // サイズを更新して次回比較に使う
-        prevA = RewardItemList.Count;
-        prevB = UI_RewardItemList.Count;
+        prevA = ItemList.Count;
+        prevB = UI_ItemList.Count;
     }
     private void SyncSize<T>(List<T> list, int size)
     {

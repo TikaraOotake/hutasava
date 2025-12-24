@@ -20,6 +20,10 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private int SelectIndex;
     [SerializeField] private UI_Base SelectingUI;//選択中のUI
 
+    [SerializeField] private UI_Base HoldingUI;//保留中のUI//点滅させる
+    [SerializeField]
+    private float UI_BlinkInterval = 1.0f;
+
     [SerializeField] private float JoyStickInputLength_old;//ジョイスティックの入力値
     void Start()
     {
@@ -59,6 +63,12 @@ public class UI_Manager : MonoBehaviour
                 }
             }
             //----------------------------------------
+        }
+
+        if (HoldingUI != null)
+        {
+            bool flag = ((int)(Time.unscaledTime / UI_BlinkInterval) % 2) == 0;
+            HighlightUI(HoldingUI, flag);
         }
     }
 
@@ -167,6 +177,12 @@ public class UI_Manager : MonoBehaviour
         {
             Time.timeScale = 1.0f;//時間再生
         }
+    }
+    public void SetHoldingUI(UI_Base _ui)
+    {
+        //元のUIの発光をオフ
+        HighlightUI(HoldingUI, false);
+        HoldingUI = _ui;
     }
     public void SetCursorObj(GameObject _Cursor)
     {

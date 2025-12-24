@@ -13,6 +13,9 @@ public class UI_ItemSlot_V2 : UI_Base
 
     [SerializeField] protected bool IsSetedItem;//アイテムセット状態かのフラグ
 
+    [SerializeField] protected ItemContainer Container;//担当しているコンテナクラス
+    [SerializeField] protected int Index;//担当しているインデックス
+
     public override void Event()
     {
         OnSelected?.Invoke(this);
@@ -48,5 +51,11 @@ public class UI_ItemSlot_V2 : UI_Base
         if (ItemSpriteImage != null) ItemSpriteImage.sprite = null;
         if (ItemExpText != null) ItemExpText.text = " ";
         if (ItemNameText != null) ItemNameText.text = " ";
+    }
+
+    public void SetContainerIndex(ItemContainer _Container,int _index)
+    {
+        Container = _Container;
+        Index = _index;
     }
 }
