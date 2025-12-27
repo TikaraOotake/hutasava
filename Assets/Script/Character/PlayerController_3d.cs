@@ -28,8 +28,14 @@ public class PlayerController_3d : Character
     private bool IsDead;//死亡状態フラグ
     [SerializeField] private float HealthPoint_Current_old;//前フレームのHP状態を記録
 
-    [SerializeField] private UI_Inventory_Player uI_Inventory_Player;
+    //アイテムを格納するコンテナ
+    [SerializeField] private ItemContainer itemContainer;
 
+
+
+    //削除予定
+    [SerializeField] private UI_Inventory_Player uI_Inventory_Player;
+   
 
     void Start()
     {
@@ -41,6 +47,23 @@ public class PlayerController_3d : Character
         if (TestOriginWeapon != null)
         {
             WeaponList.Add(Instantiate(TestOriginWeapon));//複製したものを登録
+        }
+
+        //アイテムのUIを選択可能に
+        if (itemContainer != null)
+        {
+            List<UI_ItemSlot_V2> uiList = itemContainer.GetItem_DisplayUI_List();
+            //Debug.Log(uiList.Count + "個のUIを選択可能状態にします");
+
+            //クリック時のEventを設定
+            itemContainer.SetClickEvent(itemContainer.TradeItem);
+
+            //選択可能状態にしたい選択肢を登録
+            GameManager.Instance.SetSelectSlot_isSelective(uiList);
+        }
+        else
+        {
+            Debug.Log("アイテムストレージがありません");
         }
     }
 
@@ -123,6 +146,19 @@ public class PlayerController_3d : Character
                             }
                         }
                     }
+                }
+            }
+        }
+
+        if (itemContainer != null)
+        {
+            List<EquipmentItem_Base> itemList = itemContainer.GetItemList();
+            for (int i = 0; i < itemList.Count; ++i)
+            {
+                if (itemList[i] is Weapon)
+                {
+                    Weapon weapon = (Weapon)itemList[i];
+                    weapon.Update_Item(this.gameObject);
                 }
             }
         }

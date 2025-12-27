@@ -42,7 +42,7 @@ public class UI_Manager : MonoBehaviour
 
         //選択中のUIを光らせる
         //UIを発光
-        HighlightUI(SelectUI_List[SelectIndex], true);
+        HighlightUI(SelectUI_List, SelectIndex, true);
     }
 
     // Update is called once per frame
@@ -118,16 +118,29 @@ public class UI_Manager : MonoBehaviour
         if (best != null)
         {
             //移る前のUIの色を戻す
-            HighlightUI(SelectUI_List[SelectIndex], false);
+            HighlightUI(SelectUI_List, SelectIndex, false);
 
             SelectIndex = bestIndex;       // ←選択中インデックスを更新
 
             //UIを発光
-            HighlightUI(SelectUI_List[SelectIndex], true);
+            HighlightUI(SelectUI_List, SelectIndex, true);
         }
     }
-    void HighlightUI(UI_Base _ui,bool _LightFlag)
+    void HighlightUI(UI_Base _ui, bool _LightFlag)
     {
+        if (_ui != null)
+        {
+            _ui.SetSelectingHighlight_UI(_LightFlag);
+        }
+    }
+    void HighlightUI(List<UI_Base> _uiList, int _index, bool _LightFlag)
+    {
+        UI_Base _ui = null;
+        if (0 <= _index && _uiList.Count > _index)
+        {
+            _ui = _uiList[_index];
+        }
+
         if (_ui != null)
         {
             _ui.SetSelectingHighlight_UI(_LightFlag);

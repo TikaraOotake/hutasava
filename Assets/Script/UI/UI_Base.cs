@@ -25,7 +25,7 @@ public class UI_Base : MonoBehaviour
     //イベントを呼び出す
     public virtual void Event()
     {
-        //OnSelected?.Invoke(itemId);
+        OnSelected?.Invoke(-1);
         return;
     }
 

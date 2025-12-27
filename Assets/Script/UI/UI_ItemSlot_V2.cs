@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UI_ItemSlot_V2 : UI_Base
 {
-    new public event Action<UI_Base> OnSelected;
+    public event Action<UI_Base> OnSelected_UI_Base;
 
 
     [SerializeField] protected Image ItemSpriteImage;//アイテムの画像を表示させるイメージ
@@ -18,7 +18,7 @@ public class UI_ItemSlot_V2 : UI_Base
 
     public override void Event()
     {
-        OnSelected?.Invoke(this);
+        OnSelected_UI_Base?.Invoke(this);
         return;
     }
 

@@ -1,29 +1,38 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class RewardScene : ItemContainer
+public class RewardScene :MonoBehaviour
 {
     [SerializeField] int HoldSelectIndex;//保留選択中のインデックス
 
     [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private ItemContainer itemContainer;
 
     //リスト同期用変数
     private int prevA, prevB;
 
     void Start()
     {
-        for (int i = 0; i < UI_ItemList.Count; ++i)
+        if (itemContainer != null)
         {
-            UI_ItemList[i].OnSelected += OnClick_UI;
+            //入力時のイベントを登録
+            itemContainer.SetClickEvent(OnClick_UI);
         }
+
 
         if (playerManager == null)
         {
+            //Playerマネージャー取得
             playerManager = GameManager.Instance.GetPlayerManager();
         }
 
-        //選択可能状態にしたい選択肢を登録
-        GameManager.Instance.SetSelectSlot_isSelective(UI_ItemList);
+        if (itemContainer != null)
+        {
+            List<UI_ItemSlot_V2> uiList = itemContainer.GetItem_DisplayUI_List();
+            //選択可能状態にしたい選択肢を登録
+            GameManager.Instance.SetSelectSlot_isSelective(uiList);
+        }
+
 
         //アイテム生成
         GenerateItem();
@@ -35,18 +44,42 @@ public class RewardScene : ItemContainer
         
     }
 
-    private void OnClick_UI(UI_Base ui)
+    private void OnClick_UI(UI_Base _ui)
     {
-        //どこのUIが呼ばれたか特定する
-        for (int i = 0; i < UI_ItemList.Count; ++i)
+        if (itemContainer != null)
         {
-            if (UI_ItemList[i] == ui)
+            List<UI_ItemSlot_V2> uiList = itemContainer.GetItem_DisplayUI_List();
+            List<EquipmentItem_Base> itemList = itemContainer.GetItemList();
+            for (int i = 0; i < uiList.Count; ++i)
             {
-                //Debug.Log(i + "番スロットが呼ばれました");
+                if (uiList[i] == _ui)
+                {
+                    //Debug.Log(i + "番スロットが呼ばれました");
 
-                //該当要素番号のアイテムを交換に掛ける
-                TransferItem_toStorage(ItemList[i]);
-                return;
+                    //残高取得
+                    int money = GameManager.Instance.GetMoney();
+
+                    //残高を値段で引く
+                    money -= itemList[i].GetSaleCost();
+
+                    bool Result = false;
+
+                    //残高が0以上ならアイテム交換
+                    if (money >= 0)
+                    {
+                        Result = TransferItem_toStorage(itemList[i]);
+                    }
+
+                    //交換に成功したら
+                    if (Result) 
+                    {
+                        GameManager.Instance.SetMoney(money);//残高をManagerに代入
+                        itemContainer.SetItem(i, null);//該当要素番号のアイテムを削除
+                    }
+                    
+                    
+                    return;
+                }
             }
         }
     }
@@ -55,19 +88,24 @@ public class RewardScene : ItemContainer
         List<EquipmentItem_Base> StorageList = new List<EquipmentItem_Base>();
         if (playerManager != null)
         {
-            //プレイヤーマネージャーからストレージの内容を取得
-            StorageList = playerManager.GetItemStorageList();
+            ItemContainer PlayerItemContainer = playerManager.GetItemContainer();
 
-            for (int i = 0; i < StorageList.Count; ++i)
+            if(PlayerItemContainer!=null)
             {
-                //既に入っているアイテムを取得
-                EquipmentItem_Base item = StorageList[i];
+                //プレイヤーマネージャーからストレージの内容を取得
+                StorageList = PlayerItemContainer.GetItemStorageList();
 
-                //アイテムが空であれば引き数のアイテムを代入して終了
-                if (item == null)
+                for (int i = 0; i < StorageList.Count; ++i)
                 {
-                    playerManager.SetItem(_Itemdata, i);
-                    return true;
+                    //既に入っているアイテムを取得
+                    EquipmentItem_Base item = StorageList[i];
+
+                    //アイテムが空であれば引き数のアイテムを代入して終了
+                    if (item == null)
+                    {
+                        PlayerItemContainer.SetItem(_Itemdata, i);
+                        return true;
+                    }
                 }
             }
         }
@@ -99,56 +137,14 @@ public class RewardScene : ItemContainer
 
     public void GenerateItem()
     {
-        for (int i = 0; i < ItemList.Count; ++i)
+        if (itemContainer != null)
         {
-            //ランダムなアイテムデータを渡す
-            ItemList[i] = GameManager.Instance.GetRandCopyItemData();
-        }
-
-        Update_DisplayUI();
-    }
-
-    
-    public List<UI_ItemSlot_V2> GetUI_ItemList()
-    {
-        return UI_ItemList;
-    }
-
-    private void OnValidate()
-    {
-        //リストサイズ同期用処理
-
-        // どれが変更されたか判定
-        bool aChanged = ItemList.Count != prevA;
-        bool bChanged = UI_ItemList.Count != prevB;
-
-        // 変更されたリストのサイズを基準にする
-        int targetSize = -1;
-
-        if (aChanged) targetSize = ItemList.Count;
-        else if (bChanged) targetSize = UI_ItemList.Count;
-        else return; // 何も変わってなければ終了
-
-        // サイズ同期
-        SyncSize(ItemList, targetSize);
-        SyncSize(UI_ItemList, targetSize);
-
-        // サイズを更新して次回比較に使う
-        prevA = ItemList.Count;
-        prevB = UI_ItemList.Count;
-    }
-    private void SyncSize<T>(List<T> list, int size)
-    {
-        if (list.Count == size) return;
-
-        if (list.Count < size)
-        {
-            while (list.Count < size)
-                list.Add(default);
-        }
-        else
-        {
-            list.RemoveRange(size, list.Count - size);
+            List<EquipmentItem_Base> itemList = itemContainer.GetItemStorageList();
+            for (int i = 0; i < itemList.Count; ++i)
+            {
+                //ランダムなアイテムデータを渡す
+                itemContainer.SetItem(i, GameManager.Instance.GetRandCopyItemData());
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ public class ItemManager : MonoBehaviour
     private ItemSlot HoldSlot;//保留中のスロット
                               //private ItemSlot SelectSlot;//選択中のスロット
 
-    public void SetSelectSlot(ItemContainer _Container, int _Index)
+    public void TradeItem(ItemContainer _Container, int _Index)
     {
         //引数の有効性チェック
         if (_Container == null) return;

@@ -59,6 +59,11 @@ public class GameManager : MonoBehaviour
         // インスタンスが存在しない → 自分を設定
         Instance = this;
 
+        //各マネージャー取得
+        enemyManager = this.GetComponent<EnemyManager>();//エネミーマネージャー取得
+        ui_Manager = this.GetComponent<UI_Manager>();//UIマネージャー取得
+        itemManager = this.GetComponent<ItemManager>();//アイテムマネージャー取得
+
         // シーンをまたいでも破棄されない
         DontDestroyOnLoad(gameObject);
     }
@@ -67,9 +72,7 @@ public class GameManager : MonoBehaviour
     {
         WaveTimer = WaveTime;//タイマー設定
 
-        enemyManager = this.GetComponent<EnemyManager>();//エネミーマネージャー取得
-        ui_Manager = this.GetComponent<UI_Manager>();//UIマネージャー取得
-        itemManager = this.GetComponent<ItemManager>();//アイテムマネージャー取得
+        
 
         //時間をとめる
         Time.timeScale = 0.0f;
@@ -337,11 +340,11 @@ public class GameManager : MonoBehaviour
     {
         return GetComponent<PlayerManager>();
     }
-    public void SetSelectSlot(ItemContainer _Container, int _Index)
+    public void TradeItem(ItemContainer _Container, int _Index)
     {
-        if(itemManager!=null)
+        if (itemManager != null)
         {
-            itemManager.SetSelectSlot(_Container, _Index);
+            itemManager.TradeItem(_Container, _Index);
         }
     }
 
@@ -363,6 +366,10 @@ public class GameManager : MonoBehaviour
                 tempList.Add(_List[i]);
             }
             ui_Manager.SetSelectSlot_isSelective(tempList);
+        }
+        else
+        {
+            Debug.Log("UIマネージャーが見つかりません");
         }
     }
 }

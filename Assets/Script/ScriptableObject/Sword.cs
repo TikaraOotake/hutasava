@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Sword", menuName = "ScriptableObjects/CreateWeapon_Sword")]
-public class NewMonoBehaviourScript : Weapon
+public class Sword : Weapon
 {
     private int AttackCount = 0;
 
