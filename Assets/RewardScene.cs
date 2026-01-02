@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class RewardScene :MonoBehaviour
 {
@@ -8,40 +9,33 @@ public class RewardScene :MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private ItemContainer itemContainer;
 
+    [SerializeField] private UI_Base UI_BuySlot;
+
     //リスト同期用変数
     private int prevA, prevB;
 
     void Start()
     {
-        if (itemContainer != null)
-        {
-            //入力時のイベントを登録
-            itemContainer.SetClickEvent(OnClick_UI);
-        }
+        //入力時のイベントを登録
+        if (itemContainer != null) itemContainer.SetClickEvent(OnClick_UI);
+        if (UI_BuySlot != null) UI_BuySlot.OnSelected += OnClick_UI_SaleItem;
 
 
-        if (playerManager == null)
-        {
-            //Playerマネージャー取得
-            playerManager = GameManager.Instance.GetPlayerManager();
-        }
+        //Playerマネージャー取得
+        if (playerManager == null) playerManager = GameManager.Instance.GetPlayerManager();
 
-        if (itemContainer != null)
-        {
-            List<UI_ItemSlot_V2> uiList = itemContainer.GetItem_DisplayUI_List();
-            //選択可能状態にしたい選択肢を登録
-            GameManager.Instance.SetSelectSlot_isSelective(uiList);
-        }
-
-
-        //アイテム生成
-        GenerateItem();
+        
+        //報酬シーンを開く
+        OpenRewardScene();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
+        {
+            CloseRewardScene();
+        }
     }
 
     private void OnClick_UI(UI_Base _ui)
@@ -50,9 +44,10 @@ public class RewardScene :MonoBehaviour
         {
             List<UI_ItemSlot_V2> uiList = itemContainer.GetItem_DisplayUI_List();
             List<EquipmentItem_Base> itemList = itemContainer.GetItemList();
+
             for (int i = 0; i < uiList.Count; ++i)
             {
-                if (uiList[i] == _ui)
+                if (uiList[i] == _ui && itemList[i] != null)
                 {
                     //Debug.Log(i + "番スロットが呼ばれました");
 
@@ -82,6 +77,10 @@ public class RewardScene :MonoBehaviour
                 }
             }
         }
+    }
+    private void OnClick_UI_SaleItem(int i)
+    {
+        GameManager.Instance.SaleItem();
     }
     public bool TransferItem_toStorage(EquipmentItem_Base _Itemdata)
     {
@@ -146,5 +145,175 @@ public class RewardScene :MonoBehaviour
                 itemContainer.SetItem(i, GameManager.Instance.GetRandCopyItemData());
             }
         }
+    }
+
+    public void OpenRewardScene()
+    {
+        ////選択可能状態にしたいものをリストにまとめる
+        List<UI_Base> uiList = new List<UI_Base>();
+
+        if (itemContainer != null)
+        {
+            List<UI_ItemSlot_V2> tempList = itemContainer.GetItem_DisplayUI_List();
+            for (int i = 0; i < tempList.Count; ++i)
+            {
+                uiList.Add(tempList[i]);//リストに追加
+            }
+        }
+
+        //売却UIを追加
+        uiList.Add(UI_BuySlot);
+
+
+        if (playerManager != null)
+        {
+            //プレイヤーストレージのUIを追加
+            ItemContainer container = playerManager.GetItemContainer();
+            if (container != null)
+            {
+                List<UI_ItemSlot_V2> tempList = container.GetItem_DisplayUI_List();
+                for (int i = 0; i < tempList.Count; ++i)
+                {
+                    uiList.Add(tempList[i]);//リストに追加
+                }
+            }
+        }
+
+        //PlayerのコンテナのUIを追加
+        GameObject Player1 = GameManager.Instance.GetPlayer(1);
+        GameObject Player2 = GameManager.Instance.GetPlayer(2);
+        PlayerController_3d Player1comp = null;
+        PlayerController_3d Player2comp = null;
+        if (Player1 != null) Player1comp = Player1.GetComponent<PlayerController_3d>();
+        if (Player2 != null) Player2comp = Player2.GetComponent<PlayerController_3d>();
+        if (Player1comp != null)
+        {
+            ItemContainer itemContainer = Player1comp.GetItemContainer();
+            if (itemContainer != null)
+            {
+                List<UI_ItemSlot_V2> tempList = itemContainer.GetItem_DisplayUI_List();
+                for (int i = 0; i < tempList.Count; ++i)
+                {
+                    uiList.Add(tempList[i]);
+                }
+            }
+        }
+        if (Player2comp != null)
+        {
+            ItemContainer itemContainer = Player2comp.GetItemContainer();
+            if (itemContainer != null)
+            {
+                List<UI_ItemSlot_V2> tempList = itemContainer.GetItem_DisplayUI_List();
+                for (int i = 0; i < tempList.Count; ++i)
+                {
+                    uiList.Add(tempList[i]);
+                }
+            }
+        }
+
+        //登録
+        GameManager.Instance.SetSelectSlot_isSelective(uiList);
+
+        //UIを表示にする
+        for (int i = 0; i < uiList.Count; ++i)
+        {
+            if (uiList != null)
+            {
+                uiList[i].gameObject.SetActive(true);
+            }
+        }
+
+        //アイテム生成
+        GenerateItem();
+    }
+    public void CloseRewardScene()
+    {
+        ////選択可能状態を解除したいものをリストにまとめる
+        List<UI_Base> uiList = new List<UI_Base>();
+
+        if (itemContainer != null)
+        {
+            List<UI_ItemSlot_V2> tempList = itemContainer.GetItem_DisplayUI_List();
+            for (int i = 0; i < tempList.Count; ++i)
+            {
+                uiList.Add(tempList[i]);//リストに追加
+            }
+        }
+
+        //売却UIを追加
+        uiList.Add(UI_BuySlot);
+
+      
+        if (playerManager != null)
+        {
+            //プレイヤーストレージのUIを追加
+            ItemContainer container = playerManager.GetItemContainer();
+            if (container != null)
+            {
+                List<UI_ItemSlot_V2> tempList = container.GetItem_DisplayUI_List();
+                for (int i = 0; i < tempList.Count; ++i)
+                {
+                    uiList.Add(tempList[i]);//リストに追加
+                }
+            }
+        }
+
+        //PlayerのコンテナのUIを追加
+        GameObject Player1 = GameManager.Instance.GetPlayer(1);
+        GameObject Player2 = GameManager.Instance.GetPlayer(2);
+        PlayerController_3d Player1comp = null;
+        PlayerController_3d Player2comp = null;
+        if (Player1 != null) Player1comp = Player1.GetComponent<PlayerController_3d>();
+        if (Player2 != null) Player2comp = Player2.GetComponent<PlayerController_3d>();
+        if (Player1comp != null)
+        {
+            ItemContainer itemContainer = Player1comp.GetItemContainer();
+            if (itemContainer != null)
+            {
+                List<UI_ItemSlot_V2> tempList = itemContainer.GetItem_DisplayUI_List();
+                for (int i = 0; i < tempList.Count; ++i)
+                {
+                    uiList.Add(tempList[i]);
+                }
+            }
+        }
+        if (Player2comp != null)
+        {
+            ItemContainer itemContainer = Player2comp.GetItemContainer();
+            if (itemContainer != null)
+            {
+                List<UI_ItemSlot_V2> tempList = itemContainer.GetItem_DisplayUI_List();
+                for (int i = 0; i < tempList.Count; ++i)
+                {
+                    uiList.Add(tempList[i]);
+                }
+            }
+        }
+
+        //除外する
+        GameManager.Instance.RemoveSelectSlot(uiList);
+
+        //UIを非表示にする
+        for (int i = 0; i < uiList.Count; ++i)
+        {
+            if (uiList != null)
+            {
+                uiList[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    //sauceリストの内容をTargetリストにコピーする関数(重複回避)
+    public List<T> MergeLists<T>(List<T> target, List<T> source)
+    {
+        foreach (var item in source)
+        {
+            if (!target.Contains(item))
+            {
+                target.Add(item);
+            }
+        }
+
+        return target;
     }
 }

@@ -53,4 +53,32 @@ public class ItemManager : MonoBehaviour
             GameManager.Instance.SetHoldingUI(null);
         }
     }
+    //アイテムの売却
+    public void SaleItem()
+    {
+        //保留アイテムを売却
+        if (HoldSlot.Container != null)
+        {
+            //保留からアイテムを取得
+            EquipmentItem_Base Item = HoldSlot.Container.GetItem(HoldSlot.Index);
+
+            if (Item != null)
+            {
+                //価格を取得
+                int cost = Item.GetSaleCost();
+
+                //保留スロットのアイテムを削除
+                HoldSlot.Container.SetItem(HoldSlot.Index, null);
+
+                //残高に価格を加算
+                GameManager.Instance.SetMoney(GameManager.Instance.GetMoney() + cost);
+
+                //保留をリセット
+                HoldSlot.Container = null;
+
+                //点滅解除
+                GameManager.Instance.SetHoldingUI(null);
+            }
+        }
+    }
 }

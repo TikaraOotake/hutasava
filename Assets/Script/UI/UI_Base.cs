@@ -11,6 +11,8 @@ public class UI_Base : MonoBehaviour
 
     [SerializeField] private Image HighlightImage;//選択時に発光させるイメージ
     [SerializeField] protected bool HighlightFalg;//発光フラグ
+
+    [SerializeField] protected bool IsSelectiveFalg;//選択状態フラグ
     public void Awake()
     {
         Image image = GetComponent<Image>();
@@ -25,11 +27,20 @@ public class UI_Base : MonoBehaviour
     //イベントを呼び出す
     public virtual void Event()
     {
-        OnSelected?.Invoke(-1);
+        InvokeSelected();
         return;
+    }
+    protected void InvokeSelected()
+    {
+        OnSelected?.Invoke(-1);
     }
 
     public virtual void SetSelectingHighlight_UI(bool _flag)
+    {
+        IsSelectiveFalg = _flag;
+        SetHighlight_UI(_flag);
+    }
+    public virtual void SetHighlight_UI(bool _flag)
     {
         HighlightFalg = _flag;
         HighlightUI(HighlightFalg);

@@ -341,4 +341,9 @@ public class PlayerController_3d : Character
             }
         }
     }
+
+    public ItemContainer GetItemContainer()
+    {
+        return itemContainer;
+    }
 }

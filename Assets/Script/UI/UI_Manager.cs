@@ -42,7 +42,7 @@ public class UI_Manager : MonoBehaviour
 
         //選択中のUIを光らせる
         //UIを発光
-        HighlightUI(SelectUI_List, SelectIndex, true);
+        SelectingHighlightUI(SelectUI_List, SelectIndex, true);
     }
 
     // Update is called once per frame
@@ -76,12 +76,13 @@ public class UI_Manager : MonoBehaviour
     {
         Vector2 inputDir = GetInputDir();
         if (inputDir == Vector2.zero) return;
-        if (SelectUI_List[SelectIndex] == null)
+        
+        if (SelectIndex < 0 || SelectIndex >= SelectUI_List.Count)
         {
             SelectIndex = 0;
             return;
         }
-        if (SelectIndex < 0 || SelectIndex >= SelectUI_List.Count)
+        if (SelectUI_List[SelectIndex] == null)
         {
             SelectIndex = 0;
             return;
@@ -118,19 +119,19 @@ public class UI_Manager : MonoBehaviour
         if (best != null)
         {
             //移る前のUIの色を戻す
-            HighlightUI(SelectUI_List, SelectIndex, false);
+            SelectingHighlightUI(SelectUI_List, SelectIndex, false);
 
             SelectIndex = bestIndex;       // ←選択中インデックスを更新
 
             //UIを発光
-            HighlightUI(SelectUI_List, SelectIndex, true);
+            SelectingHighlightUI(SelectUI_List, SelectIndex, true);
         }
     }
     void HighlightUI(UI_Base _ui, bool _LightFlag)
     {
         if (_ui != null)
         {
-            _ui.SetSelectingHighlight_UI(_LightFlag);
+            _ui.SetHighlight_UI(_LightFlag);
         }
     }
     void HighlightUI(List<UI_Base> _uiList, int _index, bool _LightFlag)
@@ -138,7 +139,22 @@ public class UI_Manager : MonoBehaviour
         UI_Base _ui = null;
         if (0 <= _index && _uiList.Count > _index)
         {
-            _ui = _uiList[_index];
+            _ui = _uiList[_index];//取得
+        }
+
+        if (_ui != null)
+        {
+            _ui.SetHighlight_UI(_LightFlag);
+        }
+    }
+    void SelectingHighlightUI(List<UI_Base> _uiList, int _index, bool _LightFlag)
+    {
+        HighlightUI(_uiList, _index, _LightFlag);
+
+        UI_Base _ui = null;
+        if (0 <= _index && _uiList.Count > _index)
+        {
+            _ui = _uiList[_index];//取得
         }
 
         if (_ui != null)
@@ -235,12 +251,29 @@ public class UI_Manager : MonoBehaviour
             Debug.Log("必要な変数がありませんでした");
         }
     }
-    
+
     //選択肢を選択可能状態にする
     public void SetSelectSlot_isSelective(List<UI_Base> _List)
     {
         //選択肢可能リストに追加
         MergeLists<UI_Base>(SelectUI_List, _List);
+    }
+    public void SetSelectSlot_isSelective(UI_Base _ui)
+    {
+        //選択肢可能リストに追加
+        SelectUI_List.Add(_ui);
+    }
+
+    //引数と同一のものを除外する
+    public void RemoveSelectSlot(List<UI_Base> _List)
+    {
+        RemoveFromList<UI_Base>(SelectUI_List, _List);
+    }
+
+    //選択肢リストを全て除外
+    public void RemoveSelectSlot_all()
+    {
+        SelectUI_List.Clear();
     }
 
     //sauceリストの内容をTargetリストにコピーする関数(重複回避)
@@ -254,6 +287,13 @@ public class UI_Manager : MonoBehaviour
             }
         }
 
+        return target;
+    }
+
+    //引数のリスト（source）と同一のものがあったら target から除外する
+    public List<T> RemoveFromList<T>(List<T> target, List<T> source)
+    {
+        target.RemoveAll(item => source.Contains(item));
         return target;
     }
 }

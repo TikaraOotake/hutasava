@@ -18,6 +18,7 @@ public class UI_ItemSlot_V2 : UI_Base
 
     public override void Event()
     {
+        InvokeSelected();
         OnSelected_UI_Base?.Invoke(this);
         return;
     }

@@ -143,11 +143,11 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if(ui_Manager!=null)
+        if (ui_Manager != null)
         {
             ui_Manager.SetMoneyValue_UI(Money);
         }
-	}
+    }
 
     public void SetMoney(int _Money)
     {
@@ -347,8 +347,22 @@ public class GameManager : MonoBehaviour
             itemManager.TradeItem(_Container, _Index);
         }
     }
+    public void SaleItem()
+    {
+        if (itemManager != null)
+        {
+            itemManager.SaleItem();
+        }
+    }
 
     //選択肢を選択可能状態にする
+    public void SetSelectSlot_isSelective(UI_Base _ui)
+    {
+        if (ui_Manager != null)
+        {
+            ui_Manager.SetSelectSlot_isSelective(_ui);
+        }
+    }
     public void SetSelectSlot_isSelective(List<UI_Base> _List)
     {
         if (ui_Manager != null)
@@ -370,6 +384,35 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("UIマネージャーが見つかりません");
+        }
+    }
+    //引数と同一のものを除外する
+    public void RemoveSelectSlot(List<UI_Base> _List)
+    {
+        if (ui_Manager != null)
+        {
+            ui_Manager.RemoveSelectSlot(_List);
+        }
+    }
+    public void RemoveSelectSlot(List<UI_ItemSlot_V2> _List)
+    {
+        if (ui_Manager != null)
+        {
+            List<UI_Base> tempList = new List<UI_Base>();
+            for (int i = 0; i < _List.Count; ++i)
+            {
+                tempList.Add(_List[i]);
+            }
+            ui_Manager.RemoveSelectSlot(tempList);
+        }
+    }
+
+    //選択肢リストを全て除外
+    public void RemoveSelectSlot_all()
+    {
+        if (ui_Manager != null)
+        {
+            ui_Manager.RemoveSelectSlot_all();
         }
     }
 }
