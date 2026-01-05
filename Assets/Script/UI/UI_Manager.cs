@@ -230,7 +230,7 @@ public class UI_Manager : MonoBehaviour
     }
     public void GenerateDamageDisplayUI(int _Damage, Vector3 _Pos)
     {
-        Debug.Log("ダメージ表記を生成します");
+        //Debug.Log("ダメージ表記を生成します");
 
         if (DamageDisplayUI_Prefab != null && canvas != null && cameraComp)
         {

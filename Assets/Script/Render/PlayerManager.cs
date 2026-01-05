@@ -7,6 +7,12 @@ public class PlayerManager : MonoBehaviour
     //Player
     [SerializeField] List<GameObject> PlayerList;//プレイヤーを格納するためのリスト
 
+    [SerializeField] GameObject Player1;
+    [SerializeField] GameObject Player2;
+
+    [SerializeField] UI_PlayerStatusView ui_PlayerStatusView1;
+    [SerializeField] UI_PlayerStatusView ui_PlayerStatusView2;
+
     //アイテムを格納するコンテナ
     [SerializeField] ItemContainer itemContainer;
 
@@ -14,6 +20,9 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
+        if (Player1 != null) GameManager.Instance.GetPlayer(1);
+        if (Player2 != null) GameManager.Instance.GetPlayer(2);
+
         if (itemContainer != null)
         {
             //クリック時のEventを設定
@@ -49,5 +58,47 @@ public class PlayerManager : MonoBehaviour
     public ItemContainer GetItemContainer()
     {
         return itemContainer;
+    }
+
+    public void Update_PlayerStatusView()
+    {
+        //Debug.Log("プレイヤーステータスの表示を更新");
+
+        int HP = 0;
+        int Attack = 0;
+        int Speed = 0;
+        if (Player1 != null)
+        {
+            PlayerController_3d playerController = Player1.GetComponent<PlayerController_3d>();
+            if (playerController != null)
+            {
+                HP = (int)playerController.GetHealthPointMax_Result();
+                Attack = (int)playerController.GetAttackPoint_Result();
+                Speed = (int)playerController.GetMoveSpeedPoint_Result();
+            }
+            else
+            {
+                Debug.Log("プレイヤー1が見つかりません");
+            }
+        }
+        if (ui_PlayerStatusView1 != null) ui_PlayerStatusView1.SetPlayerStatus(HP, Attack, Speed);
+
+
+        if (Player2 != null)
+        {
+            PlayerController_3d playerController = Player2.GetComponent<PlayerController_3d>();
+            if (playerController != null)
+            {
+                HP = (int)playerController.GetHealthPointMax_Result();
+                Attack = (int)playerController.GetAttackPoint_Result();
+                Speed = (int)playerController.GetMoveSpeedPoint_Result();
+            }
+        }
+        if (ui_PlayerStatusView2 != null) ui_PlayerStatusView2.SetPlayerStatus(HP, Attack, Speed);
+    }
+    public void SetUI_PlayerStatusViewActive(bool _flag)
+    {
+        if (ui_PlayerStatusView1 != null) ui_PlayerStatusView1.gameObject.SetActive(_flag);
+        if (ui_PlayerStatusView2 != null) ui_PlayerStatusView2.gameObject.SetActive(_flag);
     }
 }

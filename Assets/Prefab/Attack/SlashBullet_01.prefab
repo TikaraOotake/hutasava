@@ -82,6 +82,7 @@ MonoBehaviour:
   BulletMoveVec: {x: 0, y: 0, z: 0}
   DestroyTimer: 0.8
   isPerforate: 1
+  HittedObjList: []
 --- !u!65 &2058129012738316275
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -101,7 +102,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: -3.82, y: 1, z: 1}
+  m_Size: {x: 3.82, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6590355753627163474
 GameObject:

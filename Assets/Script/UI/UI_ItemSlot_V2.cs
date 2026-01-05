@@ -10,6 +10,10 @@ public class UI_ItemSlot_V2 : UI_Base
     [SerializeField] protected Image ItemSpriteImage;//アイテムの画像を表示させるイメージ
     [SerializeField] protected Text ItemNameText;//アイテムの名前を表示させるテキスト
     [SerializeField] protected Text ItemExpText;//アイテムの説明を表示させるテキスト
+    [SerializeField] protected Text ItemCostText;//アイテムの価格を表示させるテキスト
+    [SerializeField] protected Text ItemLevelText;//アイテムのレベルを表示させるテキスト
+
+    [SerializeField] protected string CostLabel = " G";//価格の単位
 
     [SerializeField] protected bool IsSetedItem;//アイテムセット状態かのフラグ
 
@@ -23,13 +27,15 @@ public class UI_ItemSlot_V2 : UI_Base
         return;
     }
 
-    public void SetItemShowData(Sprite _Sprite, string _Name, string _Exp)
+    public void SetItemShowData(Sprite _Sprite, string _Name, string _Exp, int _Cost, int _Level)
     {
         IsSetedItem = true;
 
         if (ItemSpriteImage != null) ItemSpriteImage.sprite = _Sprite;
         if (ItemExpText != null) ItemExpText.text = _Exp;
         if (ItemNameText != null) ItemNameText.text = _Name;
+        if (ItemCostText != null) ItemCostText.text = _Cost.ToString() + CostLabel;
+        if (ItemLevelText != null) ItemLevelText.text = "Lv."+_Level.ToString();
     }
     public void SetItemShowData(EquipmentItem_Base _item)
     {
@@ -38,7 +44,9 @@ public class UI_ItemSlot_V2 : UI_Base
             Sprite sprite = _item.GetItemSprite();
             string Name = _item.GetItemName();
             string Exp = _item.GetItemExplanation();
-            SetItemShowData(sprite, Name, Exp);
+            int Cost = _item.GetSaleCost();
+            int Level = _item.GetLevel();
+            SetItemShowData(sprite, Name, Exp, Cost, Level);
         }
         else
         {
@@ -52,6 +60,8 @@ public class UI_ItemSlot_V2 : UI_Base
         if (ItemSpriteImage != null) ItemSpriteImage.sprite = null;
         if (ItemExpText != null) ItemExpText.text = " ";
         if (ItemNameText != null) ItemNameText.text = " ";
+        if (ItemCostText != null) ItemCostText.text = " ";
+        if (ItemLevelText != null) ItemLevelText.text = " ";
     }
 
     public void SetContainerIndex(ItemContainer _Container,int _index)

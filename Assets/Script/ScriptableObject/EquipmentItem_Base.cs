@@ -8,11 +8,12 @@ public class EquipmentItem_Base : ScriptableObject
     [SerializeField] private string ItemName;//名前
     [SerializeField] private string ItemExplanation;//アイテム説明文
 
-    [SerializeField] private int SaleCost = 1;//売値
+    [SerializeField] private int SaleCost = 1;//価格
 
     [SerializeField] private float Atk;
     [SerializeField] private float HP;
     [SerializeField] private float Speed;
+    [SerializeField] private int Level = 1;
 
     public Sprite GetItemSprite()
     {
@@ -30,6 +31,14 @@ public class EquipmentItem_Base : ScriptableObject
     public int GetSaleCost()
     {
         return SaleCost;
+    }
+    public int GetLevel()
+    {
+        return Level;
+    }
+    public void SetLevel(int _Level)
+    {
+        Level = _Level;
     }
     public CharacterStatus GetStatus()
     {

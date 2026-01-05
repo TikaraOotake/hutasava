@@ -75,10 +75,7 @@ public class ItemContainer : MonoBehaviour
                     EquipmentItem_Base item = ItemList[i];
                     if (item != null)
                     {
-                        UI_ItemList[i].SetItemShowData(
-                            item.GetItemSprite(),
-                            item.GetItemName(),
-                            item.GetItemExplanation());
+                        UI_ItemList[i].SetItemShowData(item);
 
                         continue;
                     }

@@ -40,13 +40,17 @@ public class RewardScene :MonoBehaviour
 
     private void OnClick_UI(UI_Base _ui)
     {
+        //コンテナの有効性チェック
         if (itemContainer != null)
         {
+            //アイテムとそれに付随するUIのリストを取得
             List<UI_ItemSlot_V2> uiList = itemContainer.GetItem_DisplayUI_List();
             List<EquipmentItem_Base> itemList = itemContainer.GetItemList();
 
+            //リストの要素を1つずつチェック
             for (int i = 0; i < uiList.Count; ++i)
             {
+                //要素の有効性チェック
                 if (uiList[i] == _ui && itemList[i] != null)
                 {
                     //Debug.Log(i + "番スロットが呼ばれました");
@@ -59,20 +63,31 @@ public class RewardScene :MonoBehaviour
 
                     bool Result = false;
 
-                    //残高が0以上ならアイテム交換
+                   
+
+                    //残高が0以上ならアイテム移す
                     if (money >= 0)
                     {
-                        Result = TransferItem_toStorage(itemList[i]);
+                        //アイテムの種類を確認
+                        if (itemList[i] is Accessory)
+                        {
+                            //アイテムがアクセサリーであれば次にどちらに装備するか決める
+                            Result = true;
+                        }
+                        else
+                        {
+                            //アイテムを移す
+                            Result = TransferItem_toStorage(itemList[i]);
+                        }
                     }
 
                     //交換に成功したら
                     if (Result) 
                     {
                         GameManager.Instance.SetMoney(money);//残高をManagerに代入
-                        itemContainer.SetItem(i, null);//該当要素番号のアイテムを削除
+                        itemContainer.SetItem(i, null);//コンテナの該当要素番号のアイテムを削除
                     }
-                    
-                    
+
                     return;
                 }
             }
@@ -222,6 +237,11 @@ public class RewardScene :MonoBehaviour
                 uiList[i].gameObject.SetActive(true);
             }
         }
+        if (playerManager != null)
+        {
+            //プレイヤーステータスのUIを表示
+            playerManager.SetUI_PlayerStatusViewActive(true);
+        }
 
         //アイテム生成
         GenerateItem();
@@ -300,6 +320,11 @@ public class RewardScene :MonoBehaviour
             {
                 uiList[i].gameObject.SetActive(false);
             }
+        }
+        if (playerManager != null)
+        {
+            //プレイヤーステータスのUIを非表示
+            playerManager.SetUI_PlayerStatusViewActive(false);
         }
     }
 

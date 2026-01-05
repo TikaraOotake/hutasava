@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
@@ -39,6 +40,31 @@ public class ItemManager : MonoBehaviour
         }
         else //保留中のスロットがある場合は入れ替えを実施
         {
+            //同じアイテムかつ同じレベルであれば合成を実施
+            EquipmentItem_Base holdItem = HoldSlot.Container.GetItem(HoldSlot.Index);
+            EquipmentItem_Base selectItem = _Container.GetItem(_Index);
+
+            if (holdItem != null && selectItem != null)//アイテムの有効性チェック
+            {
+                //同種同レベルかチェック
+                if (holdItem.GetLevel() == selectItem.GetLevel() &&
+                    holdItem.GetType() == selectItem.GetType())
+                {
+                    //レベルをインクリメント
+                    selectItem.SetLevel(selectItem.GetLevel() + 1);
+
+                    //レベルを上げたアイテムをコンテナにセット
+                    _Container.SetItem(_Index, selectItem);
+
+                    //保留のコンテナのアイテムを削除
+                    HoldSlot.Container.SetItem(HoldSlot.Index, null);
+
+                    HoldSlot.Container = null;                //保留をリセット
+                    GameManager.Instance.SetHoldingUI(null);  //点滅解除
+                    return;//終了
+                }
+            }
+
             //仮として保留から取得し記録
             EquipmentItem_Base tempItem = HoldSlot.Container.GetItem(HoldSlot.Index);
 

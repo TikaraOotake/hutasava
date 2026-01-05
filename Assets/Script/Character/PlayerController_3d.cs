@@ -31,18 +31,23 @@ public class PlayerController_3d : Character
     //アイテムを格納するコンテナ
     [SerializeField] private ItemContainer itemContainer;
 
-
+    [SerializeField] private PlayerManager playerManager;
 
     //削除予定
     [SerializeField] private UI_Inventory_Player uI_Inventory_Player;
-   
 
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         Camera = GameObject.FindGameObjectWithTag("MainCamera");
 
         //自身をゲームマネージャーに登録
         GameManager.Instance.SetPlayer(PlayerNumber, this.gameObject);
+
+        if (playerManager == null) playerManager = GameManager.Instance.GetPlayerManager();
 
         if (TestOriginWeapon != null)
         {
@@ -65,6 +70,9 @@ public class PlayerController_3d : Character
         {
             Debug.Log("アイテムストレージがありません");
         }
+
+        //ステータス計算
+        CalcuStatus();
     }
 
     // Update is called once per frame
@@ -313,6 +321,9 @@ public class PlayerController_3d : Character
         AttackPoint_Result = AttackPoint_Base + AttackPoint_Base * AcceAtk;
         //DefensePoint_Result = DefensePoint_Base;
         HealthPointMax_Result = HealthPointMax_Base + HealthPointMax_Base * AcceHP;
+
+        //ステータス表示を更新
+        playerManager.Update_PlayerStatusView();
     }
 
     private void OnTriggerEnter(Collider other)

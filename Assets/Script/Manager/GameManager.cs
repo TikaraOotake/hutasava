@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,12 +33,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<EquipmentItem_Base> OriginItemDataList;//複製したいアイテムを登録して使う
 
+    [SerializeField] private RewardScene rewardScene;//報酬シーンのクラス
     [SerializeField] private UI_RewardScene ui_RewardScene;//報酬SceneのUI
 
-    enum GameSceneStatus
+    public  enum GameSceneStatus
     {
         PlayGame,
         Pause,
+        Rest,
         GameOver
     }
     [SerializeField] GameSceneStatus gameSceneStatus;
@@ -64,6 +67,8 @@ public class GameManager : MonoBehaviour
         ui_Manager = this.GetComponent<UI_Manager>();//UIマネージャー取得
         itemManager = this.GetComponent<ItemManager>();//アイテムマネージャー取得
 
+        rewardScene = this.GetComponent<RewardScene>();//報酬シーンクラス取得
+
         // シーンをまたいでも破棄されない
         DontDestroyOnLoad(gameObject);
     }
@@ -72,7 +77,8 @@ public class GameManager : MonoBehaviour
     {
         WaveTimer = WaveTime;//タイマー設定
 
-        
+        //休憩シーン呼び出し
+        Event_Rest();
 
         //時間をとめる
         Time.timeScale = 0.0f;
@@ -86,61 +92,25 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        WaveTimer = Mathf.Max(0.0f, WaveTimer - Time.deltaTime);
-
-        if (WaveTimer <= 0.0f)
+        switch (gameSceneStatus)
         {
-            //報酬UIを呼び出す
-            if (ui_RewardScene != null && WaveClearFlag == false)
-            {
-                ui_RewardScene.gameObject.SetActive(true);
-                ui_RewardScene.GenerateItem();
-            }
-
-            WaveClearFlag = true;//クリア状態に
-
-            //時間をとめる
-            Time.timeScale = 0.0f;
-
-            
-
-            //全てのエネミーを削除
-            if (enemyManager != null) enemyManager.DestroyAllEnemy();
-        }
-
-
-        //Wave初期化
-        if (WaveClearFlag == true)
-        {
-
-
-            //
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
-            {
-                InitWave();
-
-                //時間をもどす
-                Time.timeScale = 1.0f;
-
-                //報酬シーンのUIを閉じる
-                if (ui_RewardScene != null)
+            case GameSceneStatus.PlayGame:
+                WaveTimer = Mathf.Max(0.0f, WaveTimer - Time.deltaTime);
+                if (WaveTimer <= 0.0f)
                 {
-                    ui_RewardScene.gameObject.SetActive(false);
+                    Event_Rest();
                 }
-            }
-            
-        }
-        else
-        {
-            //報酬UIを閉じる
-        }
-
-        //Wave進行
-        if (WaveClearFlag == false)
-        {
-            //=WaveDataList[WaveData_Index].GetSpawnRateList();
-
-
+                break;
+            case GameSceneStatus.Pause:
+                break;
+            case GameSceneStatus.Rest:
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
+                {
+                    Event_PlayGame();
+                }
+                break;
+            case GameSceneStatus.GameOver:
+                break;
         }
 
         if (ui_Manager != null)
@@ -148,7 +118,50 @@ public class GameManager : MonoBehaviour
             ui_Manager.SetMoneyValue_UI(Money);
         }
     }
+    public void Event_PlayGame()
+    {
+        //インゲーム状態
+        gameSceneStatus = GameSceneStatus.PlayGame;
 
+        InitWave();
+
+        //時間をもどす
+        Time.timeScale = 1.0f;
+
+        //報酬シーンのUIを閉じる
+        if (ui_RewardScene != null)
+        {
+            ui_RewardScene.gameObject.SetActive(false);
+        }
+    }
+    public void Event_GameOver()
+    {
+        gameSceneStatus = GameSceneStatus.GameOver;
+    }
+
+    public void Event_Rest()
+    {
+        //報酬シーンを呼び出す
+        if (rewardScene != null && WaveClearFlag == false)
+        {
+            rewardScene.OpenRewardScene();
+        }
+
+        WaveClearFlag = true;//クリア状態に
+
+        //時間をとめる
+        Time.timeScale = 0.0f;
+
+        //ゲームシーンステータスを休憩に変更
+        gameSceneStatus = GameSceneStatus.Rest;
+
+        //全てのエネミーを削除
+        if (enemyManager != null) enemyManager.DestroyAllEnemy();
+    }
+    public void SetGameSceneStatus(GameSceneStatus _status)
+    {
+        gameSceneStatus = _status;
+    }
     public void SetMoney(int _Money)
     {
         Money = _Money;

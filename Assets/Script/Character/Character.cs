@@ -79,7 +79,14 @@ public class Character : MonoBehaviour
     {
         return DefensePoint_Result;
     }
-
+    public float GetHealthPointMax_Result()
+    {
+        return HealthPointMax_Result;
+    }
+    public  float GetMoveSpeedPoint_Result()
+    {
+        return MoveSpeedPoint_Result;
+    }
     public float GetHealthPoint_Current()
     {
         return HealthPoint_Current;

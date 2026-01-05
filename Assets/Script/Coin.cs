@@ -51,7 +51,7 @@ public class Coin : Item_Base
         {
             //プレイヤーなら回収状態に
             Getter = other.gameObject;
-            Debug.Log("プレイヤーと接触");
+            //Debug.Log("プレイヤーと接触");
         }
     }
 }
