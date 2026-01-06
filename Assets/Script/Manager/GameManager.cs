@@ -152,6 +152,9 @@ public class GameManager : MonoBehaviour
         //時間をとめる
         Time.timeScale = 0.0f;
 
+        //ダメージ表示を削除
+        if (ui_Manager != null) ui_Manager.CleanDamageDisplayUI();
+
         //ゲームシーンステータスを休憩に変更
         gameSceneStatus = GameSceneStatus.Rest;
 
@@ -427,5 +430,10 @@ public class GameManager : MonoBehaviour
         {
             ui_Manager.RemoveSelectSlot_all();
         }
+    }
+
+    public UI_Manager GetUI_Manager()
+    {
+        return ui_Manager;
     }
 }

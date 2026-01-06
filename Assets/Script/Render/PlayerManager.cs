@@ -101,4 +101,23 @@ public class PlayerManager : MonoBehaviour
         if (ui_PlayerStatusView1 != null) ui_PlayerStatusView1.gameObject.SetActive(_flag);
         if (ui_PlayerStatusView2 != null) ui_PlayerStatusView2.gameObject.SetActive(_flag);
     }
+
+    //プレイヤーにアクセサリをセット
+    public void SetAccessory_Player(int _PlayerNam,Accessory _Accessory)
+    {
+        if (_PlayerNam == 1 && Player1 != null)
+        {
+            PlayerController_3d player = Player1.GetComponent<PlayerController_3d>();//取得
+            if (player != null) player.SetAccessory(_Accessory);//アクセをセット
+        }
+        else if (_PlayerNam == 2 && Player2 != null)
+        {
+            PlayerController_3d player = Player2.GetComponent<PlayerController_3d>();//取得
+            if (player != null) player.SetAccessory(_Accessory);//アクセをセット
+        }
+        else
+        {
+            Debug.Log("アクセの装備に失敗しました");
+        }
+    }
 }

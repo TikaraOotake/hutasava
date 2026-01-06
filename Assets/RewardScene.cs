@@ -11,6 +11,10 @@ public class RewardScene :MonoBehaviour
 
     [SerializeField] private UI_Base UI_BuySlot;
 
+    [SerializeField] private UI_SelectWindow SelectAttachmentWindow;//装備者を決めるウィンドウ
+
+    [SerializeField] private Accessory waitAcce;//装備待機アクセ
+
     //リスト同期用変数
     private int prevA, prevB;
 
@@ -19,6 +23,15 @@ public class RewardScene :MonoBehaviour
         //入力時のイベントを登録
         if (itemContainer != null) itemContainer.SetClickEvent(OnClick_UI);
         if (UI_BuySlot != null) UI_BuySlot.OnSelected += OnClick_UI_SaleItem;
+
+        if (SelectAttachmentWindow != null)
+        {
+            //入力時のイベントを登録
+            SelectAttachmentWindow.SetAction(0, OnClick_UI_AttachAccessory, 1);
+            SelectAttachmentWindow.SetAction(1, OnClick_UI_AttachAccessory, 2);
+
+            SelectAttachmentWindow.SetActiveWindow(false);//非表示
+        }
 
 
         //Playerマネージャー取得
@@ -36,6 +49,10 @@ public class RewardScene :MonoBehaviour
         {
             CloseRewardScene();
         }
+    }
+    private void TestFunction(int i)
+    {
+        Debug.Log("テスト　引数：" + i);
     }
 
     private void OnClick_UI(UI_Base _ui)
@@ -72,6 +89,13 @@ public class RewardScene :MonoBehaviour
                         if (itemList[i] is Accessory)
                         {
                             //アイテムがアクセサリーであれば次にどちらに装備するか決める
+
+                            //選択ウィンドウの有効化
+                            SelectAttachmentWindow.SetActiveWindow(true);
+
+                            //装備したいアクセを待機欄に設定
+                            waitAcce = (Accessory)itemList[i];
+
                             Result = true;
                         }
                         else
@@ -96,6 +120,23 @@ public class RewardScene :MonoBehaviour
     private void OnClick_UI_SaleItem(int i)
     {
         GameManager.Instance.SaleItem();
+    }
+    //アクセサリ装備
+    private void OnClick_UI_AttachAccessory(int id)
+    {
+        if (playerManager != null && waitAcce != null)//有効性チェック
+        {
+            playerManager.SetAccessory_Player(id, waitAcce);//セット
+            waitAcce = null;//待機アクセを空に
+        }
+
+        //選択ウィンドウを非有効化
+        SelectAttachmentWindow.SetActiveWindow(false);
+
+        //元の報酬シーンのUIを再び選択可能に設定
+        SetSelectUI_IsActive();
+
+        Debug.Log("アクセを装備しました");
     }
     public bool TransferItem_toStorage(EquipmentItem_Base _Itemdata)
     {
@@ -162,7 +203,8 @@ public class RewardScene :MonoBehaviour
         }
     }
 
-    public void OpenRewardScene()
+    //報酬シーンのUIを選べる状態にする
+    public void SetSelectUI_IsActive()
     {
         ////選択可能状態にしたいものをリストにまとめる
         List<UI_Base> uiList = new List<UI_Base>();
@@ -242,6 +284,10 @@ public class RewardScene :MonoBehaviour
             //プレイヤーステータスのUIを表示
             playerManager.SetUI_PlayerStatusViewActive(true);
         }
+    }
+    public void OpenRewardScene()
+    {
+        SetSelectUI_IsActive();
 
         //アイテム生成
         GenerateItem();

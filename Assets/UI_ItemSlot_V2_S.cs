@@ -8,6 +8,17 @@ public class UI_ItemSlot_V2_S : UI_ItemSlot_V2
         IsSelectiveFalg = _flag;
         SetHighlight_UI(_flag);
 
+        //選択中にUIを拡大させる
+        if(IsSelectiveFalg)
+        {
+            transform.localScale = UI_BaseScale * SelectUpScaleRate;//大きさを拡大
+        }
+        else
+        {
+            transform.localScale = UI_BaseScale;//大きさを通常に
+        }
+
+        //サブタブの表示条件
         if (SubTab != null)
         {
             //選択状態かつアイテムセット状態

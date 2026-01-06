@@ -11,6 +11,12 @@ public class ItemContainer : MonoBehaviour
     //リスト同期用変数
     private int prevA, prevB;
 
+    private void Start()
+    {
+        //UIの表示更新
+        Update_DisplayUI();
+    }
+
     public List<EquipmentItem_Base> GetItemList()
     {
         return ItemList;

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UI_Manager : MonoBehaviour
 {
     [SerializeField] private GameObject DamageDisplayUI_Prefab;//ダメ―ジ表示のUIプレハブ
+    [SerializeField] private List<GameObject> DamageDisplayUI_List;//生成したダメージ表示のUIのリスト
 
     [SerializeField] private bool Reward_UI_Flag;//報酬画面の表示フラグ
     [SerializeField] private GameObject CursorObj;//カーソルのオブジェクト
@@ -245,11 +246,27 @@ public class UI_Manager : MonoBehaviour
                 ui.SetDisplayDamage(_Damage);
                 ui.Setup(_Pos,canvas,cameraComp);
             }
+
+            DamageDisplayUI_List.Add(damageObj);
         }
         else
         {
             Debug.Log("必要な変数がありませんでした");
         }
+    }
+    public void CleanDamageDisplayUI()
+    {
+        //全てのダメージ表示UIを削除
+        for (int i = 0; i < DamageDisplayUI_List.Count; ++i)
+        {
+            if (DamageDisplayUI_List[i] != null)
+            {
+                Destroy(DamageDisplayUI_List[i]);//オブジェクトを削除
+                DamageDisplayUI_List.RemoveAt(i);//要素を解放
+            }
+        }
+
+        DamageDisplayUI_List.Clear();
     }
 
     //選択肢を選択可能状態にする
@@ -257,6 +274,13 @@ public class UI_Manager : MonoBehaviour
     {
         //選択肢可能リストに追加
         MergeLists<UI_Base>(SelectUI_List, _List);
+
+        //設定した段階でインデックスが配列外の場合は0番目を選択する
+        if (!(SelectIndex >= 0 && SelectIndex < SelectUI_List.Count))
+        {
+            SelectIndex = 0;
+            SelectingHighlightUI(SelectUI_List, SelectIndex, true);
+        }
     }
     public void SetSelectSlot_isSelective(UI_Base _ui)
     {
@@ -267,12 +291,23 @@ public class UI_Manager : MonoBehaviour
     //引数と同一のものを除外する
     public void RemoveSelectSlot(List<UI_Base> _List)
     {
+        //選択表示を解除
+        SelectingHighlightUI(SelectUI_List, SelectIndex, false);
+
         RemoveFromList<UI_Base>(SelectUI_List, _List);
+
+        //リストの最初のUIを選択中とする
+        SelectIndex = 0;
+        SelectingHighlightUI(SelectUI_List, SelectIndex, true);
     }
 
     //選択肢リストを全て除外
     public void RemoveSelectSlot_all()
     {
+        //選択表示を解除
+        SelectingHighlightUI(SelectUI_List, SelectIndex, false);
+
+        //リストをすべて外す
         SelectUI_List.Clear();
     }
 

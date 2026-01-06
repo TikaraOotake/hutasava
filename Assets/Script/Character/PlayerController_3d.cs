@@ -16,6 +16,7 @@ public class PlayerController_3d : Character
     [SerializeField] HP_Gauge HP_Gauge_Comp;//HPゲージのコンポ(仮)
 
     [SerializeField] List<Weapon> WeaponList = new List<Weapon>();
+    [SerializeField] List<Accessory> AccessoryList = new List<Accessory>();
 
     [SerializeField] Weapon TestOriginWeapon;//テスト用の複製元の武器
 
@@ -280,6 +281,13 @@ public class PlayerController_3d : Character
 
         return InputValue;
     }
+    public void SetAccessory(Accessory _Accessory)
+    {
+        AccessoryList.Add(_Accessory);//追加
+
+        //ステータス再計算
+        CalcuStatus();
+    }
 
     public override void SetDamage(float _Damage)
     {
@@ -302,7 +310,7 @@ public class PlayerController_3d : Character
         float AcceSpeed = 0.0f;
 
         //アクセサリステータスを全て加算
-        if (uI_Inventory_Player != null)
+        if (uI_Inventory_Player != null)//没
         {
             List<Accessory> accessoryList = uI_Inventory_Player.GetAccessoryList();
             for (int i = 0; i < accessoryList.Count; ++i)
@@ -314,6 +322,16 @@ public class PlayerController_3d : Character
                     AcceHP += status.HealthPoint;
                     AcceSpeed += status.SpeedPoint;
                 }
+            }
+        }
+        for (int i = 0; i < AccessoryList.Count; ++i)
+        {
+            if (AccessoryList[i] != null)
+            {
+                CharacterStatus status = AccessoryList[i].GetStatus();
+                AcceAtk += status.AttackPoint;
+                AcceHP += status.HealthPoint;
+                AcceSpeed += status.SpeedPoint;
             }
         }
 
