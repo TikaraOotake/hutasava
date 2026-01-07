@@ -34,9 +34,15 @@ public class ItemContainer : MonoBehaviour
     }
     public bool SetItem(int _Index, EquipmentItem_Base _Item)
     {
+        //初期化
+        if (_Item != null) _Item.Init();
+
         bool Result = false;
         if (_Index >= 0 && _Index < ItemList.Count)//配列内チェック
         {
+            //入れ替え先のアイテムを初期化
+            if (ItemList[_Index] != null) ItemList[_Index].Init();
+
             ItemList[_Index] = _Item;
             Result = true;
         }

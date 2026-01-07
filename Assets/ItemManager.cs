@@ -54,7 +54,10 @@ public class ItemManager : MonoBehaviour
                     selectItem.SetLevel(selectItem.GetLevel() + 1);
 
                     //レベルを上げたアイテムをコンテナにセット
-                    _Container.SetItem(_Index, selectItem);
+                    //_Container.SetItem(_Index, selectItem);//既に入っているアイテムを操作しているため代入は不要
+
+                    //アイテムオブジェクト解放
+                    Destroy(holdItem);
 
                     //保留のコンテナのアイテムを削除
                     HoldSlot.Container.SetItem(HoldSlot.Index, null);
@@ -92,6 +95,9 @@ public class ItemManager : MonoBehaviour
             {
                 //価格を取得
                 int cost = Item.GetSaleCost();
+
+                //オブジェクトを解放
+                Destroy(Item);
 
                 //保留スロットのアイテムを削除
                 HoldSlot.Container.SetItem(HoldSlot.Index, null);

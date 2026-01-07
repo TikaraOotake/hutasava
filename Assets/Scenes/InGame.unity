@@ -1260,6 +1260,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 62d49ff41929e2f43959e8cd16cb4cd8, type: 2}
   - {fileID: 11400000, guid: 149c1939f286cf64292d18d0ad97893a, type: 2}
   - {fileID: 11400000, guid: 70369835a523f914f911dc47a23a4a64, type: 2}
+  - {fileID: 11400000, guid: 2262539de80402e499bddd4885146a48, type: 2}
   rewardScene: {fileID: 0}
   ui_RewardScene: {fileID: 0}
   gameSceneStatus: 0

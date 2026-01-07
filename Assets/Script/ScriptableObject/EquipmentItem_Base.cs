@@ -15,6 +15,12 @@ public class EquipmentItem_Base : ScriptableObject
     [SerializeField] private float Speed;
     [SerializeField] private int Level = 1;
 
+    //ƒAƒCƒeƒ€‚Ì‰Šú‰»
+    public virtual void Init()
+    {
+        return;
+    }
+
     public Sprite GetItemSprite()
     {
         return ItemSprite;

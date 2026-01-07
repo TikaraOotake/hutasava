@@ -24,11 +24,11 @@ public class UI_ItemSlot_V2_S : UI_ItemSlot_V2
             //選択状態かつアイテムセット状態
             if (IsSelectiveFalg && IsSetedItem)
             {
-                SubTab.SetActive(true);
+                SubTab.SetActive(true);//表示
             }
             else
             {
-                SubTab.SetActive(false);
+                SubTab.SetActive(false);//非表示
             }
         }
     }
