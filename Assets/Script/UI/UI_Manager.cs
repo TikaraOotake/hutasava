@@ -60,7 +60,11 @@ public class UI_Manager : MonoBehaviour
             {
                 if (SelectUI_List[SelectIndex] != null)//ヌルチェック
                 {
+                    //イベントの呼び出し
                     SelectUI_List[SelectIndex].Event();
+
+                    //UIを発光
+                    SelectingHighlightUI(SelectUI_List, SelectIndex, true);
                 }
             }
             //----------------------------------------

@@ -86,6 +86,7 @@ MonoBehaviour:
   Camera: {fileID: 0}
   HP_Gauge_Comp: {fileID: 0}
   WeaponList: []
+  AccessoryList: []
   TestOriginWeapon: {fileID: 0}
   RevivalTime_Base: 1
   RevivalTime_Result: 5
@@ -94,6 +95,10 @@ MonoBehaviour:
   IsDead: 0
   HealthPoint_Current_old: 0
   itemContainer: {fileID: 780509721366066933}
+  playerManager: {fileID: 0}
+  quadTextureAnimation: {fileID: 3055221135296931248}
+  PlayerTextureFrontList: []
+  PlayerTextureBackList: []
   uI_Inventory_Player: {fileID: 0}
 --- !u!54 &5179120206610182466
 Rigidbody:
@@ -176,7 +181,7 @@ GameObject:
   - component: {fileID: 9204884441893999574}
   - component: {fileID: 1719043514331607854}
   - component: {fileID: 8652430108810800823}
-  - component: {fileID: 7513406737407848883}
+  - component: {fileID: 3055221135296931248}
   m_Layer: 0
   m_Name: SpriteBoard
   m_TagString: Untagged
@@ -266,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetCamera: {fileID: 0}
   yawOffset: 0
---- !u!114 &7513406737407848883
+--- !u!114 &3055221135296931248
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -275,7 +280,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5072176775927866701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddfd20057321eac4288a71deb916ac8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 4643521285156a84da94d1d90ebe1ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainTexture: {fileID: 2800000, guid: e79f153a576863046951d4affdd94e58, type: 3}
+  textures:
+  - {fileID: 2800000, guid: e79f153a576863046951d4affdd94e58, type: 3}
+  frameRate: 10
+  flipX: 0

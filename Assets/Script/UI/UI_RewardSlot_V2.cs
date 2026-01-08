@@ -1,7 +1,6 @@
 using NUnit.Framework.Interfaces;
 using System;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class UI_RewardSlot_V2 : UI_Base
 {

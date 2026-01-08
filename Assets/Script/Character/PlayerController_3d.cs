@@ -32,9 +32,14 @@ public class PlayerController_3d : Character
     //アイテムを格納するコンテナ
     [SerializeField] private ItemContainer itemContainer;
 
-    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private PlayerManager playerManager;//プレイヤーマネージャー
+    [SerializeField] private QuadTextureAnimation quadTextureAnimation;//テクスチャアニメーション
 
-    //削除予定
+    [SerializeField] private List<Texture> PlayerTextureFrontList = new List<Texture>();//前向きのテクスチャリスト
+    [SerializeField] private List<Texture> PlayerTextureBackList = new List<Texture>();//後ろ向きのテクスチャリスト
+    bool IsMove;//アニメーション用歩行状態確認フラグ
+
+    //削除予定---------------------------
     [SerializeField] private UI_Inventory_Player uI_Inventory_Player;
 
     private void Awake()
@@ -48,7 +53,9 @@ public class PlayerController_3d : Character
         //自身をゲームマネージャーに登録
         GameManager.Instance.SetPlayer(PlayerNumber, this.gameObject);
 
+        //プレイヤーマネージャー取得
         if (playerManager == null) playerManager = GameManager.Instance.GetPlayerManager();
+
 
         if (TestOriginWeapon != null)
         {
@@ -95,7 +102,7 @@ public class PlayerController_3d : Character
         }
 
 
-
+        Update_Animation();//Animation更新
         Update_Blow();
         
 
@@ -173,6 +180,31 @@ public class PlayerController_3d : Character
         }
     }
 
+    private void Update_Animation()
+    {
+        //有効性確認
+        if (quadTextureAnimation == null) return;
+
+        float Angle = transform.rotation.eulerAngles.y;//角度取得
+
+        //カメラの角度を減算
+        if (Camera != null) Angle -= Camera.transform.eulerAngles.y;
+
+        Angle += 90;//90度ずらす
+
+        //360度の範囲に補正
+        Angle = ((Angle + 360) % 360.0f);
+
+        if (Angle < 160)
+        {
+            quadTextureAnimation.SetFlipX(true);
+        }
+        else if (Angle > 200)
+        {
+            quadTextureAnimation.SetFlipX(false);
+        }
+    }
+
     private void Move()
     {
         //移動方向
@@ -233,6 +265,9 @@ public class PlayerController_3d : Character
             StickInputCancelTimer = 0.5f;//タイマー設定
         }
 
+        //歩行状態か記録
+        IsMove = MoveVec != Vector2.zero;
+
         //正規化
         MoveVec.Normalize();
 
@@ -240,9 +275,9 @@ public class PlayerController_3d : Character
         StickInputCancelTimer = Mathf.Max(StickInputCancelTimer - Time.deltaTime, 0.0f);
 
         //Cameraの角度に合わせて移動方向を回転させる
-        float angle = 0.0f;                                                 //変数宣言
+        float angle = 0.0f;                                                  //変数宣言
         if (Camera != null) angle = -Camera.transform.rotation.eulerAngles.y;//取得
-        MoveVec = Quaternion.Euler(0, 0, angle) * MoveVec;                  //補正
+        MoveVec = Quaternion.Euler(0, 0, angle) * MoveVec;                   //補正
 
         //座標取得
         Vector2 Pos = new Vector2(transform.position.x, transform.position.z);

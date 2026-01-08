@@ -46,6 +46,14 @@ public class ItemManager : MonoBehaviour
 
             if (holdItem != null && selectItem != null)//アイテムの有効性チェック
             {
+                //自分同士でないかチェック
+                if (holdItem == selectItem)
+                {
+                    HoldSlot.Container = null;                //保留をリセット    
+                    GameManager.Instance.SetHoldingUI(null);//点滅解除
+                    return;
+                }
+
                 //同種同レベルかチェック
                 if (holdItem.GetLevel() == selectItem.GetLevel() &&
                     holdItem.GetType() == selectItem.GetType())
