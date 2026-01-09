@@ -40,6 +40,9 @@ public class Coin : Item_Base
 
                 //©g‚ğíœ
                 Destroy(this.gameObject);
+
+                //ƒRƒCƒ“æ“¾‰¹
+                SoundManager.instance.PlaySE("coin");
             }
         }
     }

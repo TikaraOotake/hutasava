@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private seDeta[] seDatas;
 
+    //éŒ¾
     private Dictionary<string, AudioClip> seDictionary;
     private AudioSource audioSource;
 
@@ -24,11 +25,14 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null) Debug.Log("audioSource‚Ìæ“¾‚É¸”s");
 
+        //‰Šú‰»
         seDictionary = new Dictionary<string, AudioClip>();
         foreach(var se in seDatas)
         {
+            //‘¶İ‚·‚é‚©
             if(!seDictionary.ContainsKey(se.seName))
             {
+                //’Ç‰Á
                 seDictionary.Add(se.seName,se.seClip);
             }
             else
