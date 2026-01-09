@@ -6,8 +6,19 @@ public class ChakramBullet : PlayerBullet
     [SerializeField] private float RotateSpeed = 1.0f;//回転速度 
 
 
-    // Update is called once per frame
+    private void Start()
+    {
+        Update_Chakram();
+    }
     void Update()
+    {
+        Update_Chakram();
+
+        //弾共通の更新処理------------
+        Update_bullet();
+    }
+
+    private void Update_Chakram()
     {
         if (Player != null)
         {
@@ -24,5 +35,10 @@ public class ChakramBullet : PlayerBullet
             transform.position = pos + new Vector3(rotateVec.x, 0.0f, rotateVec.y);
         }
 
+        //武器データが無効であれば削除
+        if (weapon == null)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

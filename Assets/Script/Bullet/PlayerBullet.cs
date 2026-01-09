@@ -13,17 +13,22 @@ public class PlayerBullet : MonoBehaviour
 
     [SerializeField] private float DestroyTimer = 1.0f;//削除タイマー
 
+    [SerializeField] private float hitInterval = 0.5f; // 連続Hit間隔
+    Dictionary<GameObject, float> hitCooldown = new Dictionary<GameObject, float>();
+
+    float cleanupTimer;
+
     [SerializeField] private bool isPerforate;//弾貫通フラグ
 
     [SerializeField] private List<GameObject> HittedObjList;
 
     public void SetPlayer(GameObject _Player)
     {
-        Player= _Player;
+        Player = _Player;
     }
     public void SetWeapon(Weapon _weapon)
     {
-        weapon= _weapon;
+        weapon = _weapon;
     }
 
     void Update()
@@ -37,6 +42,15 @@ public class PlayerBullet : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        //弾共通の更新処理------------
+        Update_bullet();
+    }
+
+    //弾共通の更新処理
+    protected void Update_bullet()
+    {
+        Cleanup();
     }
 
     public void SetAtkValue(float _Atk)
@@ -60,6 +74,49 @@ public class PlayerBullet : MonoBehaviour
         return Result;
     }
 
+    private bool TryHit(GameObject enemy)
+    {
+        float now = Time.time;
+
+        if (hitCooldown.TryGetValue(enemy, out float nextHitTime))
+        {
+            if (now < nextHitTime) return false; // まだ再Hit不可
+        }
+
+        // ダメージ処理
+        //DealDamage(enemy);
+
+        // 次にHit可能な時刻を更新
+        hitCooldown[enemy] = now + hitInterval;
+
+        //ヒット可能
+        return true;
+    }
+
+    //連続hit管理リストの掃除
+    protected void Cleanup()
+    {
+        cleanupTimer += Time.deltaTime;
+        if (cleanupTimer < 1.0f) return;
+
+        cleanupTimer = 0f;
+
+        float now = Time.time;
+
+        var removeList = new List<GameObject>();
+
+        foreach (var pair in hitCooldown)
+        {
+            if (now >= pair.Value)
+                removeList.Add(pair.Key);
+        }
+
+        foreach (var key in removeList)
+        {
+            hitCooldown.Remove(key);
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -67,7 +124,8 @@ public class PlayerBullet : MonoBehaviour
         if (other.tag == "Enemy")//衝突相手がエネミー
         {
             //既に当たっていないかチェック
-            if (!CheckHittedObj(other.gameObject))
+            //if (!CheckHittedObj(other.gameObject))
+            if (TryHit(other.gameObject))
             {
                 Character chara = other.GetComponent<Character>();
                 if (chara != null)
@@ -95,7 +153,6 @@ public class PlayerBullet : MonoBehaviour
                     if (isPerforate == false) Destroy(this.gameObject);
                 }
             }
-
         }
     }
 }

@@ -49,6 +49,10 @@ public class RewardScene :MonoBehaviour
         {
             CloseRewardScene();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GenerateItem();
+        }
     }
     private void TestFunction(int i)
     {
@@ -197,6 +201,14 @@ public class RewardScene :MonoBehaviour
             List<EquipmentItem_Base> itemList = itemContainer.GetItemStorageList();
             for (int i = 0; i < itemList.Count; ++i)
             {
+                //アイテムが残っていたら削除する
+                EquipmentItem_Base item = itemContainer.GetItem(i);
+                if (item != null)
+                {
+                    Destroy(item);
+                    item = null;
+                }
+
                 //ランダムなアイテムデータを渡す
                 itemContainer.SetItem(i, GameManager.Instance.GetRandCopyItemData());
             }

@@ -44,6 +44,10 @@ public class ItemManager : MonoBehaviour
             EquipmentItem_Base holdItem = HoldSlot.Container.GetItem(HoldSlot.Index);
             EquipmentItem_Base selectItem = _Container.GetItem(_Index);
 
+            //アイテムを初期化
+            if (selectItem != null) selectItem.Init();
+            if (holdItem != null) holdItem.Init();
+
             if (holdItem != null && selectItem != null)//アイテムの有効性チェック
             {
                 //自分同士でないかチェック

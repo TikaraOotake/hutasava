@@ -127,7 +127,8 @@ MonoBehaviour:
   BulletAtk: 1
   BulletMoveVec: {x: 0, y: 0, z: 0}
   DestroyTimer: 1
-  isPerforate: 0
+  hitInterval: 0.5
+  isPerforate: 1
   HittedObjList: []
   RotateLength: 3
   RotateSpeed: 3

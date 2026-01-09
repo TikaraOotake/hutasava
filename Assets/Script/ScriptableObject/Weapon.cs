@@ -14,6 +14,12 @@ public class Weapon : EquipmentItem_Base
     [SerializeField]
     protected int WeaponLevel = 0;
 
+    //初期化
+    public override void Init()
+    {
+        return;
+    }
+
     //アイテムの更新処理
     public virtual void Update_Item(GameObject _CallObject)//引き数：_CallObject　呼び出し元のオブジェクト
     {
