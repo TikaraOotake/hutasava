@@ -55,4 +55,26 @@ public class Weapon : EquipmentItem_Base
     {
         WeaponLevel = _WeaponLevel;
     }
+
+    //弾の生成と情報の受け渡しをある程度自動で行う関数
+    protected GameObject GenerateBullet(GameObject _CallObject,GameObject _BulletPrefab)
+    {
+        //生成
+        GameObject bullet = Instantiate(_BulletPrefab, _CallObject.transform.position, Quaternion.identity);
+
+        PlayerBullet playerBullet = bullet.GetComponent<PlayerBullet>();
+        if (playerBullet != null)
+        {
+            playerBullet.SetPlayer(_CallObject);//プレイヤー設定
+            playerBullet.SetWeapon(this);//武器データ設定
+
+            //攻撃力適用
+            float PlayerAtk = 1;
+            PlayerController_3d player = _CallObject.GetComponent<PlayerController_3d>();//プレイヤースクリプト取得
+            if (player) PlayerAtk = player.GetAttackPoint_Result();//プレイヤー攻撃力取得
+            SetBulletAtkValue(bullet, PlayerAtk * WeaponAttackPoint_Base);//攻撃力適用
+        }
+
+        return bullet;
+    }
 }
