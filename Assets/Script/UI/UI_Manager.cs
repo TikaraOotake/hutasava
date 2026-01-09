@@ -130,6 +130,9 @@ public class UI_Manager : MonoBehaviour
 
             //UI‚ð”­Œõ
             SelectingHighlightUI(SelectUI_List, SelectIndex, true);
+
+            //‘I‘ð‰¹
+            SoundManager.instance.PlaySE("ui_select");
         }
     }
     void HighlightUI(UI_Base _ui, bool _LightFlag)
