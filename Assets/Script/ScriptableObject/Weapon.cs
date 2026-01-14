@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "Weapon", menuName = "ScriptableObjects/CreateWeapon")]
 public class Weapon : EquipmentItem_Base
 {
@@ -13,6 +14,9 @@ public class Weapon : EquipmentItem_Base
     protected float WeaponAttackPoint_Base = 1;//•ŠíŠî‘bUŒ‚—Í
     [SerializeField]
     protected int WeaponLevel = 0;
+
+    //ƒ_ƒ[ƒW‰¹
+    //SoundManager.instance.PlaySE("hit_damage");
 
     //‰Šú‰»
     public override void Init()
