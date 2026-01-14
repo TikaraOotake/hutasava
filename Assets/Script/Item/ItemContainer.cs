@@ -73,6 +73,11 @@ public class ItemContainer : MonoBehaviour
         return UI_ItemList;
     }
 
+    public int GetSize()
+    {
+        return ItemList.Count;
+    }
+
     //UI‚Ì•\¦‚ğXV‚·‚é
     protected void Update_DisplayUI()
     {

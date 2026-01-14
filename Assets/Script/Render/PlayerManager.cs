@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     //Player
-    [SerializeField] List<GameObject> PlayerList;//プレイヤーを格納するためのリスト
+    [SerializeField] List<GameObject> PlayerList = new List<GameObject>();//プレイヤーを格納するためのリスト
 
     [SerializeField] GameObject Player1;
     [SerializeField] GameObject Player2;
@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour
 
     //アイテムを格納するコンテナ
     [SerializeField] ItemContainer itemContainer;
+
+    //絆効果を格納するリスト
+    [SerializeField] List<BondEffect_Base> bondEffectList = new List<BondEffect_Base>();
 
    
 
@@ -118,5 +121,59 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("アクセの装備に失敗しました");
         }
+    }
+
+    //絆効果のセット
+    public void SetBondEffect()
+    {
+        //初期化
+        for (int i = 0; i < bondEffectList.Count; ++i)
+        {
+            if (bondEffectList[i] != null)//有効性確認
+            {
+                bondEffectList[i].SetLevel(0);
+            }
+        }
+
+        List<EquipmentItem_Base> itemList1 = new List<EquipmentItem_Base>();
+        List<EquipmentItem_Base> itemList2 = new List<EquipmentItem_Base>();
+
+        List<EquipmentItem_Base> itemList = new List<EquipmentItem_Base>();
+
+        //取得
+        if (Player1 != null)
+        {
+            ItemContainer itemContainer1 = Player1.GetComponent<ItemContainer>();
+            if (itemContainer1 != null) itemList1 = itemContainer1.GetItemList();
+        }
+        if (Player2 != null)
+        {
+            ItemContainer itemContainer2 = Player2.GetComponent<ItemContainer>();
+            if (itemContainer2 != null) itemList2 = itemContainer2.GetItemList();
+        }
+
+        //リスト
+        for (int i = 0; i < itemList1.Count; ++i)
+        {
+            itemList.Add(itemList1[i]);
+        }
+        for (int i = 0; i < itemList2.Count; ++i)
+        {
+            itemList.Add(itemList2[i]);
+        }
+
+        //絆効果を集計
+        for (int i = 0; i < itemList.Count; ++i)
+        {
+            if (itemList[i] != null)//有効確認
+            {
+                if (itemList[i] is Weapon)
+                {
+                    Weapon weapon = (Weapon)itemList[i];//型変換
+                    
+                }
+            }
+        }
+
     }
 }

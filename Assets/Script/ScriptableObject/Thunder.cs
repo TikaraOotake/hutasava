@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Thunder", menuName = "ScriptableObjects/CreateWeapon_Thunder")]
 public class Thunder : Weapon
 {
 
@@ -34,6 +35,9 @@ public class Thunder : Weapon
                     //À•WÝ’è
                     newBullet.transform.position = pos + new Vector3(dir.x, 0.0f, dir.y);
                 }
+
+                //UŒ‚‰ñ”‚ð‰ÁŽZ
+                ++AttackCount;
 
                 //3‰ñUŒ‚‚µ‚½‚çUŒ‚‰ñ”ƒŠƒZƒbƒg
                 if (AttackCount >= 3)
