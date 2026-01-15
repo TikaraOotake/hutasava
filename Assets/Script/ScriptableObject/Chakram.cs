@@ -24,7 +24,7 @@ public class Chakram : Weapon
         if (bullet == null && BulletPrefab != null)
         {
             //ê∂ê¨
-            bullet = Instantiate(BulletPrefab, _CallObject.transform.position, Quaternion.identity);
+            bullet = GenerateBullet(_CallObject, BulletPrefab);
 
             PlayerBullet playerBullet = bullet.GetComponent<PlayerBullet>();
             if (playerBullet != null)

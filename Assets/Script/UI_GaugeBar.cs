@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HP_Gauge : MonoBehaviour
+public class UI_GaugeBar : MonoBehaviour
 {
     [SerializeField]
     private Image CurrentBar_Image;//現在バーのイメージコンポ

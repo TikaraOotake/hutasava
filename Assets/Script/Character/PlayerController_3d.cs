@@ -13,7 +13,7 @@ public class PlayerController_3d : Character
 
     float StickInputCancelTimer;//スティック入力をキャンセルし続けるタイマー
 
-    [SerializeField] HP_Gauge HP_Gauge_Comp;//HPゲージのコンポ(仮)
+    [SerializeField] UI_GaugeBar HP_Gauge_Comp;//HPゲージのコンポ(仮)
 
     [SerializeField] List<Weapon> WeaponList = new List<Weapon>();
     [SerializeField] List<Accessory> AccessoryList = new List<Accessory>();

@@ -26,6 +26,7 @@ public class UI_Manager : MonoBehaviour
     private float UI_BlinkInterval = 1.0f;
 
     [SerializeField] private float JoyStickInputLength_old;//ジョイスティックの入力値
+
     void Start()
     {
         //カメラ取得
