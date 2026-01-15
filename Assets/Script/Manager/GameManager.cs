@@ -100,6 +100,10 @@ public class GameManager : MonoBehaviour
                 {
                     Event_Rest();
                 }
+                if (ui_Manager != null)
+                {
+                    ui_Manager.SetWaveProgressGaugeValue(WaveTimer, WaveTime);
+                }
                 break;
             case GameSceneStatus.Pause:
                 break;

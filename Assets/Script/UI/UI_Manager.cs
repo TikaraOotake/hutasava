@@ -15,7 +15,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private Canvas canvas;//キャンバス
     [SerializeField] private Camera cameraComp;//カメラのコンポ
 
-
+    [SerializeField] private UI_GaugeBar WaveProgressGauge;//ウェーブの進行度を表示するUI
 
     [SerializeField] private List<UI_Base> SelectUI_List;//選択したいUIのリスト
     [SerializeField] private int SelectIndex;
@@ -275,6 +275,14 @@ public class UI_Manager : MonoBehaviour
         }
 
         DamageDisplayUI_List.Clear();
+    }
+
+    public void SetWaveProgressGaugeValue(float _CurrentValue, float _MaxValue)
+    {
+        if (WaveProgressGauge != null)
+        {
+            WaveProgressGauge.SetGaugeValue(_CurrentValue, _MaxValue);
+        }
     }
 
     //選択肢を選択可能状態にする
