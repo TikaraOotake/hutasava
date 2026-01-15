@@ -149,6 +149,9 @@ public class PlayerBullet : MonoBehaviour
                     //当たったオブジェクトを記録
                     HittedObjList.Add(other.gameObject);
 
+                    //ダメージ音
+                    SoundManager.instance.PlaySEIntervalOnScreen("hit_damage", transform.position);
+
                     //自身を削除
                     if (isPerforate == false) Destroy(this.gameObject);
                 }

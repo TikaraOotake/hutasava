@@ -15,9 +15,6 @@ public class Weapon : EquipmentItem_Base
     [SerializeField]
     protected int WeaponLevel = 0;
 
-    //ƒ_ƒ[ƒW‰¹
-    //SoundManager.instance.PlaySE("hit_damage");
-
     //‰Šú‰»
     public override void Init()
     {
