@@ -10715,7 +10715,23 @@ PrefabInstance:
     - target: {fileID: 3055221135296931248, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
       propertyPath: 'textures.Array.data[0]'
       value: 
-      objectReference: {fileID: 2800000, guid: 187de6af854644346867c9ee1385977a, type: 3}
+      objectReference: {fileID: 2800000, guid: 00b4425157571c6429ff21366772725f, type: 3}
+    - target: {fileID: 5819576246004816974, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819576246004816974, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819576246004816974, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819576246004816974, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.83
+      objectReference: {fileID: 0}
     - target: {fileID: 7513406737407848883, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
       propertyPath: mainTexture
       value: 
