@@ -1674,6 +1674,7 @@ MonoBehaviour:
     seClip: {fileID: 8300000, guid: 0d0e5de442a344c48b45461bbc46362c, type: 3}
   - seName: hit_damage
     seClip: {fileID: 8300000, guid: 80557c28d37e86046a560cf17b627930, type: 3}
+  seInterval: 1
 --- !u!114 &188116533
 MonoBehaviour:
   m_ObjectHideFlags: 0
