@@ -16,9 +16,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] ItemContainer itemContainer;
 
     //ãJŒø‰Ê‚ğŠi”[‚·‚éƒŠƒXƒg
-    [SerializeField] List<BondEffect_Base> bondEffectList = new List<BondEffect_Base>();
+    [SerializeField] List<BondEffect> bondEffectList = new List<BondEffect>();
 
-   
+    [SerializeField] BondEffect testBond;
+
+
 
     void Start()
     {
@@ -44,6 +46,13 @@ public class PlayerManager : MonoBehaviour
             List<UI_ItemSlot_V2> uiList = itemContainer.GetItem_DisplayUI_List();
             //‘I‘ğ‰Â”\ó‘Ô‚É‚µ‚½‚¢‘I‘ğˆ‚ğ“o˜^
             GameManager.Instance.SetSelectSlot_isSelective(uiList);
+        }
+    }
+    private void Update()
+    {
+        if (testBond != null)
+        {
+            testBond.Update_BondEffect();
         }
     }
     public bool SetItem(int _Index, EquipmentItem_Base _Item)

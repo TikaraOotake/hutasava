@@ -99,6 +99,9 @@ public class Enemy_3d : Character
             Character chara = other.GetComponent<Character>();
             if (chara != null)
             {
+                //死亡状態な終了
+                if (chara.GetIsDead()) return;
+
                 //ダメージ計算
                 float Def = chara.GetDefensePoint_Result();
 

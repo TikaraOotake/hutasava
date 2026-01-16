@@ -63,4 +63,10 @@ public class LightningBeam : MonoBehaviour
             // hit.collider.GetComponent<Enemy>()?.Damage(1);
         }
     }
+
+    public void SetPoint(Transform _point1, Transform _point2)
+    {
+        startPoint = _point1;
+        endPoint = _point2;
+    }
 }

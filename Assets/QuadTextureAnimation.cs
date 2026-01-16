@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class QuadTextureAnimation : MonoBehaviour
 {
-    [SerializeField] private Texture[] textures;
+    [SerializeField] private List<Texture> textures = new List<Texture>();
     [SerializeField] private float frameRate = 10f;
     [SerializeField] private bool flipX;
 
@@ -40,7 +41,7 @@ public class QuadTextureAnimation : MonoBehaviour
     void ApplyFirstTexture()
     {
         if (mr == null) return;
-        if (textures == null || textures.Length == 0) return;
+        if (textures == null || textures.Count == 0) return;
 
         index = 0;
         timer = 0f;
@@ -67,13 +68,13 @@ public class QuadTextureAnimation : MonoBehaviour
 
     void Update()
     {
-        if (textures == null || textures.Length == 0) return;
+        if (textures == null || textures.Count == 0) return;
 
         timer += Time.deltaTime;
         if (timer >= 1f / frameRate)
         {
             timer = 0f;
-            index = (index + 1) % textures.Length;
+            index = (index + 1) % textures.Count;
             ApplyTexture(textures[index]);
         }
     }
@@ -81,5 +82,9 @@ public class QuadTextureAnimation : MonoBehaviour
     public void SetFlipX(bool _flag)
     {
         flipX = _flag;
+    }
+    public void SetTexture(List<Texture> _list)
+    {
+        textures = _list;
     }
 }

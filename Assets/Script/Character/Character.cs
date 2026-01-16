@@ -28,6 +28,8 @@ public class Character : MonoBehaviour
 
     [SerializeField] protected Vector2 BlowVec;//‚«”ò‚Ô•ûŒü
 
+    protected bool IsDead;//€–Só‘Ôƒtƒ‰ƒO
+
     void Start()
     {
     }
@@ -90,5 +92,9 @@ public class Character : MonoBehaviour
     public float GetHealthPoint_Current()
     {
         return HealthPoint_Current;
+    }
+    public bool GetIsDead()
+    {
+        return IsDead;
     }
 }

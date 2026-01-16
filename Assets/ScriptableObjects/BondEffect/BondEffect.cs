@@ -1,14 +1,26 @@
 using UnityEngine;
 
-public class BondEffect_Base : ScriptableObject
+public class BondEffect : EquipmentItem_Base
 {
-    private int Level = 0;
+    [SerializeField] protected GameObject Player1;
+    [SerializeField] protected GameObject Player2;
+
+    //初期化したか確認するフラグ
+    protected bool InitedFalg;
+    public override void Init()
+    {
+        //初期化済みなら終了
+        if (InitedFalg == true) return;
+
+        InitedFalg = true;//初期化済みとしてフラグをture
+
+
+
+    }
     public virtual void Update_BondEffect()
     {
+        Init();
+
         return;
-    }
-    public void SetLevel(int _Level)
-    {
-        Level = _Level;
     }
 }

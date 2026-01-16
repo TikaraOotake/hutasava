@@ -1,4 +1,4 @@
-using NUnit.Framework;
+//using NUnit.Framework;
 using StructStatus;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,8 +25,6 @@ public class PlayerController_3d : Character
     [SerializeField] float RevivalTimer;//復活タイマー
     [SerializeField] float RevivalTimer_old;//前フレームの復活タイマーを記録
 
-    [SerializeField]
-    private bool IsDead;//死亡状態フラグ
     [SerializeField] private float HealthPoint_Current_old;//前フレームのHP状態を記録
 
     //アイテムを格納するコンテナ
@@ -193,15 +191,24 @@ public class PlayerController_3d : Character
         Angle += 90;//90度ずらす
 
         //360度の範囲に補正
-        Angle = ((Angle + 360) % 360.0f);
+        Angle = ((Angle + 360.0f) % 360.0f);
 
-        if (Angle < 160)
+        if (Angle > 10 && Angle < 170)
         {
             quadTextureAnimation.SetFlipX(true);
         }
-        else if (Angle > 200)
+        else if (Angle > 190 && Angle < 350)
         {
             quadTextureAnimation.SetFlipX(false);
+        }
+
+        if (Angle >= 0 && Angle < 80 || Angle > 280 && Angle <= 360)
+        {
+            quadTextureAnimation.SetTexture(PlayerTextureBackList);
+        }
+        else if (Angle > 100 && Angle < 260)
+        {
+            quadTextureAnimation.SetTexture(PlayerTextureFrontList);
         }
     }
 
@@ -381,6 +388,9 @@ public class PlayerController_3d : Character
 
     private void OnTriggerEnter(Collider other)
     {
+        //死亡状態なら終了
+        if (IsDead) return;
+
         //仮ダメージ処理
         if (other.tag == "Enemy")//衝突相手がエネミー
         {
