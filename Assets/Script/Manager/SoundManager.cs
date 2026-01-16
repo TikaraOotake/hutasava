@@ -77,7 +77,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    //‰æ–Ê“à‚É‚ ‚éw’è‚µ‚½SE‚ğˆê’èŠÔ‘Ò‚Á‚ÄÄ¶‚·‚é
+    //‰æ–Ê“à‚É‚ ‚éw’è‚µ‚½SE‚ğˆê’èŠÔŠu‚ÅÄ¶‚·‚é
     public void PlaySEIntervalOnScreen(string seName, Vector3 targetObject)
     {
         if (audioSource == null)

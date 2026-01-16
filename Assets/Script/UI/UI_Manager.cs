@@ -66,6 +66,9 @@ public class UI_Manager : MonoBehaviour
 
                     //UI‚ð”­Œõ
                     SelectingHighlightUI(SelectUI_List, SelectIndex, true);
+
+                    //Œˆ’è‰¹
+                    SoundManager.instance.PlaySE("ui_decide");
                 }
             }
             //----------------------------------------
