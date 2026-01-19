@@ -193,6 +193,7 @@ public class PlayerController_3d : Character
         //360度の範囲に補正
         Angle = ((Angle + 360.0f) % 360.0f);
 
+        //キャラクターの左右反転
         if (Angle > 10 && Angle < 170)
         {
             quadTextureAnimation.SetFlipX(true);
@@ -202,6 +203,7 @@ public class PlayerController_3d : Character
             quadTextureAnimation.SetFlipX(false);
         }
 
+        //キャラクターの前後切り替え
         if (Angle >= 0 && Angle < 80 || Angle > 280 && Angle <= 360)
         {
             quadTextureAnimation.SetTexture(PlayerTextureBackList);

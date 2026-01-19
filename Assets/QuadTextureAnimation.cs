@@ -85,6 +85,7 @@ public class QuadTextureAnimation : MonoBehaviour
     }
     public void SetTexture(List<Texture> _list)
     {
+        if (_list == null || _list.Count == 0) return;
         textures = _list;
     }
 }
