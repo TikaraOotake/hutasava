@@ -11,6 +11,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject CursorObj;//カーソルのオブジェクト
 
     [SerializeField] private Text MoneyValueText;//残高を表示するテキスト
+    [SerializeField] private Text WaveLevelText;//ウェーブのレベルを表示するテキスト
 
     [SerializeField] private Canvas canvas;//キャンバス
     [SerializeField] private Camera cameraComp;//カメラのコンポ
@@ -238,6 +239,13 @@ public class UI_Manager : MonoBehaviour
         if (MoneyValueText != null)
         {
             MoneyValueText.text = _value.ToString() + "G";
+        }
+    }
+    public void SetWaveLevelText_UI(int _Level)
+    {
+        if (WaveLevelText != null)
+        {
+            WaveLevelText.text = "Wave:" + _Level.ToString();
         }
     }
     public void GenerateDamageDisplayUI(int _Damage, Vector3 _Pos)

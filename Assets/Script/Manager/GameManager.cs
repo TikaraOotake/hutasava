@@ -1,6 +1,9 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static GameManager;
 
 public class GameManager : MonoBehaviour
@@ -13,7 +16,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] float WaveTime = 1.0f;//ウェーブ時間
 	[SerializeField] float WaveTimer = 0.0f;//ウェーブタイマー
 
-    [SerializeField] private List<WaveData_Base> WaveDataList = new List<WaveData_Base>();
+    [SerializeField] private List<WaveData_Base> WaveDataRandomList = new List<WaveData_Base>();
     [SerializeField] private int WaveData_Index;//リストの中から一つ選ぶ数字を記録する
     [SerializeField] private bool WaveClearFlag;//ウェーブをクリアしたかのフラグ
 
@@ -22,6 +25,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> EnemyPrefabList = new List<GameObject>();//エネミーのプレハブリスト
     [SerializeField] private List<float> LevelModifierRatioList = new List<float>();//エネミーのLevel補正リスト
     [SerializeField] private List<float> SpawnRateList = new List<float>();//エネミーの出現率リスト
+
+    [SerializeField] private List<WaveData_Base> WaveDataList = new List<WaveData_Base>();//ウェーブ
     //---------------
 
     [SerializeField] private EnemyManager enemyManager;//エネミーマネージャー
@@ -36,6 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RewardScene rewardScene;//報酬シーンのクラス
     [SerializeField] private UI_RewardScene ui_RewardScene;//報酬SceneのUI
 
+    [SerializeField] private SceneAsset ClearScene;
+    [SerializeField] private SceneAsset GameoverScene;
     public  enum GameSceneStatus
     {
         PlayGame,
@@ -70,7 +77,7 @@ public class GameManager : MonoBehaviour
         rewardScene = this.GetComponent<RewardScene>();//報酬シーンクラス取得
 
         // シーンをまたいでも破棄されない
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -140,7 +147,12 @@ public class GameManager : MonoBehaviour
     }
     public void Event_GameOver()
     {
+        //ゲームオーバーに切り替え
         gameSceneStatus = GameSceneStatus.GameOver;
+
+        //時間をもどす
+        Time.timeScale = 0.0f;
+
     }
 
     public void Event_Rest()
@@ -150,7 +162,6 @@ public class GameManager : MonoBehaviour
         {
             rewardScene.OpenRewardScene();
         }
-
         WaveClearFlag = true;//クリア状態に
 
         //時間をとめる
@@ -164,6 +175,14 @@ public class GameManager : MonoBehaviour
 
         //全てのエネミーを削除
         if (enemyManager != null) enemyManager.DestroyAllEnemy();
+
+        if (WaveLevel + 1 >= WaveDataList.Count)//次のウェーブがリストの端かチェック
+        {
+            //次のウェーブが設定されていないためステージクリアとみなす
+            Debug.Log("ステージクリア");
+            LoadScene(ClearScene);
+            return;
+        }
     }
     public void SetGameSceneStatus(GameSceneStatus _status)
     {
@@ -197,25 +216,31 @@ public class GameManager : MonoBehaviour
 
         //ウェーブレベルを上げる
         ++WaveLevel;
+        //ウェーブレベルをUIに反映
+        if (ui_Manager != null) ui_Manager.SetWaveLevelText_UI(WaveLevel);
 
         //ウェーブのリストを選ぶ
-        WaveData_Index = Random.Range(0, WaveDataList.Count);
+        WaveData_Index = Random.Range(0, WaveDataRandomList.Count);
 
-        //ウェーブDataをセット
-        if (WaveData_Index >= 0 && WaveData_Index < WaveDataList.Count)//リスト内かチェック
+        //仮入れ先のウェーブデータ変数
+        WaveData_Base tempWaveData = null;
+
+        //ウェーブデータを取得
+        if (WaveData_Index >= 0 && WaveData_Index < WaveDataRandomList.Count)//リスト内かチェック
         {
-            if (enemyManager != null)
-            {
-                enemyManager.SetWaveData(WaveDataList[WaveData_Index]);//リストを登録
-                enemyManager.SetEnemyLevel(WaveLevel);//Levelを設定
-            }
+            tempWaveData = WaveDataRandomList[WaveData_Index];
         }
-        else
+        if (WaveLevel >= 0 && WaveLevel < WaveDataList.Count)//リスト内かチェック
         {
-            if (enemyManager != null) enemyManager.SetWaveData(null);//登録
+            tempWaveData = WaveDataList[WaveLevel];
         }
 
-        
+        //ウェーブデータを登録
+        if (enemyManager != null)
+        {
+            enemyManager.SetWaveData(tempWaveData);//ウェーブデータを登録
+            enemyManager.SetEnemyLevel(WaveLevel);//Levelを設定
+        }
 
         //フラグを戻す
         WaveClearFlag = false;
@@ -439,5 +464,33 @@ public class GameManager : MonoBehaviour
     public UI_Manager GetUI_Manager()
     {
         return ui_Manager;
+    }
+
+    private void LoadScene(SceneAsset _scene)
+    {
+        string sceneName = "";
+
+        if (_scene != null)
+        {
+            //取得
+            sceneName = _scene.name;
+
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                Debug.LogError("sceneNameが空！");
+                return;
+            }
+
+            if (!Application.CanStreamedLevelBeLoaded(sceneName))
+            {
+                Debug.LogError(
+                    $"Scene '{sceneName}' はBuild Profiles（SceneList）に登録されてないよ！"
+                );
+                return;
+            }
+
+            //読み込みを開始
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }
