@@ -18,17 +18,17 @@ public class SoundManager : MonoBehaviour
     //宣言
     private Dictionary<string, AudioClip> seDictionary;
     private Dictionary<string, float> lastPlayTime = new Dictionary<string, float>();
-    private AudioSource audioSource;
+    private AudioSource seaudioSource;
 
     //シングルトン
     public static SoundManager instance;
 
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
+        seaudioSource = GetComponent<AudioSource>();
+        if (seaudioSource == null) 
         {
-            Debug.Log("audioSourceの取得に失敗");
+            Debug.Log("seaudioSourceの取得に失敗");
             return;
         }
         //初期化
@@ -60,16 +60,16 @@ public class SoundManager : MonoBehaviour
     //指定したSEを再生する
     public void PlaySE(string seName)
     {
-        if (audioSource == null)
+        if (seaudioSource == null)
         {
-            Debug.Log("audioSourceがnull");
+            Debug.Log("seaudioSourceがnull");
             return;
         }
         //SE名に対応するAudioClipを取得
         if (seDictionary.TryGetValue(seName, out AudioClip clip))
         {
             //再生
-            audioSource.PlayOneShot(clip);
+            seaudioSource.PlayOneShot(clip);
         }
         else
         {
@@ -80,9 +80,9 @@ public class SoundManager : MonoBehaviour
     //画面内にある指定したSEを一定間隔で再生する
     public void PlaySEIntervalOnScreen(string seName, Vector3 targetObject)
     {
-        if (audioSource == null)
+        if (seaudioSource == null)
         {
-            Debug.Log("audioSourceがnull");
+            Debug.Log("seaudioSourceがnull");
             return;
         }
         //SE名に対応するAudioClipを取得
@@ -104,7 +104,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
         //再生
-        audioSource.PlayOneShot(clip);
+        seaudioSource.PlayOneShot(clip);
         lastPlayTime[seName] = Time.unscaledTime;
     }
 
