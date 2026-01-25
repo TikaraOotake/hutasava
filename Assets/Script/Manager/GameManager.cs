@@ -465,6 +465,10 @@ public class GameManager : MonoBehaviour
     {
         return ui_Manager;
     }
+    public EnemyManager GetEnemyManager()
+    {
+        return enemyManager;
+    }
 
     private void LoadScene(SceneAsset _scene)
     {

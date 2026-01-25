@@ -1,4 +1,4 @@
-using NUnit.Framework;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,11 +20,24 @@ public class WaveData_Base :  ScriptableObject
     [SerializeField] private List<float> LevelModifierRatioList = new List<float>();//エネミーのLevel補正リスト
     [SerializeField] private List<float> SpawnRateList = new List<float>();//エネミーの出現率リスト
 
+    [SerializeField] protected List<Vector2> SpawnPosList = new List<Vector2>();//エネミーの出現座標リスト
+
     [SerializeField] private int TreasureLevel;//報酬Level
     [SerializeField] private int DestroyQuota;//撃破ノルマ
 
+    [SerializeField] private GameObject BossEnemyPrefab;//ボス敵のプレハブ
+
     //リスト同期用変数
     private int prevA, prevB, prevC;
+
+    public virtual void Init()
+    {
+
+    }
+    public virtual void Update_Wave()
+    {
+
+    }
 
     public List<GameObject> GetEnemyPrefabList()
     {
@@ -51,6 +64,7 @@ public class WaveData_Base :  ScriptableObject
         return GetWeightedIndex(SpawnRateList);
     }
 
+
     public int GetWeightedIndex(List<float> weights)
     {
         // 合計重みを計算
@@ -73,7 +87,7 @@ public class WaveData_Base :  ScriptableObject
         return weights.Count - 1; // 念のため（浮動小数誤差対策）
     }
 
-    private void OnValidate()
+    protected void OnValidate()
     {
         //リストサイズ同期用処理
 
@@ -101,7 +115,7 @@ public class WaveData_Base :  ScriptableObject
         prevC = SpawnRateList.Count;
     }
 
-    private void SyncSize<T>(List<T> list, int size)
+    protected void SyncSize<T>(List<T> list, int size)
     {
         if (list.Count == size) return;
 
@@ -109,6 +123,20 @@ public class WaveData_Base :  ScriptableObject
         {
             while (list.Count < size)
                 list.Add(default);
+        }
+        else
+        {
+            list.RemoveRange(size, list.Count - size);
+        }
+    }
+    protected void SyncSize<T>(List<T> list, int size, T initialValue)
+    {
+        if (list.Count == size) return;
+
+        if (list.Count < size)
+        {
+            while (list.Count < size)
+                list.Add(initialValue);
         }
         else
         {

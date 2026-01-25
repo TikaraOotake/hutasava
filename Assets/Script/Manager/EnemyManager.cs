@@ -30,6 +30,13 @@ public class EnemyManager : MonoBehaviour
     {
         if (WaveData != null)
         {
+            //シナリオデータだったら専用の処理に切り換える
+            if(WaveData is WaveData_Scenario)
+            {
+                WaveData.Update_Wave();
+                return;//終了
+            }
+
             if (SpawnEnemyRateTimer <= 0.0f)
             {
                 //エネミーを取得
@@ -91,6 +98,12 @@ public class EnemyManager : MonoBehaviour
         EnemyList.Clear(); // リストも空にする
     }
 
+    //エネミーをリストに追加
+    public void AddEnemyList(GameObject _enemy)
+    {
+        EnemyList.Add(_enemy);
+    }
+
     public void SetSpawnEnemyPrefab(GameObject _Enemy)
     {
         TestEnemyPrefab = _Enemy;
@@ -98,6 +111,13 @@ public class EnemyManager : MonoBehaviour
     public void SetWaveData(WaveData_Base _data)
     {
         WaveData = _data;
+
+        //シナリオデータだったら初期化
+        if (WaveData is WaveData_Scenario)
+        {
+            WaveData.Init();
+            return;//終了
+        }
     }
 
     public void Exclusion_EnemyList(GameObject _Enemy)
