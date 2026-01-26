@@ -16585,6 +16585,22 @@ PrefabInstance:
       propertyPath: ClearScene
       value: 
       objectReference: {fileID: 102900000, guid: 1abf3ac3f0f8f4048be9b114629ef8fd, type: 3}
+    - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
+      propertyPath: WaveDataList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
+      propertyPath: 'WaveDataList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
+      propertyPath: 'WaveDataList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: fb18ad227f54d634e93e5616d71e69d0, type: 2}
+    - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
+      propertyPath: 'WaveDataList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f62cf019f082dd4e994936b71dd3739, type: 2}
     - target: {fileID: 3925016594363524565, guid: e2807160a425f84428ef17584d3c0035, type: 3}
       propertyPath: UI_BuySlot
       value: 

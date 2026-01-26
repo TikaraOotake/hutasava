@@ -87,12 +87,12 @@ public class WaveData_Scenario : WaveData_Base
         }
 
         //座標取得
-        if(0 <= _Index && PhaseSpawnPosIndexList.Count > _Index)//サイズチェック
+        if (0 <= _Index && PhaseSpawnPosIndexList.Count > _Index)//サイズチェック
         {
             //座標インデックスの取得
             int PosIndex = PhaseSpawnPosIndexList[_Index];
 
-            if(0 <= PosIndex && SpawnPosList.Count > PosIndex)
+            if (0 <= PosIndex && SpawnPosList.Count > PosIndex)
             {
                 Pos = SpawnPosList[PosIndex];//取得
             }
@@ -116,7 +116,10 @@ public class WaveData_Scenario : WaveData_Base
         }
 
         //出現数取得
-        //
+        if (0 <= _Index && PhaseSpawnNamList.Count > _Index)//サイズチェック
+        {
+            SpawnNam = PhaseSpawnNamList[_Index];
+        }
 
 
         //エネミーマネージャーの取得

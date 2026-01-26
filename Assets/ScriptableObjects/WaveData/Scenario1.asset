@@ -15,12 +15,25 @@ MonoBehaviour:
   EnemyPrefabList: []
   LevelModifierRatioList: []
   SpawnRateList: []
-  SpawnPosList: []
+  SpawnPosList:
+  - {x: 20, y: 0}
+  - {x: 20, y: 5}
+  - {x: 20, y: 10}
+  - {x: 20, y: 15}
   TreasureLevel: 0
   DestroyQuota: 0
   BossEnemyPrefab: {fileID: 0}
-  ScenarioPhaseIndex: 0
-  ScenarioPhaseTimeList: []
-  PhaseSpawnEnemyList: []
-  PhaseSpawnNamList: 
-  PhaseSpawnPosIndexList: 
+  ScenarioPhaseIndex: 3
+  ScenarioPhaseTimeList:
+  - 5
+  - 5
+  - 5
+  - 5
+  PhaseSpawnEnemyList:
+  - {fileID: 8463169047004779428, guid: c5cb10f1d4fa8b24d96677d5c20569f6, type: 3}
+  - {fileID: 8463169047004779428, guid: d9ccbd8be23fd8b40ab80f0383b42176, type: 3}
+  - {fileID: 8463169047004779428, guid: c5cb10f1d4fa8b24d96677d5c20569f6, type: 3}
+  - {fileID: 8463169047004779428, guid: 8e1eaed62a84b5d458133eec828e1737, type: 3}
+  PhaseSpawnNamList: 01000000020000000300000004000000
+  PhaseSpawnPosIndexList: 00000000010000000200000003000000
+  PhaseTimer: 2.8223126
