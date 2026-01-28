@@ -12,6 +12,8 @@ public class WaveData_Scenario : WaveData_Base
     [SerializeField] private List<int> PhaseSpawnNamList;//各フェーズ開始時に出現するエネミーの数
     [SerializeField] private List<int> PhaseSpawnPosIndexList;//各フェーズどこの座標にエネミーが出現するかみるIndexのリスト(配列外の場合はランダム)
 
+    private bool ClearFlag;
+
     [SerializeField]
     private float PhaseTimer;
 
@@ -25,8 +27,11 @@ public class WaveData_Scenario : WaveData_Base
         //フェーズ初期化
         ScenarioPhaseIndex = 0;
 
+        //クリアフラグをリセット
+        ClearFlag = false;
+
         //サイズチェック
-        if (0 <= ScenarioPhaseTimeList.Count && ScenarioPhaseIndex > ScenarioPhaseTimeList.Count)
+        if (0 <= ScenarioPhaseTimeList.Count && ScenarioPhaseTimeList.Count > ScenarioPhaseIndex)
         {
             //タイマー設定
             PhaseTimer = ScenarioPhaseTimeList[ScenarioPhaseIndex];
@@ -37,6 +42,8 @@ public class WaveData_Scenario : WaveData_Base
     }
     public override void Update_Wave()
     {
+        if (ClearFlag == true) return;
+
         //タイマー経過
         PhaseTimer = Mathf.Max(0.0f, PhaseTimer - Time.deltaTime);
 
@@ -63,6 +70,9 @@ public class WaveData_Scenario : WaveData_Base
             {
                 //配列外なのでクリアとして判定
                 Debug.Log("ウェーブクリア");
+
+                //クリア状態に
+                ClearFlag = true;
 
                 //休憩シーン呼び出し
                 GameManager.Instance.Event_Rest();

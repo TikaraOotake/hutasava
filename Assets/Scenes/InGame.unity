@@ -16582,6 +16582,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1074604588}
     - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
+      propertyPath: WaveTime
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
       propertyPath: ClearScene
       value: 
       objectReference: {fileID: 102900000, guid: 1abf3ac3f0f8f4048be9b114629ef8fd, type: 3}
@@ -16596,7 +16600,7 @@ PrefabInstance:
     - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
       propertyPath: 'WaveDataList.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: fb18ad227f54d634e93e5616d71e69d0, type: 2}
+      objectReference: {fileID: 11400000, guid: 15f991c5b297a4c49b6490d01093de40, type: 2}
     - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
       propertyPath: 'WaveDataList.Array.data[3]'
       value: 
