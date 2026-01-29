@@ -21,6 +21,8 @@ Shader "Custom/URP_CullOff_Unlit_Cutout"
 
         Pass
         {
+             Tags { "LightMode" = "SRPDefaultUnlit" }
+
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -41,7 +43,11 @@ Shader "Custom/URP_CullOff_Unlit_Cutout"
 
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
+
+            //float _Cutoff;
+            CBUFFER_START(UnityPerMaterial)
             float _Cutoff;
+            CBUFFER_END
 
             Varyings vert (Attributes v)
             {

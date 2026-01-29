@@ -91,12 +91,12 @@ public class Enemy_3d : Character
         HealthPoint_Current = HealthPointMax_Result;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void IsHit(GameObject _HitObj)
     {
         //ダメージ処理
-        if (other.tag == "Player")//衝突相手がプレイヤー
+        if (_HitObj.tag == "Player")//衝突相手がプレイヤー
         {
-            Character chara = other.GetComponent<Character>();
+            Character chara = _HitObj.GetComponent<Character>();
             if (chara != null)
             {
                 //死亡状態な終了

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitleScene : MonoBehaviour
-{
+{/*
     [SerializeField] private SceneAsset targetScene;//‘JˆÚæ‚ÌƒV[ƒ“
     void Start()
     {
@@ -41,4 +41,5 @@ public class TitleScene : MonoBehaviour
             }
         }
     }
+  */
 }

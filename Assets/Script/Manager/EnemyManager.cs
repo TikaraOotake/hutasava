@@ -21,6 +21,8 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private int EnemyLevel;
 
+    [SerializeField] private float SpawnEnemyHeight;//出現する高さ
+
     void Start()
     {
         SpawnEnemyRateTimer = SpawnEnemyRateTime;
@@ -102,6 +104,28 @@ public class EnemyManager : MonoBehaviour
     public void AddEnemyList(GameObject _enemy)
     {
         EnemyList.Add(_enemy);
+    }
+
+    //エネミーを生成する
+    public GameObject GenerateEnemy(GameObject _EnemyPrefab, Vector3 _Pos)
+    {
+        GameObject enemy = null;
+        if (_EnemyPrefab != null)
+        {
+            enemy = Instantiate(_EnemyPrefab);
+            enemy.transform.position = new Vector3(_Pos.x, SpawnEnemyHeight, _Pos.z);
+
+            //リストに登録
+            AddEnemyList(enemy);
+        }
+
+        //エネミーを返す
+        return enemy;
+    }
+
+    public GameObject GenerateEnemy(GameObject _EnemyPrefab)
+    {
+        return GenerateEnemy(_EnemyPrefab, Vector3.zero);
     }
 
     public void SetSpawnEnemyPrefab(GameObject _Enemy)

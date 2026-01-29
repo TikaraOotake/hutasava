@@ -54,6 +54,10 @@ public class Character : MonoBehaviour
 
     public virtual void SetDamage(float _Damage)
     {
+        //現在HPが最大HPを超えないように補正
+        HealthPoint_Current = Mathf.Min(HealthPointMax_Result, HealthPoint_Current);
+
+        //ダメージを与える
         HealthPoint_Current = Mathf.Max(0.0f, HealthPoint_Current - _Damage);
 
         //ダメージ表示を依頼
@@ -96,5 +100,19 @@ public class Character : MonoBehaviour
     public bool GetIsDead()
     {
         return IsDead;
+    }
+
+    protected virtual void IsHit(GameObject _HitObj)
+    {
+        return;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        IsHit(other.gameObject);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        IsHit(collision.gameObject);
     }
 }

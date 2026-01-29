@@ -141,18 +141,18 @@ public class WaveData_Scenario : WaveData_Base
             //出現数分繰り返し
             for (int i = 0; i < SpawnNam; ++i)
             {
-                GameObject enemy = Instantiate(enemyPrefab);//生成
-
-                //座標代入
-                Vector3 enemyPos = enemy.transform.position;
-                enemyPos.x = Pos.x + i;//出現数に応じてずらす
-                enemyPos.z = Pos.y;
-                enemy.transform.position = enemyPos;
-
-                //マネージャーに登録
+                //マネージャーから生成
                 if (enemyManager != null)
                 {
-                    enemyManager.AddEnemyList(enemy);
+                    //生成
+                    GameObject enemy = enemyManager.GenerateEnemy(enemyPrefab);
+
+                    //座標代入
+                    Vector3 enemyPos = enemy.transform.position;
+                    enemyPos.x = Pos.x + i;//出現数に応じてずらす
+                    enemyPos.z = Pos.y;
+
+                    enemy.transform.position = enemyPos;
                 }
             }
         }

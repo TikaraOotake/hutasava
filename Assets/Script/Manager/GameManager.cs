@@ -1,7 +1,5 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GameManager;
@@ -41,8 +39,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RewardScene rewardScene;//報酬シーンのクラス
     [SerializeField] private UI_RewardScene ui_RewardScene;//報酬SceneのUI
 
-    [SerializeField] private SceneAsset ClearScene;
-    [SerializeField] private SceneAsset GameoverScene;
+    //[SerializeField] private SceneAsset ClearScene;
+    //[SerializeField] private SceneAsset GameoverScene;
     public  enum GameSceneStatus
     {
         PlayGame,
@@ -180,7 +178,7 @@ public class GameManager : MonoBehaviour
         {
             //次のウェーブが設定されていないためステージクリアとみなす
             Debug.Log("ステージクリア");
-            LoadScene(ClearScene);
+            //LoadScene(ClearScene);
             return;
         }
     }
@@ -470,7 +468,7 @@ public class GameManager : MonoBehaviour
         return enemyManager;
     }
 
-    private void LoadScene(SceneAsset _scene)
+    /* private void LoadScene(SceneAsset _scene)
     {
         string sceneName = "";
 
@@ -497,4 +495,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(sceneName);
         }
     }
+     */
+   
 }

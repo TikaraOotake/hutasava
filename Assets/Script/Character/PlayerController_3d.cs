@@ -37,6 +37,9 @@ public class PlayerController_3d : Character
     [SerializeField] private List<Texture> PlayerTextureBackList = new List<Texture>();//後ろ向きのテクスチャリスト
     bool IsMove;//アニメーション用歩行状態確認フラグ
 
+
+    [SerializeField] Rigidbody rigidbody;
+
     //削除予定---------------------------
     [SerializeField] private UI_Inventory_Player uI_Inventory_Player;
 
@@ -59,6 +62,9 @@ public class PlayerController_3d : Character
         {
             WeaponList.Add(Instantiate(TestOriginWeapon));//複製したものを登録
         }
+
+        //リジットボディ取得
+        rigidbody = GetComponent<Rigidbody>();
 
         //アイテムのUIを選択可能に
         if (itemContainer != null)
@@ -84,6 +90,11 @@ public class PlayerController_3d : Character
     // Update is called once per frame
     void Update()
     {
+        if (rigidbody != null)
+        {
+            rigidbody.linearVelocity = Vector3.zero;
+        }
+
         if (IsDead == false)
         {
             Move();
@@ -338,6 +349,9 @@ public class PlayerController_3d : Character
         //死亡状態ならダメージを通さない
         if (HealthPoint_Current <= 0.0f) return;
 
+        //現在HPが最大HPを超えないように補正
+        HealthPoint_Current = Mathf.Min(HealthPointMax_Result, HealthPoint_Current);
+
         //ダメージ
         HealthPoint_Current = Mathf.Max(0.0f, HealthPoint_Current - _Damage);
 
@@ -388,15 +402,15 @@ public class PlayerController_3d : Character
         playerManager.Update_PlayerStatusView();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void IsHit(GameObject _HitObj)
     {
         //死亡状態なら終了
         if (IsDead) return;
 
         //仮ダメージ処理
-        if (other.tag == "Enemy")//衝突相手がエネミー
+        if (_HitObj.tag == "Enemy")//衝突相手がエネミー
         {
-            Character chara = other.GetComponent<Character>();
+            Character chara = _HitObj.GetComponent<Character>();
             if (chara != null)
             {
                 //ダメージ計算
