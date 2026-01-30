@@ -33,7 +33,7 @@ public class PlayerBullet : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(new Vector3(0.0f, 0.0f, BulletSpeed) * Time.deltaTime);
+        transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * BulletSpeed * Time.deltaTime);
 
         //タイマー更新
         DestroyTimer = Mathf.Max(0.0f, DestroyTimer - Time.deltaTime);
@@ -99,7 +99,7 @@ public class PlayerBullet : MonoBehaviour
         cleanupTimer += Time.deltaTime;
         if (cleanupTimer < 1.0f) return;
 
-        cleanupTimer = 0f;
+        cleanupTimer = 0.0f;
 
         float now = Time.time;
 
