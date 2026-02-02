@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PairChakramBullet : PlayerBullet
 {
@@ -6,6 +7,9 @@ public class PairChakramBullet : PlayerBullet
     [SerializeField] private GameObject player2;
 
     [SerializeField] private bool FlipFlag;
+    private float sign = 1.0f;//点Pの移動符号
+
+    private float Ratio;//二点間の割合座標
 
     void Start()
     {
@@ -15,6 +19,7 @@ public class PairChakramBullet : PlayerBullet
     // Update is called once per frame
     void Update()
     {
+
         GameObject TargetObj = null;
         if (FlipFlag == true)
         {
@@ -25,15 +30,56 @@ public class PairChakramBullet : PlayerBullet
             TargetObj = player2;
         }
 
+
+
+        // ターゲットのXZ座標のみを使う（Yは自分と同じにする）
+        Vector3 targetPos = TargetObj.transform.position;
+        targetPos.y = transform.position.y;
+
+        //任意の方向を向き続ける
+        //transform.LookAt(targetPos);
+
         //移動
-        transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * BulletSpeed * Time.deltaTime);
+        //transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * BulletSpeed * Time.deltaTime);
+
+        //座標取得
+        Vector3 pos1 = player1.transform.position;
+        Vector3 pos2 = player2.transform.position;
+        pos1.y = pos2.y = 0.0f;//高さを無視
 
         //距離を算出
-        float Length = Vector3.Distance(this.gameObject.transform.position, TargetObj.transform.position);
+        float Length = Vector3.Distance(pos1, pos2);
         if (Length <= BulletSpeed * Time.deltaTime)
         {
-            FlipFlag = !FlipFlag;
+            //FlipFlag = !FlipFlag;
         }
 
+        // 点Pの移動
+        if (Length != 0.0f)
+        {
+            Ratio += sign * BulletSpeed * Time.deltaTime / Length;
+        }
+
+        // 先に反転判定
+        if (Ratio >= 1.0f)
+        {
+            Ratio = 1.0f;
+            sign = -1.0f;
+        }
+        else if (Ratio <= 0.0f)
+        {
+            Ratio = 0.0f;
+            sign = 1.0f;
+        }
+
+        //ヌルチェック
+        if (player1 == null || player2 == null) return;
+
+        //座標計算
+        Vector3 pos = Vector3.Lerp(player1.transform.position, player2.transform.position, Ratio);
+        pos.y = TargetObj.transform.position.y;//Y座標を無視
+
+        //代入
+        transform.position= pos;
     }
 }
