@@ -25,11 +25,14 @@ public class PairChakramBullet : PlayerBullet
             TargetObj = player2;
         }
 
+        //ˆÚ“®
+        transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * BulletSpeed * Time.deltaTime);
+
         //‹——£‚ğZo
         float Length = Vector3.Distance(this.gameObject.transform.position, TargetObj.transform.position);
-        if(Length < BulletSpeed * Time.deltaTime)
+        if (Length <= BulletSpeed * Time.deltaTime)
         {
-
+            FlipFlag = !FlipFlag;
         }
 
     }

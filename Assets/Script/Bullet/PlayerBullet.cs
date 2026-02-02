@@ -6,7 +6,7 @@ public class PlayerBullet : MonoBehaviour
     [SerializeField] protected GameObject Player;//この弾を撃つプレイヤー
     [SerializeField] protected Weapon weapon;//この弾を撃つ武器データ
 
-    [SerializeField] private float BulletSpeed = 1.0f;
+    [SerializeField] protected float BulletSpeed = 1.0f;
     [SerializeField] private float BulletAtk = 1.0f;
 
     [SerializeField] private Vector3 BulletMoveVec;
