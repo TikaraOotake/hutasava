@@ -74,7 +74,7 @@ MonoBehaviour:
   HealthPoint_Current_old: 0
   itemContainer: {fileID: 780509721366066933}
   playerManager: {fileID: 0}
-  quadTextureAnimation: {fileID: 0}
+  quadTextureAnimation: {fileID: 48986470074697017}
   PlayerTextureFrontList:
   - {fileID: 2800000, guid: 187de6af854644346867c9ee1385977a, type: 3}
   PlayerTextureBackList:
@@ -127,7 +127,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &780509721366066933
 MonoBehaviour:
@@ -185,6 +185,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpriteBoard_Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 2281405048879595726, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281405048879595726, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281405048879595726, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281405048879595726, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3118489158666715263, guid: fc73373380111414c9be0b136d442563, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -225,12 +241,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4725248601568623237, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.402
+      objectReference: {fileID: 0}
+    - target: {fileID: 8275645072060185741, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: 'textures.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2800000, guid: 53829f9f85f828f47a4f2ec2369b556a, type: 3}
     m_RemovedComponents:
     - {fileID: 2448357379388285304, guid: fc73373380111414c9be0b136d442563, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc73373380111414c9be0b136d442563, type: 3}
+--- !u!114 &48986470074697017 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8275645072060185741, guid: fc73373380111414c9be0b136d442563, type: 3}
+  m_PrefabInstance: {fileID: 8248052135556659636}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4643521285156a84da94d1d90ebe1ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6427180830262376907 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3118489158666715263, guid: fc73373380111414c9be0b136d442563, type: 3}

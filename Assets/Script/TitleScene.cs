@@ -3,43 +3,61 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitleScene : MonoBehaviour
-{/*
-    [SerializeField] private SceneAsset targetScene;//遷移先のシーン
+{
+    [SerializeField] private string targetScene;//遷移先のシーン
+
+    [SerializeField] private float Timer = 1.0f;//移行までのタイマー
+
+    [SerializeField] private bool flag;
+
+    [SerializeField] private BlindFadeControl blind;
+
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
-        if(Input.GetKeyDown(KeyCode.Return))
+        if (Input.anyKeyDown)
         {
-            string sceneName = " ";
+            //Fadeを掛ける
+            if (blind != null) blind.SetFadeFlag(true);
 
-            //シーン名取得
-            if (targetScene != null)
+            //フラグをtrue
+            flag = true;
+        }
+
+        if (flag)
+        {
+            Timer = Mathf.Max(0, Timer - Time.deltaTime);
+
+            if (Timer <= 0.0f)
             {
-                sceneName = targetScene.name;
-                if (!string.IsNullOrEmpty(sceneName))
-                {
-                    if (!Application.CanStreamedLevelBeLoaded(sceneName))
-                    {
-                        Debug.LogError(
-                            $"Scene '{sceneName}' はBuild Profiles（SceneList）に登録されてないよ！"
-                        );
-                        return;
-                    }
-                    SceneManager.LoadScene(sceneName);
-                }
-                else
-                {
-                    Debug.Log("シーンが設定されていないか、存在しないシーン名です");
-                }
+                //シーン読み込み開始
+                LoadScene(targetScene);
             }
         }
     }
-  */
+
+    private void LoadScene(string targetScene)
+    {
+        if (!string.IsNullOrEmpty(targetScene))
+        {
+            if (!Application.CanStreamedLevelBeLoaded(targetScene))
+            {
+                Debug.LogError(
+                $"Scene '{targetScene}' はBuild Profiles（SceneList）に登録されてないよ！"
+                );
+                return;
+            }
+            SceneManager.LoadScene(targetScene);
+        }
+        else
+        {
+            Debug.Log("シーンが設定されていないか、存在しないシーン名です");
+
+        }
+    }
 }

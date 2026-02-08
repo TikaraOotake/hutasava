@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EnemyManager enemyManager;//エネミーマネージャー
     [SerializeField] private UI_Manager ui_Manager;//UIマネージャー
     [SerializeField] private ItemManager itemManager;//アイテムマネージャー
+    [SerializeField] private SoundManager soundManager;//Soundマネージャー
 
     [SerializeField] private int Money;//銭
     [SerializeField] private GameObject CoinPrefab;//コインのプレハブ
@@ -39,8 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RewardScene rewardScene;//報酬シーンのクラス
     [SerializeField] private UI_RewardScene ui_RewardScene;//報酬SceneのUI
 
-    //[SerializeField] private SceneAsset ClearScene;
-    //[SerializeField] private SceneAsset GameoverScene;
+    [SerializeField] private string ClearSceneName;
+    [SerializeField] private string GameoverSceneName;
     public  enum GameSceneStatus
     {
         PlayGame,
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour
         enemyManager = this.GetComponent<EnemyManager>();//エネミーマネージャー取得
         ui_Manager = this.GetComponent<UI_Manager>();//UIマネージャー取得
         itemManager = this.GetComponent<ItemManager>();//アイテムマネージャー取得
+        soundManager = this.GetComponent<SoundManager>();
 
         rewardScene = this.GetComponent<RewardScene>();//報酬シーンクラス取得
 
@@ -179,6 +182,7 @@ public class GameManager : MonoBehaviour
             //次のウェーブが設定されていないためステージクリアとみなす
             Debug.Log("ステージクリア");
             //LoadScene(ClearScene);
+            SceneManager.LoadScene(ClearSceneName);
             return;
         }
     }
@@ -305,6 +309,15 @@ public class GameManager : MonoBehaviour
         Vector3 midPos = Player1Pos + (Player2Pos - Player1Pos) * 0.5f;//二点間の中心を調べる
 
         return midPos;
+    }
+
+    //指定したSEを再生する
+    public void PlaySE(string seName)
+    {
+        if(soundManager!=null)
+        {
+            soundManager.PlaySE(seName);
+        }
     }
 
     //計算関数　※移動予定

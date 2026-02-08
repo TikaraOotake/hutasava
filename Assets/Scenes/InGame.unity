@@ -16845,6 +16845,38 @@ PrefabInstance:
       propertyPath: HP_Gauge_Comp
       value: 
       objectReference: {fileID: 1333135507}
+    - target: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: PlayerTextureFrontList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: 'PlayerTextureBackList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2800000, guid: 92d7cd99952b7784ca43cd959b5e364f, type: 3}
+    - target: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: 'PlayerTextureFrontList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2800000, guid: 53829f9f85f828f47a4f2ec2369b556a, type: 3}
+    - target: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: 'PlayerTextureFrontList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2800000, guid: 8dbaa78bf4337f644bd729dd7c182720, type: 3}
+    - target: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: 'PlayerTextureFrontList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2800000, guid: 42868f07dbce6d7419047be58987bd59, type: 3}
+    - target: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: 'PlayerTextureFrontList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2800000, guid: 403960bb323ecd043a3699c0c9af15a0, type: 3}
+    - target: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: 'PlayerTextureFrontList.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2800000, guid: ce4f5f8098c04b441b3de118a650e39e, type: 3}
+    - target: {fileID: 1921515241533073683, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
+      propertyPath: 'PlayerTextureFrontList.Array.data[5]'
+      value: 
+      objectReference: {fileID: 2800000, guid: f600b9cf7e01d474cb3de2cde2ee4876, type: 3}
     - target: {fileID: 6427180830262376907, guid: 6f91b5de691844749a001d6957c962d2, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -16990,6 +17022,14 @@ PrefabInstance:
       propertyPath: ClearScene
       value: 
       objectReference: {fileID: 102900000, guid: 1abf3ac3f0f8f4048be9b114629ef8fd, type: 3}
+    - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
+      propertyPath: ClearSceneName
+      value: Clear
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
+      propertyPath: GameoverSceneName
+      value: Gameover
+      objectReference: {fileID: 0}
     - target: {fileID: 2595292147235770988, guid: e2807160a425f84428ef17584d3c0035, type: 3}
       propertyPath: WaveDataList.Array.size
       value: 4

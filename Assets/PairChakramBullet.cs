@@ -9,6 +9,9 @@ public class PairChakramBullet : PlayerBullet
     [SerializeField] private bool FlipFlag;
     private float sign = 1.0f;//“_P‚ÌˆÚ“®•„†
 
+    [SerializeField] private string ShotSE;
+
+
     private float Ratio;//“ñ“_ŠÔ‚ÌŠ„‡À•W
 
     void Start()

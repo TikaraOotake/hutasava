@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2078461568833414325}
-  - component: {fileID: 6993561936525705970}
   - component: {fileID: 8890002322504395464}
   - component: {fileID: -2530112408589371137}
   - component: {fileID: 6109611971787489920}
@@ -36,27 +35,6 @@ Transform:
   - {fileID: 8022025364325234526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6993561936525705970
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8463169047004779428}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8890002322504395464
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -189,6 +167,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.503
       objectReference: {fileID: 0}
+    - target: {fileID: 8275645072060185741, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: 'textures.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2800000, guid: 5105d26a0c635bb429f2df30f4612e51, type: 3}
     - target: {fileID: 8288047818212000549, guid: fc73373380111414c9be0b136d442563, type: 3}
       propertyPath: mainTexture
       value: 
