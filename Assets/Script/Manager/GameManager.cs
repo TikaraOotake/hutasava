@@ -28,12 +28,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<WaveData_Base> WaveDataList = new List<WaveData_Base>();//ウェーブ
     //---------------
 
+    //マネージャー--------------
+    [SerializeField] private PlayerManager playerManager;//プレイヤーマネージャー
     [SerializeField] private EnemyManager enemyManager;//エネミーマネージャー
     [SerializeField] private UI_Manager ui_Manager;//UIマネージャー
     [SerializeField] private ItemManager itemManager;//アイテムマネージャー
     [SerializeField] private SoundManager soundManager;//Soundマネージャー
+    //--------------------------
 
-    [SerializeField] private int Money;//銭
+    [SerializeField] private GameObject UI_FastItemSelecterPrefab;//最初の武器を選択するUIプレハブ
+    [SerializeField] private GameObject OnlyShowDisplayUI = null;//1つだけ表示するUIを記録する変数
+    [SerializeField] private GameObject CanvasObj;//キャンバスのオブジェクト
+
+    [SerializeField] private int Money;//通貨
     [SerializeField] private GameObject CoinPrefab;//コインのプレハブ
 
     [SerializeField] private List<EquipmentItem_Base> OriginItemDataList;//複製したいアイテムを登録して使う
@@ -69,7 +76,12 @@ public class GameManager : MonoBehaviour
         // インスタンスが存在しない → 自分を設定
         Instance = this;
 
+        //キャンバスの取得
+        if (CanvasObj == null) CanvasObj = GameObject.Find("Canvas");
+        if (CanvasObj == null) Debug.Log("キャンバスの取得に失敗");
+
         //各マネージャー取得
+        playerManager = this.GetComponent<PlayerManager>();//プレイヤーマネージャー取得
         enemyManager = this.GetComponent<EnemyManager>();//エネミーマネージャー取得
         ui_Manager = this.GetComponent<UI_Manager>();//UIマネージャー取得
         itemManager = this.GetComponent<ItemManager>();//アイテムマネージャー取得
@@ -83,20 +95,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        WaveTimer = WaveTime;//タイマー設定
-
-        //休憩シーン呼び出し
-        Event_Rest();
-
-        //時間をとめる
-        Time.timeScale = 0.0f;
-
-        //報酬UIを呼び出す
-        if (ui_RewardScene != null)
-        {
-            ui_RewardScene.gameObject.SetActive(true);
-            ui_RewardScene.GenerateItem();
-        }
+        Event_FastItemSelecter();
     }
     private void Update()
     {
@@ -118,7 +117,7 @@ public class GameManager : MonoBehaviour
             case GameSceneStatus.Rest:
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
                 {
-                    Event_PlayGame();
+                    //Event_PlayGame();
                 }
                 break;
             case GameSceneStatus.GameOver:
@@ -153,9 +152,31 @@ public class GameManager : MonoBehaviour
 
         //時間をもどす
         Time.timeScale = 0.0f;
-
     }
 
+    //最初の武器選択画面
+    public void Event_FastItemSelecter()
+    {
+        //報酬シーンのUIを閉じる
+        if (ui_RewardScene != null)
+        {
+            ui_RewardScene.gameObject.SetActive(false);
+        }
+
+        //UI生成
+        ActivateOnlyShowDisplayUI(UI_FastItemSelecterPrefab);
+
+        WaveClearFlag = true;//クリア状態に
+
+        //時間をとめる
+        Time.timeScale = 0.0f;
+
+        //ダメージ表示を削除
+        if (ui_Manager != null) ui_Manager.CleanDamageDisplayUI();
+
+        //ゲームシーンステータスを休憩に変更
+        gameSceneStatus = GameSceneStatus.Rest;
+    }
     public void Event_Rest()
     {
         //報酬シーンを呼び出す
@@ -181,10 +202,56 @@ public class GameManager : MonoBehaviour
         {
             //次のウェーブが設定されていないためステージクリアとみなす
             Debug.Log("ステージクリア");
+
+            //時間をmodosu
+            Time.timeScale = 1.0f;
+
             //LoadScene(ClearScene);
             SceneManager.LoadScene(ClearSceneName);
             return;
         }
+    }
+
+    //引数のUIを生成し表示する(nullの場合は既に表示中のUIを削除する)
+    public GameObject ActivateOnlyShowDisplayUI(GameObject _ui)
+    {
+        //既に表示中のUIがないか確認
+        if (OnlyShowDisplayUI != null)
+        {
+            System.Type UI_type = null;
+            if (_ui != null) UI_type = _ui.GetType();//タイプ取得
+
+            if (OnlyShowDisplayUI.GetType() == UI_type)
+            {
+                //既にUIが表示されており次に表示するUIと同じTypeなら
+
+                //生成は行わすそのまま終了
+                return OnlyShowDisplayUI;
+            }
+            else
+            {
+                //既にUIがあるが次に表示させたいUIと違うTypeなら
+
+                //削除
+                OnlyShowDisplayUI.transform.parent = null;//親子付け解除
+                Destroy(OnlyShowDisplayUI);//破棄
+                OnlyShowDisplayUI = null;//ヌル代入
+            }
+        }
+
+        //ヌルチェック
+        if (_ui != null && CanvasObj != null)
+        {
+            //生成、親子付け
+            GameObject tempObj = Instantiate(_ui,CanvasObj.transform);
+            OnlyShowDisplayUI = tempObj;//記録
+        }
+        else
+        {
+            OnlyShowDisplayUI = null;//生成失敗
+        }
+
+        return OnlyShowDisplayUI;
     }
     public void SetGameSceneStatus(GameSceneStatus _status)
     {
@@ -481,6 +548,14 @@ public class GameManager : MonoBehaviour
         return enemyManager;
     }
 
+    public void SetMainWeapon(Weapon _weapon)
+    {
+        if (playerManager != null)
+        {
+            playerManager.SetMainWeapon(_weapon);
+        }
+    }
+
     /* private void LoadScene(SceneAsset _scene)
     {
         string sceneName = "";
@@ -509,5 +584,5 @@ public class GameManager : MonoBehaviour
         }
     }
      */
-   
+
 }

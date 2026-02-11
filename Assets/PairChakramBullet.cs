@@ -8,15 +8,19 @@ public class PairChakramBullet : PlayerBullet
 
     [SerializeField] private bool FlipFlag;
     private float sign = 1.0f;//点Pの移動符号
+    private float sign_old;//符号監視変数
 
     [SerializeField] private string ShotSE;
+
+    [SerializeField] private float RotateSpeed;//回転速度
 
 
     private float Ratio;//二点間の割合座標
 
     void Start()
     {
-        
+        //符号監視変数更新
+        sign_old = sign;
     }
 
     // Update is called once per frame
@@ -33,7 +37,8 @@ public class PairChakramBullet : PlayerBullet
             TargetObj = player2;
         }
 
-
+        //ヌルチェック
+        if (player1 == null || player2 == null) return;
 
         // ターゲットのXZ座標のみを使う（Yは自分と同じにする）
         Vector3 targetPos = TargetObj.transform.position;
@@ -82,7 +87,29 @@ public class PairChakramBullet : PlayerBullet
         Vector3 pos = Vector3.Lerp(player1.transform.position, player2.transform.position, Ratio);
         pos.y = TargetObj.transform.position.y;//Y座標を無視
 
+        //回転する
+        Vector3 angle = transform.eulerAngles;
+        angle.y += RotateSpeed * BulletSpeed * Time.deltaTime;
+        transform.eulerAngles = angle;
+
         //代入
-        transform.position= pos;
+        transform.position = pos;
+
+
+        //符号の変化を見る
+        if (sign != sign_old)
+        {
+            //音を再生
+            SoundManager.instance.PlaySE(ShotSE);
+        }
+
+        //符号監視変数更新
+        sign_old = sign;
+    }
+
+    public void SetPlayer(GameObject _player1, GameObject _player2)
+    {
+        player1 = _player1;
+        player2 = _player2;
     }
 }

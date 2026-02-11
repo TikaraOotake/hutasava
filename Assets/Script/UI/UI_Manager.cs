@@ -106,8 +106,9 @@ public class UI_Manager : MonoBehaviour
 
         for (int i = 0; i < SelectUI_List.Count; i++)
         {
-            if (i == SelectIndex) continue;
-            if (SelectUI_List[i] == null) continue;
+            if (i == SelectIndex) continue;//チェックする番号が重複しているならコンティニュー
+            if (SelectUI_List[i] == null) continue;//無効であればコンティニュー
+            if (SelectUI_List[i].gameObject.activeSelf == false) continue;//非アクティブであればコンティニュー
 
             Vector2 diff = (Vector2)SelectUI_List[i].transform.position - (Vector2)current.position;
 
@@ -306,8 +307,10 @@ public class UI_Manager : MonoBehaviour
         if (!(SelectIndex >= 0 && SelectIndex < SelectUI_List.Count))
         {
             SelectIndex = 0;
-            SelectingHighlightUI(SelectUI_List, SelectIndex, true);
         }
+
+        //選択中のUIを発光
+        SelectingHighlightUI(SelectUI_List, SelectIndex, true);
     }
     public void SetSelectSlot_isSelective(UI_Base _ui)
     {

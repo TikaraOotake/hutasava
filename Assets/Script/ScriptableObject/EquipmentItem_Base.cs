@@ -20,6 +20,11 @@ public class EquipmentItem_Base : ScriptableObject
     {
         return;
     }
+    //ƒAƒCƒeƒ€‚Ì‰ð•ú
+    public virtual void Remove()
+    {
+        return;
+    }
 
     public Sprite GetItemSprite()
     {

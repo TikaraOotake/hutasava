@@ -163,18 +163,23 @@ MonoBehaviour:
   WaveLevel: 0
   WaveTime: 30
   WaveTimer: 0
-  WaveDataList:
-  - {fileID: 11400000, guid: ecfc3f20663c56747a6f5093366f0b7f, type: 2}
-  - {fileID: 11400000, guid: 1970b2aa93a87ca489a0306ce27426ed, type: 2}
-  - {fileID: 11400000, guid: 8f62cf019f082dd4e994936b71dd3739, type: 2}
+  WaveDataRandomList: []
   WaveData_Index: 0
   WaveClearFlag: 1
   EnemyPrefabList: []
   LevelModifierRatioList: []
   SpawnRateList: []
+  WaveDataList:
+  - {fileID: 11400000, guid: ecfc3f20663c56747a6f5093366f0b7f, type: 2}
+  - {fileID: 11400000, guid: 1970b2aa93a87ca489a0306ce27426ed, type: 2}
+  - {fileID: 11400000, guid: 8f62cf019f082dd4e994936b71dd3739, type: 2}
   enemyManager: {fileID: 0}
   ui_Manager: {fileID: 0}
   itemManager: {fileID: 0}
+  soundManager: {fileID: 0}
+  UI_FastItemSelecterPrefab: {fileID: 2673654986114122780, guid: 9946baa1245ded444af93385267408fe, type: 3}
+  OnlyShowDisplayUI: {fileID: 0}
+  CanvasObj: {fileID: 0}
   Money: 50
   CoinPrefab: {fileID: 3626767033986122044, guid: b537df1d91f431545a84a2fedc39a5ff, type: 3}
   OriginItemDataList:
@@ -189,6 +194,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e812505892a62584e8462a245206872a, type: 2}
   rewardScene: {fileID: 0}
   ui_RewardScene: {fileID: 0}
+  ClearSceneName: 
+  GameoverSceneName: 
   gameSceneStatus: 0
   PairWeapon: {fileID: 0}
 --- !u!114 &5991082049371209242
@@ -229,6 +236,7 @@ MonoBehaviour:
   SpawnLength: 20
   WaveData: {fileID: 0}
   EnemyLevel: 0
+  SpawnEnemyHeight: 0
 --- !u!114 &2006545366912208558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +254,7 @@ MonoBehaviour:
   Reward_UI_Flag: 0
   CursorObj: {fileID: 0}
   MoneyValueText: {fileID: 0}
+  WaveLevelText: {fileID: 0}
   canvas: {fileID: 0}
   cameraComp: {fileID: 960471824194099147}
   WaveProgressGauge: {fileID: 0}

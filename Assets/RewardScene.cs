@@ -10,6 +10,7 @@ public class RewardScene :MonoBehaviour
     [SerializeField] private ItemContainer itemContainer;
 
     [SerializeField] private UI_Base UI_BuySlot;
+    [SerializeField] private UI_Base UI_CloseEventSlot;//報酬シーンUIを閉じるボタン
 
     [SerializeField] private UI_SelectWindow SelectAttachmentWindow;//装備者を決めるウィンドウ
 
@@ -23,6 +24,7 @@ public class RewardScene :MonoBehaviour
         //入力時のイベントを登録
         if (itemContainer != null) itemContainer.SetClickEvent(OnClick_UI);
         if (UI_BuySlot != null) UI_BuySlot.OnSelected += OnClick_UI_SaleItem;
+        if (UI_CloseEventSlot != null) UI_CloseEventSlot.OnSelected += OnClick_UI_CloseEvent;
 
         if (SelectAttachmentWindow != null)
         {
@@ -37,9 +39,12 @@ public class RewardScene :MonoBehaviour
         //Playerマネージャー取得
         if (playerManager == null) playerManager = GameManager.Instance.GetPlayerManager();
 
-        
+
         //報酬シーンを開く
-        OpenRewardScene();
+        //OpenRewardScene();
+
+        //報酬シーンを閉じる
+        CloseRewardScene();
     }
 
     // Update is called once per frame
@@ -47,7 +52,7 @@ public class RewardScene :MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
-            CloseRewardScene();
+            //CloseRewardScene();
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -124,6 +129,14 @@ public class RewardScene :MonoBehaviour
     private void OnClick_UI_SaleItem(int i)
     {
         GameManager.Instance.SaleItem();
+    }
+    private void OnClick_UI_CloseEvent(int i)
+    {
+        //報酬シーンUIを閉じる
+        CloseRewardScene();
+
+        //ゲーム再開
+        GameManager.Instance.Event_PlayGame();
     }
     //アクセサリ装備
     private void OnClick_UI_AttachAccessory(int id)
@@ -232,7 +245,7 @@ public class RewardScene :MonoBehaviour
 
         //売却UIを追加
         uiList.Add(UI_BuySlot);
-
+        uiList.Add(UI_CloseEventSlot);
 
         if (playerManager != null)
         {
@@ -299,6 +312,7 @@ public class RewardScene :MonoBehaviour
     }
     public void OpenRewardScene()
     {
+        //報酬シーンのUIを選べる状態にする
         SetSelectUI_IsActive();
 
         //アイテム生成
@@ -320,7 +334,7 @@ public class RewardScene :MonoBehaviour
 
         //売却UIを追加
         uiList.Add(UI_BuySlot);
-
+        uiList.Add(UI_CloseEventSlot);
       
         if (playerManager != null)
         {

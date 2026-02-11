@@ -169,13 +169,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   weapon: {fileID: 0}
-  BulletSpeed: 1
+  BulletSpeed: 5
   BulletAtk: 1
   BulletMoveVec: {x: 0, y: 0, z: 0}
   DestroyTimer: 1
   hitInterval: 0.5
-  isPerforate: 0
+  isPerforate: 1
   HittedObjList: []
   player1: {fileID: 0}
   player2: {fileID: 0}
   FlipFlag: 0
+  ShotSE: ui_decide
+  RotateSpeed: 50

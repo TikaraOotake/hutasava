@@ -108,7 +108,10 @@ public class ItemContainer : MonoBehaviour
     {
         for (int i = 0; i < UI_ItemList.Count; ++i)
         {
-            UI_ItemList[i].OnSelected_UI_Base += _action;
+            if (UI_ItemList[i] != null)
+            {
+                UI_ItemList[i].OnSelected_UI_Base += _action;
+            }
         }
     }
 

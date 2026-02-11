@@ -12,11 +12,6 @@ public class TitleScene : MonoBehaviour
 
     [SerializeField] private BlindFadeControl blind;
 
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {

@@ -20,7 +20,8 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] BondEffect testBond;
 
-
+    //メイン武器
+    [SerializeField] Weapon mainWeapon;
 
     void Start()
     {
@@ -54,6 +55,11 @@ public class PlayerManager : MonoBehaviour
         {
             testBond.Update_BondEffect();
         }
+
+        if (mainWeapon != null)
+        {
+            mainWeapon.Update_Item(this.gameObject);
+        }
     }
     public bool SetItem(int _Index, EquipmentItem_Base _Item)
     {
@@ -71,6 +77,10 @@ public class PlayerManager : MonoBehaviour
         return itemContainer;
     }
 
+    public void SetMainWeapon(Weapon _weapon)
+    {
+        mainWeapon = _weapon;
+    }
     public void Update_PlayerStatusView()
     {
         //Debug.Log("プレイヤーステータスの表示を更新");
