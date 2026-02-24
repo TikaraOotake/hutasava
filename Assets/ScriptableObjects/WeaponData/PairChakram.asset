@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PairChakram
   m_EditorClassIdentifier: 
   ItemSprite: {fileID: 21300000, guid: a1e9e281c36e26d4ca33f5b31a1cff9f, type: 3}
-  ItemName: 
-  ItemExplanation: 
+  ItemName: "\u5F80\u5FA9\u30C1\u30E3\u30AF\u30E9\u30E0"
+  ItemExplanation: "\u81EA\u6A5F\u9593\u3092\u5F80\u5FA9\u3059\u308B\u30C1\u30E3\u30AF\u30E9\u30E0\u3092\u98DB\u3070\u3059"
   SaleCost: 1
   Atk: 0
   HP: 0

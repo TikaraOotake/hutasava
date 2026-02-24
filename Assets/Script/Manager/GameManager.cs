@@ -151,7 +151,10 @@ public class GameManager : MonoBehaviour
         gameSceneStatus = GameSceneStatus.GameOver;
 
         //時間をもどす
-        Time.timeScale = 0.0f;
+        Time.timeScale = 1.0f;
+
+        //ゲームオーバーシーンを呼び出す
+        SceneManager.LoadScene(GameoverSceneName);
     }
 
     //最初の武器選択画面

@@ -61,6 +61,28 @@ public class PlayerManager : MonoBehaviour
             mainWeapon.Update_Item(this.gameObject);
         }
     }
+    public void CheckGameover()
+    {
+        PlayerController_3d player1comp = null;
+        PlayerController_3d player2comp = null;
+        float player1HP = 0.0f;
+        float player2HP = 0.0f;
+
+        //コンポ取得
+        if (Player1 != null) player1comp = Player1.GetComponent<PlayerController_3d>();
+        if (Player2 != null) player2comp = Player2.GetComponent<PlayerController_3d>();
+
+        //HP取得
+        if (player1comp != null) player1HP = player1comp.GetHealthPoint_Current();
+        if (player2comp != null) player2HP = player2comp.GetHealthPoint_Current();
+
+        //戦闘不能チェック
+        if (player1HP <= 0 && player2HP <= 0.0f)
+        {
+            //ゲームオーバーイベントを起こす
+            GameManager.Instance.Event_GameOver();
+        }
+    }
     public bool SetItem(int _Index, EquipmentItem_Base _Item)
     {
         bool Result = false;

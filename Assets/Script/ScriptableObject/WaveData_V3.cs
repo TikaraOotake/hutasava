@@ -1,10 +1,8 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "WaveData_Scenario", menuName = "ScriptableObjects/WaveData_Scenario")]
-public class WaveData_Scenario : WaveData_Base
+public class WaveData_V3 : WaveData_Base
 {
     [SerializeField] private int ScenarioPhaseIndex;//シナリオ進行段階番号
     [SerializeField] private float PhaseShiftInterval = 1.0f;//次の段階へ移行する時間間隔
@@ -16,9 +14,6 @@ public class WaveData_Scenario : WaveData_Base
 
     [SerializeField]
     private float PhaseTimer;
-
-    //エネミーに入れるレベル
-    [SerializeField] int EnemyLevel = 1;
 
     //リスト同期用変数
     private int prev1, prev2, prev3, prev4;
@@ -146,10 +141,6 @@ public class WaveData_Scenario : WaveData_Base
                     //生成
                     GameObject enemy = enemyManager.GenerateEnemy(enemyPrefab);
 
-                    //エネミーのレベル設定
-                    Enemy_3d enemyController = enemy.GetComponent<Enemy_3d>();
-                    if (enemyController != null) enemyController.SetLevelStatus(EnemyLevel);
-
                     //座標代入
                     Vector3 enemyPos = enemy.transform.position;
                     enemyPos.x = Pos.x + i;//出現数に応じてずらす
@@ -174,7 +165,7 @@ public class WaveData_Scenario : WaveData_Base
         // 変更されたリストのサイズを基準にする
         int targetSize = -1;
 
-        if (bChanged) targetSize = PhaseSpawnEnemyList.Count;
+         if (bChanged) targetSize = PhaseSpawnEnemyList.Count;
         else if (cChanged) targetSize = PhaseSpawnNamList.Count;
         else if (dChanged) targetSize = PhaseSpawnPosIndexList.Count;
         else return; // 何も変わってなければ終了

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,35 @@ public class Enemy_3d : Character
 
     protected GameObject Player1;
     protected GameObject Player2;
+
+    //出現魔法陣のPrefab
+    [SerializeField] protected GameObject SpawnCirclePrefab;
+
+    private void Awake()
+    {
+        //魔法陣をインスタンス化
+        if (SpawnCirclePrefab != null)
+        {
+            GameObject Circle = Instantiate(SpawnCirclePrefab);
+            Circle.transform.position = transform.position;//自身の座標を設定
+
+            SpawnMagicCircle spawnMagicCircle = Circle.GetComponent<SpawnMagicCircle>();
+            if (spawnMagicCircle != null)
+            {
+                //自身を登録
+                spawnMagicCircle.SetEnemy(this.gameObject);
+
+                //自身を非Activeに設定
+                this.gameObject.SetActive(false);
+            }
+        }
+
+        //一定時間後に自身を有効化
+        //StartCoroutine(CallAfterSetActive(1.0f));
+
+        //自身を非Activeに設定
+        //this.gameObject.SetActive(false);
+    }
     void Start()
     {
         
@@ -119,5 +149,13 @@ public class Enemy_3d : Character
                 chara.SetKnockBack(new Vector2(BlowVec.x, BlowVec.z));
             }
         }
+    }
+    private IEnumerator CallAfterSetActive(float seconds)
+    {
+        //一定時間まで実行をまつ
+        yield return new WaitForSeconds(seconds);
+        
+        //自身をActiveに
+        this.gameObject.SetActive(true);
     }
 }

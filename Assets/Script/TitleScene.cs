@@ -8,6 +8,8 @@ public class TitleScene : MonoBehaviour
 
     [SerializeField] private float Timer = 1.0f;//移行までのタイマー
 
+    [SerializeField] private float UncontrolTimer = 1.0f;//操作不能時間タイマー
+
     [SerializeField] private bool flag;
 
     [SerializeField] private BlindFadeControl blind;
@@ -15,7 +17,7 @@ public class TitleScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && UncontrolTimer <= 0.0f)
         {
             //Fadeを掛ける
             if (blind != null) blind.SetFadeFlag(true);
@@ -34,6 +36,9 @@ public class TitleScene : MonoBehaviour
                 LoadScene(targetScene);
             }
         }
+
+        //更新
+        UncontrolTimer = Mathf.Max(0.0f, UncontrolTimer - Time.deltaTime);
     }
 
     private void LoadScene(string targetScene)

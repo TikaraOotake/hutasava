@@ -37,11 +37,11 @@ public class BlindFadeControl : MonoBehaviour
     {
         if (FadeFlag)
         {
-            AlphaValue += FadeSpeed * Time.deltaTime;
+            AlphaValue += FadeSpeed * Time.unscaledDeltaTime;
         }
         else
         {
-            AlphaValue -= FadeSpeed * Time.deltaTime;
+            AlphaValue -= FadeSpeed * Time.unscaledDeltaTime;
         }
 
         //è„å¿â∫å¿Çí¥Ç¶Ç»Ç¢ÇÊÇ§Ç…ï‚ê≥

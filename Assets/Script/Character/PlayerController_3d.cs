@@ -2,6 +2,7 @@
 using StructStatus;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController_3d : Character
 {
@@ -35,6 +36,8 @@ public class PlayerController_3d : Character
 
     [SerializeField] private List<Texture> PlayerTextureFrontList = new List<Texture>();//前向きのテクスチャリスト
     [SerializeField] private List<Texture> PlayerTextureBackList = new List<Texture>();//後ろ向きのテクスチャリスト
+    [SerializeField] private List<Texture> PlayerTextureFrontWalkList = new List<Texture>();//前向きのテクスチャリスト
+    [SerializeField] private List<Texture> PlayerTextureBackWalkList = new List<Texture>();//後ろ向きのテクスチャリスト
     bool IsMove;//アニメーション用歩行状態確認フラグ
 
 
@@ -217,11 +220,25 @@ public class PlayerController_3d : Character
         //キャラクターの前後切り替え
         if (Angle >= 0 && Angle < 80 || Angle > 280 && Angle <= 360)
         {
-            quadTextureAnimation.SetTexture(PlayerTextureBackList);
+            if (IsMove)
+            {
+                quadTextureAnimation.SetTexture(PlayerTextureBackWalkList);
+            }
+            else
+            {
+                quadTextureAnimation.SetTexture(PlayerTextureBackList);
+            }
         }
         else if (Angle > 100 && Angle < 260)
         {
-            quadTextureAnimation.SetTexture(PlayerTextureFrontList);
+            if (IsMove)
+            {
+                quadTextureAnimation.SetTexture(PlayerTextureFrontWalkList);
+            }
+            else
+            {
+                quadTextureAnimation.SetTexture(PlayerTextureFrontList);
+            }
         }
     }
 
@@ -359,6 +376,9 @@ public class PlayerController_3d : Character
         if (HealthPoint_Current <= 0.0f)
         {
             RevivalTimer = RevivalTime_Result;
+
+            //マネージャーにゲームオーバーかチェックしてもらう
+            if (playerManager != null) playerManager.CheckGameover();
         }
     }
     public override void CalcuStatus()

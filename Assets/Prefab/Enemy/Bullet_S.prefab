@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2078461568833414325}
   - component: {fileID: 8890002322504395464}
   - component: {fileID: -2530112408589371137}
-  - component: {fileID: 6109611971787489920}
+  - component: {fileID: 7771698744754414628}
   m_Layer: 0
-  m_Name: Boar
+  m_Name: Bullet_S
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8022025364325234526}
+  - {fileID: 5051398952728656331}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8890002322504395464
@@ -60,7 +60,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!135 &-2530112408589371137
 SphereCollider:
@@ -83,7 +83,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6109611971787489920
+--- !u!114 &7771698744754414628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,27 +92,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8463169047004779428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672c3cb2ba49a3a419d0f26eb0ad2da6, type: 3}
+  m_Script: {fileID: 11500000, guid: d4bbda08c1c188845bd9a1faf370bb07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeedPoint_Base: 4
-  MoveSpeedPoint_Result: 1
-  AttackPoint_Base: 1
-  AttackPoint_Result: 1
-  DefensePoint_Base: 1
-  DefensePoint_Result: 1
-  HealthPointMax_Base: 20
-  HealthPointMax_Result: 1
-  HealthPoint_Current: 1
-  BlowPower: 10
-  BlowResist: 0
-  BlowVec: {x: 0, y: 0}
-  TargetPoint: {x: 0, y: 0, z: 0}
-  SpawnCirclePrefab: {fileID: 0}
-  RushTime: 4
-  RushTimer: 0
-  MoveVec: {x: 0, y: 0, z: 0}
---- !u!1001 &4905806267680552737
+  BulletSpeed: 3
+  AttackValue: 1
+  BlowPower: 2
+  DeleteTimer: 5
+--- !u!1001 &7880514071346772404
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -165,24 +152,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4725248601568623237, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4725248601568623237, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4725248601568623237, guid: fc73373380111414c9be0b136d442563, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4725248601568623237, guid: fc73373380111414c9be0b136d442563, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.503
+      value: 0.196
       objectReference: {fileID: 0}
     - target: {fileID: 8275645072060185741, guid: fc73373380111414c9be0b136d442563, type: 3}
       propertyPath: 'textures.Array.data[0]'
       value: 
-      objectReference: {fileID: 2800000, guid: 5105d26a0c635bb429f2df30f4612e51, type: 3}
+      objectReference: {fileID: 2800000, guid: 922e72009cb2548449c08ddbb4693f2c, type: 3}
     - target: {fileID: 8288047818212000549, guid: fc73373380111414c9be0b136d442563, type: 3}
       propertyPath: mainTexture
       value: 
-      objectReference: {fileID: 2800000, guid: 5105d26a0c635bb429f2df30f4612e51, type: 3}
+      objectReference: {fileID: 2800000, guid: b723ae2b90e6eea40bfdb14666dead8e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc73373380111414c9be0b136d442563, type: 3}
---- !u!4 &8022025364325234526 stripped
+--- !u!4 &5051398952728656331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3118489158666715263, guid: fc73373380111414c9be0b136d442563, type: 3}
-  m_PrefabInstance: {fileID: 4905806267680552737}
+  m_PrefabInstance: {fileID: 7880514071346772404}
   m_PrefabAsset: {fileID: 0}

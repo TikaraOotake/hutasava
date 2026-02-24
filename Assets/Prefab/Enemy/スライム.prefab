@@ -50,17 +50,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeedPoint_Base: 1
   MoveSpeedPoint_Result: 1
-  AttackPoint_Base: 5
+  AttackPoint_Base: 1
   AttackPoint_Result: 1
   DefensePoint_Base: 1
   DefensePoint_Result: 1
-  HealthPointMax_Base: 10
+  HealthPointMax_Base: 3
   HealthPointMax_Result: 1
   HealthPoint_Current: 1
   BlowPower: 10
   BlowResist: 0
   BlowVec: {x: 0, y: 0}
   TargetPoint: {x: 0, y: 0, z: 0}
+  SpawnCirclePrefab: {fileID: 3258816946173812224, guid: 41c587de2de828b46b5a32ea6388c8c9, type: 3}
 --- !u!54 &8890002322504395464
 Rigidbody:
   m_ObjectHideFlags: 0
